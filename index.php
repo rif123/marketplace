@@ -1,5 +1,4 @@
 <?php
-echo "asdasd";die;
 /**
  * CodeIgniter
  *
