@@ -1,0 +1,98 @@
+-- ----------------------------
+--  Table structure for `cookie_law_translations`
+-- ----------------------------
+DROP TABLE IF EXISTS `cookie_law_translations`;
+CREATE TABLE `cookie_law_translations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) NOT NULL,
+  `button_text` varchar(50) NOT NULL,
+  `learn_more` varchar(50) NOT NULL,
+  `abbr` varchar(5) NOT NULL,
+  `for_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`abbr`,`for_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `dk_bankCleint`
+-- ----------------------------
+DROP TABLE IF EXISTS `dk_bankCleint`;
+CREATE TABLE `dk_bankCleint` (
+  `id_bankClient` int(11) NOT NULL AUTO_INCREMENT,
+  `id_client` int(11) DEFAULT NULL,
+  `id_bank` int(11) DEFAULT NULL,
+  `substation_bankClient` varchar(100) DEFAULT NULL,
+  `name_rek_bankClient` varchar(100) DEFAULT NULL,
+  `no_rek_bankClient` int(100) DEFAULT NULL,
+  `fileBookrek_bankClient` varchar(100) DEFAULT NULL,
+  `creator` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `edited` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_bankClient`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Table structure for `dk_client`
+-- ----------------------------
+DROP TABLE IF EXISTS `dk_client`;
+CREATE TABLE `dk_client` (
+  `id_client` int(11) NOT NULL AUTO_INCREMENT,
+  `name_client` varchar(100) NOT NULL,
+  `hp_client` varchar(100) NOT NULL,
+  `gender_client` enum('Pria','Wanita') NOT NULL DEFAULT 'Pria',
+  `email_client` varchar(100) NOT NULL,
+  `password_client` varchar(200) NOT NULL,
+  `newslatter_client` enum('true','false') DEFAULT 'false',
+  `creator` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `edited` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_client`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records of `dk_client`
+-- ----------------------------
+BEGIN;
+INSERT INTO `dk_client` VALUES ('1', 'Rifky', '08572289444', 'Pria', 'rifky rachman', 'asdqwe123', 'true', null, null, null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `dk_m_bank`
+-- ----------------------------
+DROP TABLE IF EXISTS `dk_m_bank`;
+CREATE TABLE `dk_m_bank` (
+  `id_bank` int(11) NOT NULL,
+  `name_bank` varchar(100) DEFAULT NULL,
+  `creator` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `edited` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_bank`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Table structure for `dk_store`
+-- ----------------------------
+DROP TABLE IF EXISTS `dk_store`;
+CREATE TABLE `dk_store` (
+  `id_store` int(11) NOT NULL AUTO_INCREMENT,
+  `id_client` int(11) DEFAULT NULL,
+  `original_name_store` varchar(100) DEFAULT NULL,
+  `name_store` varchar(255) DEFAULT NULL,
+  `id_identity` int(11) DEFAULT NULL,
+  `no_identity_store` varchar(200) DEFAULT NULL,
+  `file_identity_store` varchar(100) DEFAULT NULL,
+  `npwp_store` varchar(100) DEFAULT NULL,
+  `address_store` text,
+  `id_prov` int(11) DEFAULT NULL,
+  `id_city` int(11) DEFAULT NULL,
+  `id_districts` int(11) DEFAULT NULL,
+  `postal_code` varchar(100) DEFAULT NULL,
+  `creator` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `edited` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_store`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
