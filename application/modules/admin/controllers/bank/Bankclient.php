@@ -21,7 +21,7 @@ class bankclient extends ADMIN_Controller
         $head['title'] = 'Administration -Bank Client';
         $head['description'] = '!';
         $head['keywords'] = '';
-        $this->AdminModel->getBankClient();
+      
 
         // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
 

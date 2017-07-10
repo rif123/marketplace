@@ -125,6 +125,18 @@ class AdminModel extends CI_Model
         $query = $this->db->get('dk_m_bank');
         return $query->row_array();
     }
+    public function getIdentityedit($user)
+    {
+        $this->db->where('id_identity', $user);
+        $query = $this->db->get('dk_identity');
+        return $query->row_array();
+    }
+    public function getBusinessedit($user)
+    {
+        $this->db->where('id_type_business', $user);
+        $query = $this->db->get('dk_type_business');
+        return $query->row_array();
+    }
 
 
     public function getBank($limit = null, $start = null, $status){
@@ -144,7 +156,40 @@ class AdminModel extends CI_Model
             return $this->db->count_all_results('dk_m_bank');
         }
     }
-
+    public function getIdentity($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_identity.id_identity,dk_identity.name_identity,dk_identity.created,dk_identity.edited,users.id,users.username
+                                FROM dk_identity
+                                LEFT JOIN users ON dk_identity.creator = users.id'. $limit_sql);
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_identity');
+        }
+    }
+    public function getBusiness($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_type_business.id_type_business,dk_type_business.name_type_business,dk_type_business.created,dk_type_business.edited,users.id,users.username
+                                FROM dk_type_business
+                                LEFT JOIN users ON dk_type_business.creator = users.id'. $limit_sql);
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_type_business');
+        }
+    }
     public function updateBank($POST){
       $datasession = $this->session->userdata();
       $this->db->where('name_bank',$POST['name_bank']);
@@ -165,6 +210,47 @@ class AdminModel extends CI_Model
         return $result;
 
     }
+    public function updateIdentity($POST){
+      $datasession = $this->session->userdata();
+      $this->db->where('name_identity',$POST['name_identity']);
+      $result =$this->db->get('dk_identity');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name_identity' => $POST['name_identity'],
+        'editor' => $datasession['authlog']['id'],
+        'edited' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id_identity', $POST['edit']);
+        $result =$this->db->update('dk_identity', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updateBusiness($POST){
+      $datasession = $this->session->userdata();
+      $this->db->where('name_type_business',$POST['name_type_business']);
+      $result =$this->db->get('dk_type_business');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name_type_business' => $POST['name_type_business'],
+        'editor' => $datasession['authlog']['id'],
+        'edited' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id_type_business', $POST['edit']);
+        $result =$this->db->update('dk_type_business', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+
     public function saveDataBank($test){
         $datasession = $this->session->userdata();
           $this->db->where('name_bank',$test['name_bank']);
@@ -178,6 +264,48 @@ class AdminModel extends CI_Model
 
             );
             $result =$this->db->insert('dk_m_bank', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+    public function saveIdentity($test){
+        $datasession = $this->session->userdata();
+          $this->db->where('name_identity',$test['name_identity']);
+          $result =$this->db->get('dk_identity');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_identity' =>$test['name_identity'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_identity', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+    public function saveBusiness($test){
+        $datasession = $this->session->userdata();
+          $this->db->where('name_type_business',$test['name_type_business']);
+          $result =$this->db->get('dk_type_business');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_type_business' =>$test['name_type_business'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_type_business', $data);
 
           }else{
             $result =false;
@@ -250,6 +378,18 @@ class AdminModel extends CI_Model
     {
         $this->db->where('id_bank', $id);
         $result = $this->db->delete('dk_m_bank');
+        return $result;
+    }
+    public function deleteIdentity($id)
+    {
+        $this->db->where('id_identity', $id);
+        $result = $this->db->delete('dk_identity');
+        return $result;
+    }
+    public function deleteBusiness($id)
+    {
+        $this->db->where('id_type_business', $id);
+        $result = $this->db->delete('dk_type_business');
         return $result;
     }
 

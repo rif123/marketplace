@@ -153,7 +153,12 @@ $route['admin/databank'] = "admin/bank/databank";
 $route['admin/databank/(:num)'] = "admin/bank/databank/index/$1";
 $route['admin/bankclient'] = "admin/bank/bankclient";
 
-
+//DATA IDENTITY
+$route['admin/identity'] = "admin/bank/identity";
+$route['admin/identity/(:num)'] = "admin/bank/identity/index/$1";
+//TYPE BUSINESS
+$route['admin/business'] = "admin/business/business";
+$route['admin/business/(:num)'] = "admin/business/business/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";
