@@ -568,3 +568,16 @@ $config['proxy_ips'] = '';
   |
  */
 $config['template'] = 'redlabel';
+
+
+
+/*
+  |--------------------------------------------------------------------------
+  | Config Email
+  |--------------------------------------------------------------------------
+  |
+  | By default is redlabel.
+  |
+ */
+$config['from'] = 'rifky.rachman@gmail.com';
+$config['label'] = 'Admin DKantin';
