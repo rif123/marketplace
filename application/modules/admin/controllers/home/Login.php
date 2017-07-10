@@ -26,9 +26,13 @@ class Login extends ADMIN_Controller
             $this->form_validation->set_rules('password', 'Password', 'trim|required');
             if ($this->form_validation->run($this)) {
                 $result = $this->AdminModel->loginCheck($_POST);
+
                 if (!empty($result)) {
                     $_SESSION['last_login'] = $result['last_login'];
                     $this->session->set_userdata('logged_in', $result['username']);
+                    $allData = $result;
+                    unset($allData['password']);
+                    $this->session->set_userdata('authlog', $allData);
                     $this->saveHistory('User ' . $result['username'] . ' logged in');
                     redirect('admin/home');
                 } else {
