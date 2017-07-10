@@ -146,6 +146,7 @@
                                     <li><a href="<?= base_url('admin/filemanager') ?>" <?= urldecode(uri_string()) == 'admin/filemanager' ? 'class="active"' : '' ?>><i class="fa fa-file-code-o"></i> File Manager</a></li>
                                     <li><a href="<?= base_url('admin/adminusers') ?>" <?= urldecode(uri_string()) == 'admin/adminusers' ? 'class="active"' : '' ?>><i class="fa fa-user" aria-hidden="true"></i> Admin Users</a></li>
                                     <li><a href="<?= base_url('admin/databank') ?>" <?= urldecode(uri_string()) == 'admin/databank' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Bank</a></li>
+                                    <li><a href="<?= base_url('admin/bankclient') ?>" <?= urldecode(uri_string()) == 'admin/bankclient' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Bank Client</a></li>
                                 </ul>
                             </div>
                             <div class="col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2">

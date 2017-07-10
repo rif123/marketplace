@@ -151,6 +151,8 @@ $route['admin/adminusers'] = "admin/advanced_settings/adminusers";
 //DATA BANK
 $route['admin/databank'] = "admin/bank/databank";
 $route['admin/databank/(:num)'] = "admin/bank/databank/index/$1";
+$route['admin/bankclient'] = "admin/bank/bankclient";
+
 
 
 // TEXTUAL PAGES

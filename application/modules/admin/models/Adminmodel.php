@@ -186,9 +186,10 @@ class AdminModel extends CI_Model
 
       return $result;
     }
+    public function getBankClient(){
+      $this->db->query('SELECT name_bank,id_bank FROM dk_m_bank');
 
-
-
+    }
 
     public function numShopProducts()
     {
@@ -376,7 +377,7 @@ class AdminModel extends CI_Model
     {
         $this->db->insert('shop_categories', array('sub_for' => $post['sub_for']));
         $id = $this->db->insert_id();
-        print_r ($id);die;
+
         $i = 0;
         foreach ($post['translations'] as $abbr) {
             $arr = array();
