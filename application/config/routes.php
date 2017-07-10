@@ -148,6 +148,10 @@ $route['admin/history/(:num)'] = "admin/settings/history/index/$1";
 $route['admin/languages'] = "admin/advanced_settings/languages";
 $route['admin/filemanager'] = "admin/advanced_settings/filemanager";
 $route['admin/adminusers'] = "admin/advanced_settings/adminusers";
+//DATA BANK
+$route['admin/databank'] = "admin/bank/databank";
+
+
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";
 $route['admin/changePageStatus'] = "admin/textual_pages/TextualPages/changePageStatus";

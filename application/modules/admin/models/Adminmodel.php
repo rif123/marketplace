@@ -119,6 +119,68 @@ class AdminModel extends CI_Model
             return $query;
         }
     }
+    public function getBankedit($user)
+    {
+                $this->db->where('id_bank', $user);
+        $query = $this->db->get('dk_m_bank');
+
+             return $query->row_array();
+    }
+
+
+    public function getBank(){
+    $query =$this->db->query('SELECT dk_m_bank.id_bank,dk_m_bank.name_bank,dk_m_bank.created,dk_m_bank.edited,users.id,users.username
+                            FROM dk_m_bank
+                            LEFT JOIN users ON dk_m_bank.creator = users.id');
+
+    return $query;
+
+    }
+
+    public function updateBank($POST){
+      $datasession = $this->session->userdata();
+      $this->db->where('name_bank',$POST['name_bank']);
+      $result =$this->db->get('dk_m_bank');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name_bank' => $POST['name_bank'],
+        'editor' => $datasession['authlog']['id'],
+        'edited' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id_bank', $POST['edit']);
+        $result =$this->db->update('dk_m_bank', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function saveDataBank($test){
+        $datasession = $this->session->userdata();
+          $this->db->where('name_bank',$test['name_bank']);
+          $result =$this->db->get('dk_m_bank');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_bank' =>$test['name_bank'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_m_bank', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+
+
+
 
     public function numShopProducts()
     {
@@ -173,6 +235,12 @@ class AdminModel extends CI_Model
     {
         $this->db->where('id', $id);
         $result = $this->db->delete('users');
+        return $result;
+    }
+    public function deleteBank($id)
+    {
+        $this->db->where('id_bank', $id);
+        $result = $this->db->delete('dk_m_bank');
         return $result;
     }
 
@@ -280,7 +348,7 @@ class AdminModel extends CI_Model
         FROM translations as translations_first
         INNER JOIN shop_categories ON shop_categories.id = translations_first.for_id WHERE type="shop_categorie" ORDER BY position ASC ' . $limit_sql);
         $arr = array();
-        foreach ($query->result() as $shop_categorie) {
+          foreach ($query->result() as $shop_categorie) {
             $arr[$shop_categorie->for_id]['info'][] = array(
                 'abbr' => $shop_categorie->abbr,
                 'name' => $shop_categorie->name
@@ -300,7 +368,7 @@ class AdminModel extends CI_Model
     {
         $this->db->insert('shop_categories', array('sub_for' => $post['sub_for']));
         $id = $this->db->insert_id();
-
+        print_r ($id);die;
         $i = 0;
         foreach ($post['translations'] as $abbr) {
             $arr = array();
