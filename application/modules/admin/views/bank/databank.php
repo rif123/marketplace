@@ -8,7 +8,6 @@
         <hr>
         <?php
     }
-
     if ($this->session->flashdata('result_fail')) {
         ?>
         <hr>
@@ -60,7 +59,9 @@
                 </tr>
             <?php $i++; } ?>
         </table>
-    <?php } else { ?>
+    <?php
+    echo $links_pagination;
+    } else { ?>
         <div class="clearfix"></div><hr>
         <div class="alert alert-info">No users found!</div>
     <?php } ?>

@@ -1,9 +1,4 @@
 <?php
-
-/*
- * @Author:    -
- *  Gitgub:    -
- */
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -11,7 +6,9 @@ if (!defined('BASEPATH')) {
 class Databank extends ADMIN_Controller
 {
 
-    public function index()
+    private $num_rows = 10;
+
+    public function index($page = 0)
     {
 
         $this->login_check();
@@ -22,9 +19,14 @@ class Databank extends ADMIN_Controller
         $head['description'] = '!';
         $head['keywords'] = '';
 
+        // CONFIG FOR PAGINATION
+        $data['bank'] = $this->AdminModel->getBank($this->num_rows, $page, true);
+        $rowscount = $this->AdminModel->getBank($this->num_rows, $page, false);
+        $data['links_pagination'] = pagination('admin/databank', $rowscount, $this->num_rows, 3);
 
         // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
 
+        // ACTION SAVE
         if (isset($_POST['save'])) {
            $result =$this->AdminModel->saveDataBank($_POST);
               if ($result ==1) {
@@ -38,10 +40,9 @@ class Databank extends ADMIN_Controller
               }
 
               redirect('admin/databank');
-         }
+        }
 
-
-
+        // ACTION DELETE
         if (isset($_GET['delete'])) {
           $result = $this->AdminModel->deleteBank($_GET['delete']);
             if ($result == true) {
@@ -54,11 +55,12 @@ class Databank extends ADMIN_Controller
         }
 
 
-
+        // ACTION SHOW FOR EDIT
         if (isset($_GET['edit'])) {
             $data['edit']  =$this->AdminModel->getBankedit($_GET['edit']);
-          }
+        }
 
+        // ACTION UPDATE
         if (isset($_POST['update'])) {
           $result  =$this->AdminModel->updateBank($_POST);
           if ($result ==1) {
@@ -74,9 +76,7 @@ class Databank extends ADMIN_Controller
           redirect('admin/databank');
         }
 
-
         //TAMPIL DATA
-        $data['bank'] = $this->AdminModel->getBank();
         $this->load->view('_parts/header', $head);
         $this->load->view('bank/databank', $data);
         $this->load->view('_parts/footer');

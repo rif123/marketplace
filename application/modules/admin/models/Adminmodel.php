@@ -121,20 +121,28 @@ class AdminModel extends CI_Model
     }
     public function getBankedit($user)
     {
-                $this->db->where('id_bank', $user);
+        $this->db->where('id_bank', $user);
         $query = $this->db->get('dk_m_bank');
-
-             return $query->row_array();
+        return $query->row_array();
     }
 
 
-    public function getBank(){
-    $query =$this->db->query('SELECT dk_m_bank.id_bank,dk_m_bank.name_bank,dk_m_bank.created,dk_m_bank.edited,users.id,users.username
-                            FROM dk_m_bank
-                            LEFT JOIN users ON dk_m_bank.creator = users.id');
-
-    return $query;
-
+    public function getBank($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_m_bank.id_bank,dk_m_bank.name_bank,dk_m_bank.created,dk_m_bank.edited,users.id,users.username
+                                FROM dk_m_bank
+                                LEFT JOIN users ON dk_m_bank.creator = users.id'. $limit_sql);
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_m_bank');
+        }
     }
 
     public function updateBank($POST){

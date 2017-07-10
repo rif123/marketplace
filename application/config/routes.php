@@ -150,6 +150,7 @@ $route['admin/filemanager'] = "admin/advanced_settings/filemanager";
 $route['admin/adminusers'] = "admin/advanced_settings/adminusers";
 //DATA BANK
 $route['admin/databank'] = "admin/bank/databank";
+$route['admin/databank/(:num)'] = "admin/bank/databank/index/$1";
 
 
 // TEXTUAL PAGES
