@@ -55,7 +55,7 @@ class Home extends MY_Controller
         $data['showBrands'] = $this->AdminModel->getValueStore('showBrands');
         $data['brands'] = $this->AdminModel->getBrands();
         $data['links_pagination'] = pagination('home', $rowscount, $this->num_rows);
-        $this->render('home', $head, $data);
+        $this->render('index', $head, $data);
     }
 
     /*
@@ -105,6 +105,7 @@ class Home extends MY_Controller
         $description = str_replace("-", " ", $description) . '..';
         $head['description'] = $description;
         $head['keywords'] = str_replace(" ", ",", $data['product']['title']);
+
         $this->render('view_product', $head, $data);
     }
 

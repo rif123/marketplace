@@ -50,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   | Examples:	my-controller/index	-> my_controller/index
   |		my-controller/my-method	-> my_controller/my_method
  */
+// $route['default_controller'] = 'landing';
+
 $route['default_controller'] = 'home';
 
 // Load default conrtoller when have only currency from multilanguage
