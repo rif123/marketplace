@@ -11,7 +11,7 @@
  Target Server Version : 50505
  File Encoding         : utf-8
 
- Date: 07/10/2017 00:57:52 AM
+ Date: 07/11/2017 20:58:00 PM
 */
 
 SET NAMES utf8;
@@ -124,13 +124,12 @@ CREATE TABLE `dk_bankCleint` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dk_city`;
 CREATE TABLE `dk_city` (
-  `id_city` char(4) COLLATE utf8_unicode_ci NOT NULL,
+  `id_city` int(11) NOT NULL AUTO_INCREMENT,
   `id_prov` char(2) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_city`),
-  KEY `regencies_province_id_index` (`id_prov`),
-  CONSTRAINT `regencies_province_id_foreign` FOREIGN KEY (`id_prov`) REFERENCES `dk_prov` (`id_prov`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `regencies_province_id_index` (`id_prov`)
+) ENGINE=InnoDB AUTO_INCREMENT=9472 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `dk_city`
@@ -201,13 +200,12 @@ CREATE TABLE `dk_detail_store` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dk_districts`;
 CREATE TABLE `dk_districts` (
-  `id_districts` char(7) COLLATE utf8_unicode_ci NOT NULL,
+  `id_districts` int(11) NOT NULL AUTO_INCREMENT,
   `id_city` char(4) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_districts`),
-  KEY `districts_regency_id_index` (`id_city`),
-  CONSTRAINT `districts_regency_id_foreign` FOREIGN KEY (`id_city`) REFERENCES `dk_city` (`id_city`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `districts_regency_id_index` (`id_city`)
+) ENGINE=InnoDB AUTO_INCREMENT=9471041 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `dk_districts`
@@ -245,6 +243,27 @@ CREATE TABLE `dk_m_bank` (
   `editor` int(11) DEFAULT NULL,
   `edited` datetime DEFAULT NULL,
   PRIMARY KEY (`id_bank`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records of `dk_m_bank`
+-- ----------------------------
+BEGIN;
+INSERT INTO `dk_m_bank` VALUES ('1', 'BNI', '1', '2017-07-10 20:02:35', '1', '2017-07-10 20:02:53'), ('2', 'BRI', '1', '2017-07-10 20:03:00', null, null), ('3', 'DKI', '1', '2017-07-10 20:03:06', null, null), ('4', 'mandiri', '1', '2017-07-10 20:03:19', null, null), ('5', 'bca', '1', '2017-07-10 20:03:25', null, null), ('6', 'SINARMAS', '1', '2017-07-10 20:03:31', null, null), ('7', 'CENTURY', '1', '2017-07-10 20:03:39', null, null), ('8', 'DANAMON', '1', '2017-07-10 20:03:56', null, null), ('9', 'BTPN', '1', '2017-07-10 20:04:16', null, null), ('10', 'BTN', '1', '2017-07-10 20:04:26', null, null), ('11', 'CIMB NIAGA', '1', '2017-07-10 20:04:46', null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `dk_m_kampus`
+-- ----------------------------
+DROP TABLE IF EXISTS `dk_m_kampus`;
+CREATE TABLE `dk_m_kampus` (
+  `id_kampus` int(11) NOT NULL AUTO_INCREMENT,
+  `name_kampus` varchar(200) DEFAULT NULL,
+  `creator` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `edited` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_kampus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -252,16 +271,16 @@ CREATE TABLE `dk_m_bank` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dk_prov`;
 CREATE TABLE `dk_prov` (
-  `id_prov` char(2) COLLATE utf8_unicode_ci NOT NULL,
+  `id_prov` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_prov`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `dk_prov`
 -- ----------------------------
 BEGIN;
-INSERT INTO `dk_prov` VALUES ('11', 'ACEH'), ('12', 'SUMATERA UTARA'), ('13', 'SUMATERA BARAT'), ('14', 'RIAU'), ('15', 'JAMBI'), ('16', 'SUMATERA SELATAN'), ('17', 'BENGKULU'), ('18', 'LAMPUNG'), ('19', 'KEPULAUAN BANGKA BELITUNG'), ('21', 'KEPULAUAN RIAU'), ('31', 'DKI JAKARTA'), ('32', 'JAWA BARAT'), ('33', 'JAWA TENGAH'), ('34', 'DI YOGYAKARTA'), ('35', 'JAWA TIMUR'), ('36', 'BANTEN'), ('51', 'BALI'), ('52', 'NUSA TENGGARA BARAT'), ('53', 'NUSA TENGGARA TIMUR'), ('61', 'KALIMANTAN BARAT'), ('62', 'KALIMANTAN TENGAH'), ('63', 'KALIMANTAN SELATAN'), ('64', 'KALIMANTAN TIMUR'), ('65', 'KALIMANTAN UTARA'), ('71', 'SULAWESI UTARA'), ('72', 'SULAWESI TENGAH'), ('73', 'SULAWESI SELATAN'), ('74', 'SULAWESI TENGGARA'), ('75', 'GORONTALO'), ('76', 'SULAWESI BARAT'), ('81', 'MALUKU'), ('82', 'MALUKU UTARA'), ('91', 'PAPUA BARAT'), ('94', 'PAPUA');
+INSERT INTO `dk_prov` VALUES ('11', 'ACEH'), ('12', 'SUMATERA UTARA'), ('13', 'SUMATERA BARAT'), ('14', 'RIAU'), ('15', 'JAMBI'), ('16', 'SUMATERA SELATAN'), ('17', 'BENGKULU'), ('18', 'LAMPUNG'), ('19', 'KEPULAUAN BANGKA BELITUNG'), ('21', 'KEPULAUAN RIAU'), ('31', 'DKI JAKARTA'), ('32', 'JAWA BARAT'), ('33', 'JAWA TENGAH'), ('34', 'DI YOGYAKARTA'), ('35', 'JAWA TIMUR'), ('36', 'BANTEN'), ('51', 'BALI'), ('52', 'NUSA TENGGARA BARAT'), ('53', 'NUSA TENGGARA TIMUR'), ('61', 'KALIMANTAN BARAT'), ('62', 'KALIMANTAN TENGAH'), ('63', 'KALIMANTAN SELATAN'), ('64', 'KALIMANTAN TIMUR'), ('65', 'KALIMANTAN UTARA'), ('71', 'SULAWESI UTARA'), ('72', 'SULAWESI TENGAH'), ('73', 'SULAWESI SELATAN'), ('74', 'SULAWESI TENGGARA'), ('75', 'GORONTALO'), ('76', 'SULAWESI BARAT'), ('81', 'MALUKU'), ('82', 'MALUKU UTARA'), ('91', 'PAPUA BARAT'), ('94', 'PAPUA'), ('95', 'xxxx');
 COMMIT;
 
 -- ----------------------------
@@ -346,7 +365,7 @@ CREATE TABLE `languages` (
   `currencyKey` varchar(5) NOT NULL,
   `flag` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `languages`
@@ -516,7 +535,7 @@ CREATE TABLE `users` (
 --  Records of `users`
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'your@email.com', '0', '1499618385');
+INSERT INTO `users` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'your@email.com', '0', '1499781353');
 COMMIT;
 
 -- ----------------------------
@@ -547,8 +566,7 @@ CREATE TABLE `villages` (
   `district_id` char(7) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `villages_district_id_index` (`district_id`),
-  CONSTRAINT `villages_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `dk_districts` (`id_districts`)
+  KEY `villages_district_id_index` (`district_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
