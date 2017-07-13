@@ -11,7 +11,7 @@ class SendMail
     public function __construct()
     {
         $this->mail = new PHPMailer;
-        //$this->mail->SMTPDebug = 2; 
+        //$this->mail->SMTPDebug = 2;
         $this->mail->isMail();                                      // Set mailer to use SMTP
         $this->mail->Host = '';  // Specify main and backup SMTP servers
         $this->mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -25,7 +25,7 @@ class SendMail
     {
         $this->mail->setFrom('email@example.com', 'My Name');
         $this->mail->addAddress($toEmail, $recipientName);
-        //$this->mail->isHTML(true); 
+        //$this->mail->isHTML(true);
         $this->mail->Subject = $subject;
         $this->mail->Body = $msg;
         if (!$this->mail->send()) {
