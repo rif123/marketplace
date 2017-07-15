@@ -138,7 +138,12 @@ class AdminModel extends CI_Model
         return $query->row_array();
     }
 
-
+    public function getClientedit($user)
+    {
+        $this->db->where('id_client', $user);
+        $query = $this->db->get('dk_client');
+        return $query->row_array();
+    }
     public function getBank($limit = null, $start = null, $status){
         // FOR STATUS TRUE
         if ($status) {
@@ -190,6 +195,182 @@ class AdminModel extends CI_Model
             return $this->db->count_all_results('dk_type_business');
         }
     }
+
+    public function getProv($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT * FROM dk_prov'. $limit_sql);
+
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_prov');
+        }
+    }
+    public function getCity($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_city.id_city,
+		                                        dk_city.id_prov AS no_prov,
+		                                        dk_city.name AS name_city,dk_prov.id_prov,
+		                                        dk_prov.name AS name_prov
+                                            FROM dk_city
+                                            LEFT JOIN dk_prov ON dk_city.id_prov = dk_prov.id_prov'. $limit_sql);
+            return $query;
+        } else {
+          $query =$this->db->query('SELECT dk_city.id_city,
+                                          dk_city.id_prov AS no_prov,
+                                          dk_city.name AS name_city,dk_prov.id_prov,
+                                          dk_prov.name AS name_prov
+                                          FROM dk_city
+                                          LEFT JOIN dk_prov ON dk_city.id_prov = dk_prov.id_prov');
+          return $query->num_rows();
+        }
+    }
+    public function getDistricts($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_districts.id_districts,
+                                            dk_districts.id_city AS no_city,
+                                            dk_districts.name AS name_districts,
+                                            dk_city.id_city,
+                                            dk_city.name AS name_city
+                                            FROM dk_districts
+                                            LEFT JOIN dk_city ON dk_districts.id_city = dk_city.id_city'. $limit_sql);
+            return $query;
+        } else {
+          $query =$this->db->query('SELECT dk_districts.id_districts,
+                                          dk_districts.id_city AS no_city,
+                                          dk_districts.name AS name_districts,
+                                          dk_city.id_city,
+                                          dk_city.name AS name_city
+                                          FROM dk_districts
+                                          LEFT JOIN dk_city ON dk_districts.id_city = dk_city.id_city');
+          return $query->num_rows();
+        }
+    }
+    public function getBankClient($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_bankClient.id_bankClient,dk_bankClient.substation_bankClient,dk_bankClient.name_rek_bankClient,dk_bankClient.no_rek_bankClient,dk_bankClient.fileBookrek_bankClient,dk_bankClient.created,users.username,users.id,dk_client.id_client,dk_client.name_client,dk_m_bank.id_bank,dk_m_bank.name_bank
+                                FROM dk_bankClient
+                                LEFT JOIN users ON dk_bankClient.creator = users.id
+                                LEFT JOIN dk_client ON dk_bankClient.id_client = dk_client.id_client
+                                LEFT JOIN dk_m_bank ON dk_bankClient.id_bank = dk_m_bank.id_bank'. $limit_sql);
+
+            return $query;
+
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_bankClient');
+        }
+    }
+    public function getDetailStore($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_detail_store.id_detail_store,dk_detail_store.addres_detail_store,dk_detail_store.filelogo_detail_store,dk_detail_store.postal_code,dk_detail_store.desc_detail_store,dk_detail_store.prod_origin_store,dk_detail_store.filelicense_detail_store,dk_detail_store.referal_detail_store,dk_detail_store.created,dk_client.id_client,dk_client.name_client,dk_prov.id_prov,users.username,users.id,
+                                      dk_prov.name AS name_prov,
+                                      dk_city.name AS name_city,
+                                      dk_districts.name AS name_districts,
+                                      dk_type_business.name_type_business AS name_type_business
+                                FROM dk_detail_store
+                                LEFT JOIN users ON dk_detail_store.creator = users.id
+                                LEFT JOIN dk_client ON dk_detail_store.id_client = dk_client.id_client
+                                LEFT JOIN dk_prov ON dk_detail_store.id_prov = dk_prov.id_prov
+                                LEFT JOIN dk_city ON dk_detail_store.id_city = dk_city.id_city
+                                LEFT JOIN dk_districts ON dk_detail_store.id_districts = dk_districts.id_districts
+                                LEFT JOIN dk_type_business ON dk_detail_store.id_type_business = dk_type_business.id_type_business'.$limit_sql);
+
+            return $query;
+
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_detail_store');
+        }
+    }
+    public function getStore($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_store.id_store,dk_store.original_name_store,dk_store.name_store,dk_store.no_identity_store,dk_store.file_identity_store,dk_store.npwp_store,dk_store.address_store,dk_store.postal_code,dk_store.created,dk_client.id_client,dk_client.name_client,users.username,users.id,
+                                      dk_prov.name AS name_prov,
+                                      dk_city.name AS name_city,
+                                      dk_districts.name AS name_districts,
+                                      dk_identity.name_identity AS name_identity
+                                FROM dk_store
+                                LEFT JOIN users ON dk_store.creator = users.id
+                                LEFT JOIN dk_client ON dk_store.id_client = dk_client.id_client
+                                LEFT JOIN dk_prov ON dk_store.id_prov = dk_prov.id_prov
+                                LEFT JOIN dk_city ON dk_store.id_city = dk_city.id_city
+                                LEFT JOIN dk_districts ON dk_store.id_districts = dk_districts.id_districts
+                                LEFT JOIN dk_identity ON dk_store.id_identity = dk_identity.id_identity'.$limit_sql);
+
+            return $query;
+
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_store');
+        }
+    }
+    public function getProvs(){
+        $query =$this->db->get('dk_prov');
+
+        return $query->result_array();
+    }
+    public function getCitys(){
+        $query =$this->db->get('dk_city');
+
+        return $query->result_array();
+    }
+    public function getClient($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_client.id_client,dk_client.name_client,dk_client.hp_client,dk_client.gender_client,dk_client.email_client,dk_client.password_client,dk_client.newslatter_client,dk_client.created,dk_client.edited,users.id,users.username
+                                FROM dk_client
+                                LEFT JOIN users ON dk_client.creator = users.id'. $limit_sql);
+
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_client');
+         }
+
+    }
+
     public function updateBank($POST){
       $datasession = $this->session->userdata();
       $this->db->where('name_bank',$POST['name_bank']);
@@ -251,6 +432,86 @@ class AdminModel extends CI_Model
 
     }
 
+    public function updateProv($POST){
+      $this->db->where('name',$POST['name']);
+      $result =$this->db->get('dk_prov');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name' => $POST['name']
+        );
+
+        $this->db->where('id_prov', $POST['edit']);
+        $result =$this->db->update('dk_prov', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updateCity($POST){
+      $this->db->where('name',$POST['name']);
+      $result =$this->db->get('dk_city');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name' => $POST['name'],
+        'id_prov' => $POST['provinces']
+        );
+
+        $this->db->where('id_city', $POST['edit']);
+        $result =$this->db->update('dk_city', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updateDistricts($POST){
+      $this->db->where('name',$POST['name']);
+      $result =$this->db->get('dk_districts');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name' => $POST['name'],
+        'id_city' => $POST['citys']
+        );
+
+        $this->db->where('id_districts', $POST['edit']);
+        $result =$this->db->update('dk_districts', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updateClient($POST){
+      $datasession = $this->session->userdata();
+      $result =$this->db->get('dk_client');
+      if ($POST['newslatter_client'] =="Y") {
+         $POST['newslatter_client'] = true;
+      }elseif($POST['newslatter_client'] =="N") {
+         $POST['newslatter_client'] = false;
+
+      }
+
+        $data = array(
+          'name_client' =>$POST['name_client'],
+          'hp_client' =>$POST['hp_client'],
+          'gender_client' =>$POST['gender_client'],
+          'email_client' =>$POST['email_client'],
+          'password_client' =>md5($POST['password_client']),
+          'newslatter_client' =>$POST['newslatter_client'],
+          'creator' => $datasession['authlog']['id'],
+          'created' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id_client', $POST['edit']);
+        $result =$this->db->update('dk_client', $data);
+
+        return $result;
+
+    }
     public function saveDataBank($test){
         $datasession = $this->session->userdata();
           $this->db->where('name_bank',$test['name_bank']);
@@ -314,10 +575,90 @@ class AdminModel extends CI_Model
 
       return $result;
     }
-    public function getBankClient(){
-      $this->db->query('SELECT name_bank,id_bank FROM dk_m_bank');
 
+    public function saveProv($test){
+          $this->db->where('name',$test['name']);
+          $result =$this->db->get('dk_prov');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name' =>$test['name']
+            );
+            $result =$this->db->insert('dk_prov', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
     }
+    public function saveCity($test){
+          $this->db->where('name',$test['name']);
+          $result =$this->db->get('dk_city');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'id_prov' =>$test['provinces'],
+              'name' =>$test['name']
+            );
+            $result =$this->db->insert('dk_city', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+    public function saveDistricts($test){
+          $this->db->where('name',$test['name']);
+          $result =$this->db->get('dk_districts');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'id_city' =>$test['citys'],
+              'name' =>$test['name']
+            );
+            $result =$this->db->insert('dk_districts', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+    public function saveClient($test){
+        $datasession = $this->session->userdata();
+          $this->db->where('email_client',$test['email_client']);
+          $result =$this->db->get('dk_client');
+          if ($test['newslatter_client'] =="Y") {
+              $test['newslatter_client'] =true;
+          }elseif($test['newslatter_client'] =="N") {
+              $test['newslatter_client'] = false;
+
+          }
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_client' =>$test['name_client'],
+              'hp_client' =>$test['hp_client'],
+              'gender_client' =>$test['gender_client'],
+              'email_client' =>$test['email_client'],
+              'password_client' =>md5($test['password_client']),
+              'newslatter_client' =>  $test['newslatter_client'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+            );
+            $result =$this->db->insert('dk_client', $data);
+
+          }else{
+            $result =false;
+          }
+
+      return $result;
+    }
+
 
     public function numShopProducts()
     {
@@ -390,6 +731,31 @@ class AdminModel extends CI_Model
     {
         $this->db->where('id_type_business', $id);
         $result = $this->db->delete('dk_type_business');
+        return $result;
+    }
+
+    public function deleteProv($id)
+    {
+        $this->db->where('id_prov', $id);
+        $result = $this->db->delete('dk_prov');
+        return $result;
+    }
+    public function deleteCity($id)
+    {
+        $this->db->where('id_city', $id);
+        $result = $this->db->delete('dk_city');
+        return $result;
+    }
+    public function deleteDistricts($id)
+    {
+        $this->db->where('id_districts', $id);
+        $result = $this->db->delete('dk_districts');
+        return $result;
+    }
+    public function deleteClient($id)
+    {
+        $this->db->where('id_client', $id);
+        $result = $this->db->delete('dk_client');
         return $result;
     }
 

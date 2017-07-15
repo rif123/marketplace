@@ -159,7 +159,7 @@ $route['admin/adminusers'] = "admin/advanced_settings/adminusers";
 //DATA BANK
 $route['admin/databank'] = "admin/bank/databank";
 $route['admin/databank/(:num)'] = "admin/bank/databank/index/$1";
-$route['admin/bankclient'] = "admin/bank/bankclient";
+
 
 //DATA IDENTITY
 $route['admin/identity'] = "admin/bank/identity";
@@ -167,6 +167,28 @@ $route['admin/identity/(:num)'] = "admin/bank/identity/index/$1";
 //TYPE BUSINESS
 $route['admin/business'] = "admin/business/business";
 $route['admin/business/(:num)'] = "admin/business/business/index/$1";
+
+//PROV
+$route['admin/prov'] = "admin/address/prov";
+$route['admin/prov/(:num)'] = "admin/address/prov/index/$1";
+//CITY
+$route['admin/city'] = "admin/address/city";
+$route['admin/city/(:num)'] = "admin/address/city/index/$1";
+//DISTRICTS
+$route['admin/districts'] = "admin/address/districts";
+$route['admin/districts/(:num)'] = "admin/address/districts/index/$1";
+//ClIENT
+$route['admin/client'] = "admin/client/client";
+$route['admin/client/(:num)'] = "admin/client/client/index/$1";
+// BANK CLIENT
+$route['admin/bankclient'] = "admin/bank/bankclient";
+$route['admin/bankclient/(:num)'] = "admin/bank/bankclient/index/$1";
+//DETAIL STORE
+$route['admin/detailStore'] = "admin/store/detailStore";
+$route['admin/detailStore/(:num)'] = "admin/store/detailStore/index/$1";
+//STORE
+$route['admin/store'] = "admin/store/store";
+$route['admin/store/(:num)'] = "admin/store/store/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";

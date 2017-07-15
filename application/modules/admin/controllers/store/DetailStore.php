@@ -3,7 +3,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Bankclient extends ADMIN_Controller
+class DetailStore extends ADMIN_Controller
 {
 
     private $num_rows = 10;
@@ -15,15 +15,15 @@ class Bankclient extends ADMIN_Controller
         //HEAD
         $data = array();
         $head = array();
-        $head['title'] = 'Administration -Data Bank Client';
+        $head['title'] = 'Administration -Data Detail Store';
         $head['description'] = '!';
         $head['keywords'] = '';
         //DATA BANK
 
         // CONFIG FOR PAGINATION
-        $data['bankclient'] = $this->AdminModel->getBankClient($this->num_rows, $page, true);
-        $rowscount = $this->AdminModel->getBankClient($this->num_rows, $page, false);
-        $data['links_pagination'] = pagination('admin/bankclient', $rowscount, $this->num_rows, 3);
+        $data['detail'] = $this->AdminModel->getDetailStore($this->num_rows, $page, true);
+        $rowscount = $this->AdminModel->getDetailStore($this->num_rows, $page, false);
+        $data['links_pagination'] = pagination('admin/store', $rowscount, $this->num_rows, 3);
 
         // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
 
@@ -79,7 +79,7 @@ class Bankclient extends ADMIN_Controller
 
         //TAMPIL DATA
         $this->load->view('_parts/header', $head);
-        $this->load->view('bank/bankclient', $data);
+        $this->load->view('store/detailStore', $data);
         $this->load->view('_parts/footer');
         $this->saveHistory('Go to Admin Users');
 

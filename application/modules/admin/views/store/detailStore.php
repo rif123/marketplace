@@ -1,6 +1,6 @@
 
 <div id="users">
-    <h1><img src="<?= base_url('assets/imgs/admin-user.png') ?>" class="header-img" style="margin-top:-3px;"> Admin Users</h1>
+    <h1><img src="<?= base_url('assets/imgs/admin-user.png') ?>" class="header-img" style="margin-top:-3px;"> Detail Store</h1>
     <hr>
     <?php if (validation_errors()) { ?>
         <hr>
@@ -33,32 +33,44 @@
     ?>
     <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#add_edit_users" class="btn btn-primary btn-xs pull-right" style="margin-bottom:10px;"><b>+</b> Add new user</a> -->
     <?php
-    if ($bankclient->result()) {
+    if ($detail->result()) {
         ?>
         <table class="table table-striped custab">
             <thead>
                 <tr>
                     <th>#ID</th>
                     <th>Name Client</th>
-                    <th>Name Bank</th>
-                    <th>Substation</th>
-                    <th>Name Rek Bank</th>
-                    <th>No Rek Bank</th>
-                    <th>File Book Rek</th>
+                    <th>File Logo</th>
+                    <th>Address</th>
+                    <th>Provinces</th>
+                    <th>City</th>
+                    <th>Districts</th>
+                    <th>Postal Code</th>
+                    <th>Description</th>
+                    <th>Products</th>
+                    <th>Type Business</th>
+                    <th>File Lecense</th>
+                    <th>Referal</th>
                     <th>creator</th>
                     <th>Created</th>
                     <!-- <th class="text-center">Action</th> -->
                 </tr>
             </thead>
-            <?php $i=1; foreach ($bankclient->result() as $key=> $user) { ?>
+            <?php $i=1; foreach ($detail->result() as $key=> $user) { ?>
                 <tr>
                     <td><?= $i ?></td>
                     <td><?= $user->name_client ?></td>
-                    <td><?= $user->name_bank ?></td>
-                    <td><?= $user->substation_bankClient ?></td>
-                    <td><?= $user->name_rek_bankClient ?></td>
-                    <td><?= $user->no_rek_bankClient ?></td>
-                    <td><?= $user->fileBookrek_bankClient ?></td>
+                    <td><?= $user->filelogo_detail_store ?></td>
+                    <td><?= $user->addres_detail_store ?></td>
+                    <td><?= $user->name_prov ?></td>
+                    <td><?= $user->name_city ?></td>
+                    <td><?= $user->name_districts ?></td>
+                    <td><?= $user->postal_code ?></td>
+                    <td><?= $user->desc_detail_store ?></td>
+                    <td><?= $user->prod_origin_store ?></td>
+                    <td><?= $user->name_type_business ?></td>
+                    <td><?= $user->filelicense_detail_store ?></td>
+                    <td><?= $user->referal_detail_store ?></td>
                     <td><?= $user->username ?></td>
                     <td><?= $user->created ?></td>
                 </tr>

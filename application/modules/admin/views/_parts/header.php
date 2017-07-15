@@ -149,6 +149,13 @@
                                     <li><a href="<?= base_url('admin/bankclient') ?>" <?= urldecode(uri_string()) == 'admin/bankclient' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Bank Client</a></li>
                                     <li><a href="<?= base_url('admin/identity') ?>" <?= urldecode(uri_string()) == 'admin/identity' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Identity</a></li>
                                     <li><a href="<?= base_url('admin/business') ?>" <?= urldecode(uri_string()) == 'admin/business' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Type Business</a></li>
+                                    <li><a href="<?= base_url('admin/prov') ?>" <?= urldecode(uri_string()) == 'admin/prov' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Provinces</a></li>
+                                    <li><a href="<?= base_url('admin/city') ?>" <?= urldecode(uri_string()) == 'admin/city' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data City</a></li>
+                                    <li><a href="<?= base_url('admin/districts') ?>" <?= urldecode(uri_string()) == 'admin/districts' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Districts</a></li>
+                                    <li><a href="<?= base_url('admin/client') ?>" <?= urldecode(uri_string()) == 'admin/client' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Client</a></li>
+                                    <li><a href="<?= base_url('admin/detailStore') ?>" <?= urldecode(uri_string()) == 'admin/detailStore' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Detail Store</a></li>
+                                    <li><a href="<?= base_url('admin/store') ?>" <?= urldecode(uri_string()) == 'admin/store' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Store</a></li>
+
                                 </ul>
                             </div>
                             <div class="col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2">
