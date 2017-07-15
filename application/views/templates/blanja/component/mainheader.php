@@ -22,12 +22,24 @@
                                 <span class="line1">Wish<br><strong>List</strong></span>
                                 </a>
                             </li>
+                            <?php
+                                if ($this->session->userdata('auth')) {
+                            ?>
                             <li class="item">
-                                <a href="<?php echo site_url('/auth/login'); ?>">
+                                <a href="<?php echo site_url('/auth/logout'); ?>">
                                     <span class="icon login"></span>
-                                    <span class="line1">Login<br><strong>Masuk Website</strong></span>
+                                    <span class="line1">Logout<br><strong>Keluar Website</strong></span>
                                 </a>
                             </li>
+                            <?php } else { ?>
+                                <li class="item">
+                                    <a href="<?php echo site_url('/auth/login'); ?>">
+                                        <span class="icon login"></span>
+                                        <span class="line1">Login/Registrasi<br><strong>Masuk Website</strong></span>
+                                    </a>
+                                </li>
+
+                            <?php } ?>
                             <li class="item">
                                 <a href="<?php echo site_url('/'); ?>">
                                     <span class="icon checkout"></span>

@@ -60,9 +60,9 @@ $autoload['packages'] = array();
 */
 $autoload['libraries'] = array(
     'database',
-    'session', 
+    'session',
     'loop',
-    'ShoppingCart', 
+    'ShoppingCart',
     'Language',
     'SendMail'
 );
@@ -91,11 +91,11 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 $autoload['helper'] = array(
-    'url', 
-    'language', 
-    'text', 
-    'cookie', 
-    'getTextualPages', 
+    'url',
+    'language',
+    'text',
+    'cookie',
+    'getTextualPages',
     'mb_ucfirst',
     'purchase_steps',
     'cleanreferral'

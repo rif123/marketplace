@@ -176,6 +176,8 @@ $route['admin/loadOthersImages'] = "admin/ecommerce/publish/loadOthersImages";
 // LOGIN
 $route['auth/login'] = "Login";
 $route['auth/login/dosave'] = "Login/register";
+$route['auth/login/doLogin'] = "Login/doLogin";
+$route['auth/logout'] = "Login/doLogout";
 
 
 $route['api/v1/promobox'] = "api/v1/promoboxs";

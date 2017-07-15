@@ -13,11 +13,17 @@ class Login extends MY_Controller
         $this->load->helper(array('pagination'));
         $this->load->Model('LoginModel');
         $this->load->library('form_validation');
-        $this->load->library('SendMail');
+        $this->load->library('session');
     }
 
     public function index()
     {
+        // $this->load->library('email');
+        // $this->email->from('rifky.rachman@gmail.com', 'Admin Dkantin');
+        // $this->email->to('rifky.rachman@yahoo.com');
+        // $this->email->subject('Email Test lagi dan lagi');
+        // $this->email->message('Testing the email class.xxxxxxx');
+        // $this->email->send();
         $head = array();
         $parser['template'] = 'templates/blanja/feature/login/index';
         $this->load->view('templates/blanja/base', $parser);
@@ -32,7 +38,7 @@ class Login extends MY_Controller
         $captcha = $this->curlCaptcha($input['g-recaptcha-response']);
         if ($captcha != true) {
             $this->session->set_flashdata('errors', "Captcha gagal silahkan periksa kembali!");
-            redirect('auth/login', 'refresh');
+            redirect('auth/login', 'refreshs');
         }
         if ($this->form_validation->run() == true) {
             unset($input['g-recaptcha-response']);
@@ -110,16 +116,64 @@ class Login extends MY_Controller
         return $config;
     }
 
+    public function doLogin() {
+        $input = $this->input->post();
+        $config = $this->setValidationsLogin();
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() == true) {
+            $callBack = $this->LoginModel->doLogin($input);
+            // var_dump($callBack);die;
+            if ($callBack['status']) {
+                unset($callBack['content']->password_client);
+                $session['auth'] = $callBack['content'];
+                $this->session->set_userdata($session);
+                redirect('/');
+            } else {
+                $this->session->set_flashdata('error_login', "Login gagal silahkan cek kembali!");
+                redirect('auth/login', 'refresh');
+            }
+        }
+    }
+
+    private function setValidationsLogin(){
+        $config = array(
+                    array(
+                            'field' => 'name_client',
+                            'label' => 'Nama',
+                            'rules' => 'required|alpha',
+                            'errors' => array(
+                                    'required' => '%s Wajib diisi',
+                                    'alpha' => '%s Harus berupa Hurup',
+                            ),
+                    ),
+                    array(
+                            'field' => 'password_client',
+                            'label' => 'Password',
+                            'rules' => 'required',
+                            'errors' => array(
+                                    'required' => '%s Wajib diisi.',
+                            ),
+                    ),
+
+            );
+        return $config;
+    }
+
     private function curlCaptcha($geo) {
         $secretKey = "6LdH-CgUAAAAALuQNs-wSvcNGi1QMreSeTbrfJ5k";
         $ip = $_SERVER['REMOTE_ADDR'];
         $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$geo."&remoteip=".$ip);
-        $responseKeys = json_decode($response,true);
+        $responseKeys = json_decode($ressponse,true);
         if(intval($responseKeys["success"]) !== 1) {
             return false;
         } else {
             return true;
         }
+    }
+
+    public function doLogout() {
+        $this->session->sess_destroy();
+        redirect('/');
     }
 
 }
