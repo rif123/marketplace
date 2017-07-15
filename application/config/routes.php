@@ -110,6 +110,12 @@ $route['confirm/(:any)'] = "home/confirmLink/$1";
 // Site Multilanguage
 $route['^(\w{2})/(.*)$'] = '$2';
 
+
+// PROMOBOX
+$route['promobox/(:any)'] = "Promobox/detail";
+$route['p/(:any)'] = "Product/detail";
+
+
 /*
  * Admin Controllers Route
  */
@@ -178,6 +184,10 @@ $route['auth/login'] = "Login";
 $route['auth/login/dosave'] = "Login/register";
 $route['auth/login/doLogin'] = "Login/doLogin";
 $route['auth/logout'] = "Login/doLogout";
+
+
+
+
 
 
 $route['api/v1/promobox'] = "api/v1/promoboxs";

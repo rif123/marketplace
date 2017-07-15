@@ -12,6 +12,7 @@ class Home extends MY_Controller
         parent::__construct();
         $this->load->helper(array('pagination'));
         $this->load->Model('AdminModel');
+        $this->load->Model('PromoboxModel');
     }
 
     public function index($page = 0)
@@ -23,7 +24,6 @@ class Home extends MY_Controller
         $head['description'] = @$arrSeo['description'];
         $head['keywords'] = str_replace(" ", ",", $head['title']);
         $all_categories = $this->Publicmodel->getShopCategories();
-
         /*
          * Tree Builder for categories menu
          */
@@ -55,6 +55,8 @@ class Home extends MY_Controller
         $data['showBrands'] = $this->AdminModel->getValueStore('showBrands');
         $data['brands'] = $this->AdminModel->getBrands();
         $data['links_pagination'] = pagination('home', $rowscount, $this->num_rows);
+        $data['promoHorizontal'] = $this->PromoboxModel->getPromoHorizontal(1);
+        $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
         $this->render('index', $head, $data);
     }
 

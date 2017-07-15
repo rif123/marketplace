@@ -581,3 +581,9 @@ $config['template'] = 'redlabel';
  */
 $config['from'] = 'rifky.rachman@gmail.com';
 $config['label'] = 'Admin DKantin';
+
+
+$config['statusPromo']= [
+    'Active',
+    'No-Active'
+];

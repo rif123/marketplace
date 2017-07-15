@@ -64,7 +64,7 @@ $autoload['libraries'] = array(
     'loop',
     'ShoppingCart',
     'Language',
-    'SendMail'
+    'SendMail',
 );
 
 /*
@@ -98,7 +98,9 @@ $autoload['helper'] = array(
     'getTextualPages',
     'mb_ucfirst',
     'purchase_steps',
-    'cleanreferral'
+    'cleanreferral',
+    'seo',
+    'product'
 );
 
 /*

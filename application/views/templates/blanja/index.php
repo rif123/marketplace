@@ -18,340 +18,9 @@
                         <h5 class="vertical-title">Categories</h5>
                     </div>
                     <div class="vertical-menu-content">
-                        <ul class="vertical-menu-list">
-                            <li class="ef4896">
-                                <a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/1.png'); ?>">Fashion</a>
-                                <div class="vertical-dropdown-menu">
-                                    <div class="vertical-groups col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="block-content-vertical-menu">
-                                                    <h3 class="head">PRODUCTS SPECIAL</h3>
-                                                    <div class="inner">
-                                                        <p>Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <div class="row mega-products">
-                                                    <div class="col-sm-4 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/p10.jpg'); ?>" alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Cotton Lycra Leggings</a>
-                                                        </div>
-                                                        <div class="price-box">
-                                                            <span class="product-price">$139.98</span>
-                                                            <span class="product-price-old">$169.00</span>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/p11.jpg'); ?>" alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Cotton Lycra Leggings</a>
-                                                        </div>
-                                                        <div class="price-box">
-                                                            <span class="product-price">$139.98</span>
-                                                            <span class="product-price-old">$169.00</span>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 mega-product">
-                                                        <div class="product-avatar">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/p12.jpg'); ?>" alt="product1"></a>
-                                                        </div>
-                                                        <div class="product-name">
-                                                            <a href="#">Cotton Lycra Leggings</a>
-                                                        </div>
-                                                        <div class="price-box">
-                                                            <span class="product-price">$139.98</span>
-                                                            <span class="product-price-old">$169.00</span>
-                                                        </div>
-                                                        <div class="product-star">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-half-o"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="e664fe">
-                                <a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/2.png'); ?>">Mother & Baby</a>
-                                <div class="vertical-dropdown-menu">
-                                    <div class="vertical-groups">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="block-content-vertical-menu border banner-hover">
-                                                    <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/banner/b42.png'); ?>" alt="Banner"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="block-content-vertical-menu banner-hover">
-                                                    <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/banner/b43.png'); ?>" alt="Banner"></a>
-                                                </div>
-                                                <div class="block-content-vertical-menu">
-                                                    <div class="inner">
-                                                        <p>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. </p>
-                                                        <a href="#" class="button-radius">Shop now<span class="icon"></span></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="block-content-vertical-menu border-left">
-                                                    <h3 class="head" style="background:#e664fe;">CATEGORIES</h3>
-                                                    <div class="inner">
-                                                        <ul class="vertical-menu-link">
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Skincare</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Metkup</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Mobile phone</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Tablet</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Men's Apparel</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Women's Apparel</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Watch sport</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Metkup</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Mobile phone</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Tablet</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="fe64a9">
-                                <a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/3.png'); ?>">Cosmetics</a>
-                                <div class="vertical-dropdown-menu">
-                                    <div class="vertical-groups">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <div class="block-content-vertical-menu border">
-                                                    <h3 class="head">CATEGORIES</h3>
-                                                    <div class="inner">
-                                                        <div class="inner-img">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/banner/4.jpg'); ?>" alt="Banner"></a>
-                                                        </div>
-                                                        <ul class="vertical-menu-link">
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Skincare</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Metkup</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Mobile phone</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Tablet</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="block-content-vertical-menu border">
-                                                    <h3 class="head">CATEGORIES</h3>
-                                                    <div class="inner">
-                                                        <div class="inner-img">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/banner/5.jpg'); ?>" alt="Banner"></a>
-                                                        </div>
-                                                        <ul class="vertical-menu-link">
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Skincare</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Metkup</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Mobile phone</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Tablet</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="block-content-vertical-menu border">
-                                                    <h3 class="head">CATEGORIES</h3>
-                                                    <div class="inner">
-                                                        <div class="inner-img">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/banner/6.jpg'); ?>" alt="Banner"></a>
-                                                        </div>
-                                                        <ul class="vertical-menu-link">
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Skincare</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Metkup</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Mobile phone</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Tablet</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="block-content-vertical-menu border">
-                                                    <h3 class="head">CATEGORIES</h3>
-                                                    <div class="inner">
-                                                        <div class="inner-img">
-                                                            <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/banner/7.jpg'); ?>" alt="Banner"></a>
-                                                        </div>
-                                                        <ul class="vertical-menu-link">
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Skincare</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Metkup</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Mobile phone</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                <span class="text">Tablet</span>
-                                                                <span class="count">(9)</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/4.png'); ?>">Electronics</a></li>
-                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/5.png'); ?>">Interior</a></li>
-                            <li>
-                                <a class="parent" href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/6.png'); ?>">Sport</a>
-                            </li>
-                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/7.png'); ?>">Mobile & Tablet</a></li>
-                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/8.png'); ?>">Other</a></li>
-                        </ul>
+                        <!-- main header -->
+                        	<?php $this->load->view('templates/blanja/feature/categories/vertical', [  'categories' => $home_categories ]); ?>
+                        <!-- ./main header -->
                     </div>
                 </div>
                 <!-- ./Block vertical-menu -->
@@ -399,39 +68,44 @@
                 <!-- Home slide -->
                 <div class="block block-slider">
                     <ul class="home-slider kt-bxslider">
-                        <li><img src="<?php echo base_url('assets/tempdkantin/data/option2/slider1.jpg'); ?>" alt="Slider"></li>
+                        <?php foreach ($promoSlider as $key => $val) { ?>
+                        <li>
+                            <a href="<?php echo site_url('/promobox')."/".sanitizeStringForUrl(trim($val['dk_title_promotion']))."-".$val['dk_promotion_id']; ?>">
+                                <img src="<?php echo base_url('attachments/slider').'/'.$val['dk_banner_promotion']; ?>" alt="Slider" onerror="this.onerror=null;this.src='<?php echo base_url('assets/tempdkantin/data/option2/slider1.jpg'); ?>'" >
+                            </a>
+                        </li>
+                        <?php } ?>
                     </ul>
                 </div>
                 <!-- ./Home slide -->
             </div>
+
             <div class="col-sm-9 col-md-3">
                 <div class="block-banner-right banner-hover">
-                    <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/option2/banner1.png'); ?>" alt="Banner"></a>
-                    <a href="#"><img src="<?php echo base_url('assets/tempdkantin/data/option2/banner2.png'); ?>" alt="Banner"></a>
+                    <?php foreach ($promoSlider as $key => $val) {
+                            if ($key < 2){
+                         ?>
+                            <a href="<?php echo site_url('/promobox')."/".sanitizeStringForUrl(trim($val['dk_title_promotion']))."-".$val['dk_promotion_id']; ?>">
+                                <img src="<?php echo base_url('attachments/slider').'/'.$val['dk_banner_promotion']; ?>" alt="Banner" onerror="this.onerror=null;this.src='<?php echo base_url('assets/tempdkantin/data/option2/banner2.png'); ?>'" >
+                            </a>
+                    <?php }} ?>
+
                 </div>
             </div>
             <!-- block banner owl-->
             <div class="col-sm-12">
                 <div class="block block-banner-owl" >
                     <div class="block-inner kt-owl-carousel" data-margin="30" data-loop="true" data-nav="true" data-responsive='{"0":{"items":1},"600":{"items":2},"1000":{"items":3}}'>
-                        <div class="banner-text">
-                            <h4>TODAY'S</h4>
-                            <h2><b>TOP 50 EDO</b></h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-                            <a class="button-radius white" href="#">Shop now<span class="icon"></span></a>
+                    <?php
+                        foreach ($promoHorizontal as $key => $val) {
+                    ?>
+                        <div class="banner-text" style="background:<?php echo $val['dk_banner_promotion'];   ?>">
+                            <h4><?php echo $val['dk_head_title']; ?></h4>
+                            <h2><b><?php echo $val['dk_title_promotion']; ?></b></h2>
+                            <p><?php echo $val['dk_description_promotion']; ?></p>
+                            <a class="button-radius white" href="<?php echo site_url('/promobox')."/".sanitizeStringForUrl(trim($val['dk_title_promotion']))."-".$val['dk_promotion_id']; ?>">Shop     now<span class="icon"></span></a>
                         </div>
-                        <div class="banner-text" style="background-color:#ffd900;">
-                            <h4>UPTO</h4>
-                            <h2><b>40% OFF</b></h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-                            <a class="button-radius white" href="#">Shop now<span class="icon"></span></a>
-                        </div>
-                        <div class="banner-text" style="background-color:#fa8072;">
-                            <h4>EXTRA</h4>
-                            <h2><b>60% OFF</b></h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-                            <a class="button-radius white" href="#">Shop now<span class="icon"></span></a>
-                        </div>
+                    <?php } ?>
                     </div>
                 </div>
             </div>

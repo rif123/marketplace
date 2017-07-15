@@ -13,7 +13,7 @@ class Publish extends ADMIN_Controller
 
     public function index($id = 0)
     {
-
+    
         $this->login_check();
         $is_update = false;
         $trans_load = null;
