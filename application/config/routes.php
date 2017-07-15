@@ -168,6 +168,10 @@ $route['admin/identity/(:num)'] = "admin/bank/identity/index/$1";
 $route['admin/business'] = "admin/business/business";
 $route['admin/business/(:num)'] = "admin/business/business/index/$1";
 
+//CONFIG
+$route['admin/config'] = "admin/advanced_settings/config";
+$route['admin/config/(:num)'] = "admin/advanced_settings/config/index/$1";
+
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";
 $route['admin/changePageStatus'] = "admin/textual_pages/TextualPages/changePageStatus";
