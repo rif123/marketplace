@@ -13,6 +13,7 @@ class Home extends MY_Controller
         $this->load->helper(array('pagination'));
         $this->load->Model('AdminModel');
         $this->load->Model('PromoboxModel');
+        $this->load->Model('ProductModel');
     }
 
     public function index($page = 0)
@@ -57,6 +58,8 @@ class Home extends MY_Controller
         $data['links_pagination'] = pagination('home', $rowscount, $this->num_rows);
         $data['promoHorizontal'] = $this->PromoboxModel->getPromoHorizontal(1);
         $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
+        $data['popularCategori'] = $this->ProductModel->getPopularCategori();
+        $data['partner'] = $this->ProductModel->getPartner();
         $this->render('index', $head, $data);
     }
 

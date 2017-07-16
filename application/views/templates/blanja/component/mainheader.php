@@ -4,7 +4,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <div class="logo">
-                        <a href="index.html"><img src="<?php echo base_url('assets/tempdkantin/data/option1/logo.png'); ?>" alt="Logo"></a>
+                        <a href="<?php echo site_url('/'); ?>">
+                            <img src="<?php echo base_url('assets/tempdkantin/data/option1/logo.png'); ?>" alt="Logo">
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-header-banner">
@@ -40,17 +42,20 @@
                                 </li>
 
                             <?php } ?>
+                            <?php if ($this->session->userdata('chart')) { ?>
                             <li class="item">
                                 <a href="<?php echo site_url('/'); ?>">
                                     <span class="icon checkout"></span>
                                     <span class="line1">Checkout<br><strong>Order</strong></span>
                                 </a>
                             </li>
+                            <?php } ?>
                             <li class="item item-cart block-wrap-cart">
                                 <a href="cart.html">
                                 <span class="icon cart"></span>
                                 <span class="line1">Shopping Cart<br><strong>$0.00</strong></span>
                                 </a>
+                                <?php if ($this->session->userdata('chart')) { ?>
                                 <div class="block-mini-cart">
                                     <div class="mini-cart-content">
                                         <h5 class="mini-cart-head">2 Items in my cart</h5>
@@ -93,6 +98,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php } ?>
                             </li>
                         </ul>
                     </div>
