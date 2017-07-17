@@ -10,8 +10,8 @@ if (!defined('BASEPATH')) {
 
 class bankclient extends ADMIN_Controller
 {
-
-    public function index()
+    private $num_rows = 10;
+    public function index($page=0)
     {
 
         $this->login_check();
@@ -21,7 +21,7 @@ class bankclient extends ADMIN_Controller
         $head['title'] = 'Administration -Bank Client';
         $head['description'] = '!';
         $head['keywords'] = '';
-      
+
 
         // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
 
@@ -76,7 +76,7 @@ class bankclient extends ADMIN_Controller
 
 
         //TAMPIL DATA
-        $data['bank'] = $this->AdminModel->getBank();
+        $data['bank'] = $this->AdminModel->getBank($this->num_rows, $page , true);
         $this->load->view('_parts/header', $head);
         $this->load->view('bank/bankclient', $data);
         $this->load->view('_parts/footer');

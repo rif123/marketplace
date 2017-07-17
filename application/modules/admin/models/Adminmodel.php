@@ -186,6 +186,7 @@ class AdminModel extends CI_Model
             $query =$this->db->query('SELECT dk_m_bank.id_bank,dk_m_bank.name_bank,dk_m_bank.created,dk_m_bank.edited,users.id,users.username
                                 FROM dk_m_bank
                                 LEFT JOIN users ON dk_m_bank.creator = users.id'. $limit_sql);
+
             return $query;
         } else {
             // FOR STATUS FALSE
@@ -626,7 +627,7 @@ class AdminModel extends CI_Model
        $this->db->where('id_City', $id);
        $result = $this->db->delete('dk_city');
        return $result;
-   } 
+   }
     public function getBankClient(){
       $this->db->query('SELECT name_bank,id_bank FROM dk_m_bank');
 
