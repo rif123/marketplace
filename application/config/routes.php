@@ -171,6 +171,7 @@ $route['admin/adminusers'] = "admin/advanced_settings/adminusers";
 $route['admin/databank'] = "admin/bank/databank";
 $route['admin/databank/(:num)'] = "admin/bank/databank/index/$1";
 $route['admin/bankclient'] = "admin/bank/bankclient";
+$route['admin/client'] = "admin/client/client";
 
 //DATA IDENTITY
 $route['admin/identity'] = "admin/bank/identity";
@@ -184,7 +185,7 @@ $route['admin/city'] = "admin/address/city";
 $route['admin/city/(:num)'] = "admin/address/city/index/$1";
 //PROV
 $route['admin/prov'] = "admin/address/prov";
-$route['admin/prov/(:num)'] = "admin/address/prov/index/$1"; 
+$route['admin/prov/(:num)'] = "admin/address/prov/index/$1";
 //DISTRICTS
 $route['admin/districts'] = "admin/address/districts";
 $route['admin/districts/(:num)'] = "admin/address/districts/index/$1";
