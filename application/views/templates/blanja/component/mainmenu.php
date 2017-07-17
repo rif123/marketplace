@@ -9,195 +9,74 @@
                         </button>
                         <a class="navbar-brand" href="#">MENU</a>
                     </div>
+
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="index.html">Home</a></li>
+                            <li class="active"><a href="<?php echo site_url('/'); ?>">Home</a></li>
+                            <?php
+                                foreach ($listCategory as $k => $val) {
+                            ?>
                             <li class="dropdown">
-                                <a href="category-grid.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?php echo base_url('assets/tempdkantin/data/icon_sale.png'); ?>" alt="Category status">
-                                Fashion</a>
-                                <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 850px;">
-                                    <li class="block-container col-sm-3 border">
-                                        <div class="img_container banner-hover">
-                                            <a href="#">
-                                            <img class="img-responsive" src="<?php echo base_url('assets/tempdkantin/data/banner/b12.png') ?>" alt="sport">
-                                            </a>
-                                        </div>
-                                    </li>
+                                    <a href="<?php echo site_url('/').sanitizeStringForUrl($val['name']).'/'.$val['id']; ?>" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="<?php echo base_url('assets/tempdkantin/data/icon_sale.png'); ?>" alt="<?php echo $val['name']; ?>" />
+                                    <?php echo $val['name']; ?></a>
+                                    <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 850px;">
+                                        <li class="block-container col-sm-3 border">
+                                            <div class="img_container banner-hover">
+                                                <a href="#">
+                                                <img class="img-responsive"  src="<?php echo base_url('attachments/category/').$val['banner']; ?>"  onerror="this.onerror=null;this.src='<?php echo base_url('assets/tempdkantin/data/banner/b12.png'); ?>'" alt="<?php echo $val['name']; ?>" />
+                                                </a>
+                                            </div>
+                                        </li>
+
                                     <li class="block-container col-sm-3">
                                         <ul class="block-megamenu-link">
                                             <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
+                                                <a href="#">TO <?php echo $val['name']; ?></a>
                                             </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
+                                            <?php
+                                                foreach ($val['children'] as $ky => $v){
+                                            ?>
+                                                <li class="link_container">
+                                                    <a href="<?php echo site_url('/').sanitizeStringForUrl($v['name']).'/'.$v['id']; ?>">
+                                                        <?php echo $v['name']; ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
                                         </ul>
                                     </li>
+                                    <?php $getCategoryMenu = getCategoryMenu($val['idCategory']); ?>
                                     <li class="block-container col-sm-3">
-                                        <ul class="block-megamenu-text">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
+                                        <ul class="block-megamenu-img">
+                                            <?php
+                                                foreach ($getCategoryMenu as $k => $items) {
+                                                    if ($k < 3) {
+                                            ?>
+                                            <li class="img_container banner-hover">
+                                                <a href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($items['title']).'-'.$items['id']; ?>">
+                                                <img class="img-responsive" src="<?php echo base_url('attachments/shop_images/').$items['image']; ?>" onerror="<?php echo base_url('assets/tempdkantin/data/banner/b13.png'); ?>" alt="<?php echo $items['name']; ?>">
+                                                </a>
                                             </li>
-                                            <li class="text_container">
-                                                <p>Aenean sollicitudin, remquis bibendum auctor, nisi elit consequat ipsum, necsagittis sem nibh elit.</p>
-                                                <a href="#" class="button-radius">Learn more<span class="icon"></span></a>
-                                            </li>
+                                            <?php }} ?>
                                         </ul>
                                     </li>
                                     <li class="block-container col-sm-3">
                                         <ul class="block-megamenu-img">
+                                            <?php
+                                                foreach ($getCategoryMenu as $k => $items) {
+                                                    if ($k >= 3 && $k <= 6) {
+                                            ?>
                                             <li class="img_container banner-hover">
-                                                <a href="#">
-                                                <img class="img-responsive" src="<?php echo base_url('assets/tempdkantin/data/banner/b13.png'); ?>" alt="sport">
+                                                <a href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($items['title']).'-'.$items['id']; ?>">
+                                                    <img class="img-responsive" src="<?php echo base_url('attachments/shop_images/').$items['image']; ?>" onerror="<?php echo base_url('assets/tempdkantin/data/banner/b13.png'); ?>" alt="<?php echo $items['name']; ?>">
                                                 </a>
                                             </li>
-                                            <li class="img_container banner-hover">
-                                                <a href="#">
-                                                <img class="img-responsive" src="<?php echo base_url('assets/tempdkantin/data/banner/b14.png'); ?>" alt="sport">
-                                                </a>
-                                            </li>
-                                            <li class="img_container banner-hover">
-                                                <a href="#">
-                                                <img class="img-responsive" src="<?php echo base_url('assets/tempdkantin/data/banner/b15.png'); ?>" alt="sport">
-                                                </a>
-                                            </li>
+                                            <?php }} ?>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="category-grid2.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?php echo base_url('assets/tempdkantin/data/icon_hot.png') ?>" alt="Category status">
-                                Mobile & Tablets
-                                </a>
-                                <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 900px;">
-                                    <li class="block-container col-sm-3 border">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
-                                            </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="block-container col-sm-3 border">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
-                                            </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="block-container col-sm-3 border">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
-                                            </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="block-container col-sm-3">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
-                                            </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="category-list.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?php echo base_url('assets/tempdkantin/data/icon_new.png'); ?>" alt="Category status">
-                                Foods</a>
-                                <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 900px;">
-                                    <li class="block-container col-sm-3">
-                                        <div class="img_container banner-hover">
-                                            <a href="#">
-                                            <img class="img-responsive" src="<?php echo base_url('assets/tempdkantin/data/banner/b16.png'); ?>" alt="sport">
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="block-container col-sm-3 border">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
-                                            </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="block-container col-sm-3">
-                                        <div class="img_container banner-hover">
-                                            <a href="#">
-                                            <img class="img-responsive" src="<?php echo base_url('assets/tempdkantin/data/banner/b17.png'); ?>" alt="sport">
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="block-container col-sm-3">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container group_header">
-                                                <a href="#">TOP FASHION</a>
-                                            </li>
-                                            <li class="link_container"><a href="#">Bath & Body</a></li>
-                                            <li class="link_container"><a href="#">Makeup</a></li>
-                                            <li class="link_container"><a href="#">Creams & Lotions</a></li>
-                                            <li class="link_container"><a href="#">Sunscreens</a></li>
-                                            <li class="link_container"><a href="#">Face Packs/Facial</a></li>
-                                            <li class="link_container"><a href="#">Spa & Body grances</a></li>
-                                            <li class="link_container"><a href="#">Women's Hygiene</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="category-list2.html" class="dropdown-toggle" data-toggle="dropdown">Auto Accessories</a>
-                                <ul class="dropdown-menu mega_dropdown container-fluid">
-                                    <li class="block-container">
-                                        <ul class="block-megamenu-link">
-                                            <li class="link_container"><a href="#">Mobile</a></li>
-                                            <li class="link_container"><a href="#">Tablets</a></li>
-                                            <li class="link_container"><a href="#">Laptop</a></li>
-                                            <li class="link_container"><a href="#">Memory Cards</a></li>
-                                            <li class="link_container"><a href="#">Accessories</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="category-grid.html">Jewelry & Watches</a></li>
+                            <?php } ?>
                             <li><a href="blog.html">Blog</a></li>
                         </ul>
                     </div>

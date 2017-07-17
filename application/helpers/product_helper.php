@@ -19,6 +19,28 @@ function getCategoryMenu($id){
     return $data;
 }
 
+function getDetailPromo($id){
+    $CI =& get_instance();
+    $query = "select * from dk_promo_items as dpi
+                LEFT JOIN translations as T on dpi.id_prod = T.id and T.type='product'
+                LEFT JOIN products as P on T.for_id = P.id
+                where dpi.dk_promotion_id = '".$id."'
+                LIMIT 10
+                ";
+    $allData = $CI->db->query($query)->result_array();
+    return $allData;
+}
+
+function getListCategoryPop($shop_categorie){
+    $CI =& get_instance();
+    $query = "  select * from products as P
+                LEFT JOIN translations as T on P.shop_categorie = T.for_id
+                where T.type  = 'product' and P.shop_categorie = ".$shop_categorie."
+                LIMIT 10
+                ";
+    $allData = $CI->db->query($query)->result_array();
+    return $allData;
+}
 
 function numberToRp($num){
     $rp = number_format($num, 0, ".", ".");
