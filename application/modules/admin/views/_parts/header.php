@@ -153,6 +153,7 @@
                                     <li><a href="<?= base_url('admin/prov') ?>" <?= urldecode(uri_string()) == 'admin/prov' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Data Prov</a></li>
                                     <li><a href="<?= base_url('admin/city') ?>" <?= urldecode(uri_string()) == 'admin/city' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data City</a></li>
                                     <li><a href="<?= base_url('admin/districts') ?>" <?= urldecode(uri_string()) == 'admin/districts' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Districts</a></li>
+                                    <li><a href="<?= base_url('admin/populerCategory') ?>" <?= urldecode(uri_string()) == 'admin/populerCategory' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Populer Category</a></li>
 
                                 </ul>
                             </div>

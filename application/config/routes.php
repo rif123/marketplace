@@ -192,6 +192,9 @@ $route['admin/districts/(:num)'] = "admin/address/districts/index/$1";
 //CONFIG
 $route['admin/config'] = "admin/advanced_settings/config";
 $route['admin/config/(:num)'] = "admin/advanced_settings/config/index/$1";
+//POULER CATEGORY
+$route['admin/populerCategory'] = "admin/ecommerce/populerCategory";
+$route['admin/populerCategory/(:num)'] = "admin/ecommerce/populerCategory/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";
