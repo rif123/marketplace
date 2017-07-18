@@ -15,7 +15,7 @@ class Districts extends ADMIN_Controller
         //HEAD
         $data = array();
         $head = array();
-        $head['title'] = 'Administration -Data City';
+        $head['title'] = 'Administration -Data Districts';
         $head['description'] = '!';
         $head['keywords'] = '';
         //TAMPIL PROV

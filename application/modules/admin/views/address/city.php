@@ -1,31 +1,34 @@
-<?php if (validation_errors()) { ?>
-       <hr>
-       <div class="alert alert-danger"><?= validation_errors('result_fail') ?></div>
-       <hr>
-       <?php
-   }
-   if ($this->session->flashdata('result_fail')) {
-       ?>
-       <hr>
-       <div class="alert alert-danger"><?= $this->session->flashdata('result_fail') ?></div>
-       <hr>
-       <?php
-   }
-   if ($this->session->flashdata('result_add')) {
-       ?>
-       <hr>
-       <div class="alert alert-success"><?= $this->session->flashdata('result_add') ?></div>
-       <hr>
-       <?php
-   }
-   if ($this->session->flashdata('result_delete')) {
-       ?>
-       <hr>
-       <div class="alert alert-success"><?= $this->session->flashdata('result_delete') ?></div>
-       <hr>
-       <?php
-   }
-   ?>
+<div id="users">
+    <h1><img src="<?= base_url('assets/imgs/admin-user.png') ?>" class="header-img" style="margin-top:-3px;">City</h1>
+    <hr>
+    <?php if (validation_errors()) { ?>
+        <hr>
+        <div class="alert alert-danger"><?= validation_errors('result_fail') ?></div>
+        <hr>
+        <?php
+    }
+    if ($this->session->flashdata('result_fail')) {
+        ?>
+        <hr>
+        <div class="alert alert-danger"><?= $this->session->flashdata('result_fail') ?></div>
+        <hr>
+        <?php
+    }
+    if ($this->session->flashdata('result_add')) {
+        ?>
+        <hr>
+        <div class="alert alert-success"><?= $this->session->flashdata('result_add') ?></div>
+        <hr>
+        <?php
+    }
+    if ($this->session->flashdata('result_delete')) {
+        ?>
+        <hr>
+        <div class="alert alert-success"><?= $this->session->flashdata('result_delete') ?></div>
+        <hr>
+        <?php
+    }
+    ?>
    <a href="javascript:void(0);" data-toggle="modal" data-target="#add_edit_users" class="btn btn-primary btn-xs pull-right" style="margin-bottom:10px;"><b>+</b> Add new user</a>
    <?php
    if ($city->result()) {

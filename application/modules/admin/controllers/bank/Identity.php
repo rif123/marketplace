@@ -15,7 +15,7 @@ class Identity extends ADMIN_Controller
         //HEAD
         $data = array();
         $head = array();
-        $head['title'] = 'Administration -Data Bank';
+        $head['title'] = 'Administration -Identity';
         $head['description'] = '!';
         $head['keywords'] = '';
 

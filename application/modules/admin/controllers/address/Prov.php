@@ -15,7 +15,7 @@ class Prov extends ADMIN_Controller
         //HEAD
         $data = array();
         $head = array();
-        $head['title'] = 'Administration -Data Bank';
+        $head['title'] = 'Administration -Data Provinces';
         $head['description'] = '!';
         $head['keywords'] = '';
 
@@ -85,4 +85,4 @@ class Prov extends ADMIN_Controller
       }
 
 
-} 
+}
