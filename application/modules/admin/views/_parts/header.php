@@ -154,6 +154,7 @@
                                     <li><a href="<?= base_url('admin/city') ?>" <?= urldecode(uri_string()) == 'admin/city' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data City</a></li>
                                     <li><a href="<?= base_url('admin/districts') ?>" <?= urldecode(uri_string()) == 'admin/districts' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Data Districts</a></li>
                                     <li><a href="<?= base_url('admin/populerCategory') ?>" <?= urldecode(uri_string()) == 'admin/populerCategory' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Populer Category</a></li>
+                                    <li><a href="<?= base_url('admin/subscribed') ?>" <?= urldecode(uri_string()) == 'admin/subscribed' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Subscribed</a></li>
 
                                 </ul>
                             </div>

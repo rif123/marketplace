@@ -177,6 +177,12 @@ class AdminModel extends CI_Model
         return $query->row_array();
     }
 
+    public function getConfigedit($user)
+    {
+        $this->db->where('id_config', $user);
+        $query = $this->db->get('dk_config');
+        return $query->row_array();
+    }
 
     public function getBank($limit = null, $start = null, $status){
         // FOR STATUS TRUE
@@ -316,6 +322,37 @@ class AdminModel extends CI_Model
                                     AS shop ON dk_popular_categories.id_category = shop.for_id
                                     LEFT JOIN users ON dk_popular_categories.creator = users.id');
           return $query->num_rows();
+        }
+    }
+    public function getSubscribed($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT * FROM dk_subscribed'. $limit_sql);
+
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_subscribed');
+        }
+    }
+    public function getConfig($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT * FROM dk_config'. $limit_sql);
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_config');
         }
     }
     public function getPopuler(){
@@ -605,10 +642,67 @@ class AdminModel extends CI_Model
 
       return $result;
     }
-    public function getBankClient(){
-      $this->db->query('SELECT name_bank,id_bank FROM dk_m_bank');
+    public function saveConfig($test){
 
+    $result =$this->db->get('dk_config');
+
+    if ($result->num_rows() == 0) {
+      $data = array(
+        'telp_config' =>$test['telp_config'],
+        'logofile_config' =>$test['image'],
+        'fb_config' =>$test['fb_config'],
+        'logo_fb_config' =>$test['logo_fb_config'],
+        'twit_config' =>$test['twit_config'],
+        'logo_twit_config' =>$test['logo_twit_config'],
+        'gp_config' =>$test['gp_config'],
+        'logo_gp_config' =>$test['logo_gp_config'],
+        'li_config' =>$test['li_config'],
+        'logo_li_config' =>$test['logo_li_config'],
+        'skype_config' =>$test['skype_config'],
+        'logo_skype_config' =>$test['logo_skype_config']
+
+      );
+      $result =$this->db->insert('dk_config', $data);
+
+    }else{
+      if ($test['image']=="") {
+        $data = array(
+          'telp_config' =>$test['telp_config'],
+          'fb_config' =>$test['fb_config'],
+          'logo_fb_config' =>$test['logo_fb_config'],
+          'twit_config' =>$test['twit_config'],
+          'logo_twit_config' =>$test['logo_twit_config'],
+          'gp_config' =>$test['gp_config'],
+          'logo_gp_config' =>$test['logo_gp_config'],
+          'li_config' =>$test['li_config'],
+          'logo_li_config' =>$test['logo_li_config'],
+          'skype_config' =>$test['skype_config'],
+          'logo_skype_config' =>$test['logo_skype_config']
+        );
+      }else{
+
+      $data = array(
+        'telp_config' =>$test['telp_config'],
+        'logofile_config' =>$test['image'],
+        'fb_config' =>$test['fb_config'],
+        'logo_fb_config' =>$test['logo_fb_config'],
+        'twit_config' =>$test['twit_config'],
+        'logo_twit_config' =>$test['logo_twit_config'],
+        'gp_config' =>$test['gp_config'],
+        'logo_gp_config' =>$test['logo_gp_config'],
+        'li_config' =>$test['li_config'],
+        'logo_li_config' =>$test['logo_li_config'],
+        'skype_config' =>$test['skype_config'],
+        'logo_skype_config' =>$test['logo_skype_config']
+      );
     }
+      $result =$this->db->update('dk_config', $data);
+    }
+
+
+return $result;
+}
+    
 
     public function numShopProducts()
     {
@@ -705,6 +799,12 @@ class AdminModel extends CI_Model
     {
         $this->db->where('id_popular_category', $id);
         $result = $this->db->delete('dk_popular_categories');
+        return $result;
+    }
+    public function deleteSubscribed($id)
+    {
+        $this->db->where('id_subscribed', $id);
+        $result = $this->db->delete('dk_subscribed');
         return $result;
     }
 

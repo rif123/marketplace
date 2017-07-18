@@ -195,6 +195,9 @@ $route['admin/config/(:num)'] = "admin/advanced_settings/config/index/$1";
 //POULER CATEGORY
 $route['admin/populerCategory'] = "admin/ecommerce/populerCategory";
 $route['admin/populerCategory/(:num)'] = "admin/ecommerce/populerCategory/index/$1";
+//SUBSCRIBED
+$route['admin/subscribed'] = "admin/ecommerce/subscribed";
+$route['admin/subscribed/(:num)'] = "admin/ecommerce/subscribed/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";

@@ -80,7 +80,7 @@ class PopulerCategory extends ADMIN_Controller
 
         //TAMPIL DATA
         $this->load->view('_parts/header', $head);
-        $this->load->view('advanced_settings/populerCategory', $data);
+        $this->load->view('ecommerce/populerCategory', $data);
         $this->load->view('_parts/footer');
         $this->saveHistory('Go to Admin Users');
 
