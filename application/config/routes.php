@@ -198,6 +198,9 @@ $route['admin/populerCategory/(:num)'] = "admin/ecommerce/populerCategory/index/
 //SUBSCRIBED
 $route['admin/subscribed'] = "admin/ecommerce/subscribed";
 $route['admin/subscribed/(:num)'] = "admin/ecommerce/subscribed/index/$1";
+//SUBSCRIBED
+$route['admin/partner'] = "admin/ecommerce/partner";
+$route['admin/partner/(:num)'] = "admin/ecommerce/partner/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";

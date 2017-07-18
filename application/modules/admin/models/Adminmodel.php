@@ -176,6 +176,12 @@ class AdminModel extends CI_Model
 
         return $query->row_array();
     }
+    public function getPartneredit($user)
+    {
+        $this->db->where('id_partner', $user);
+        $query = $this->db->get('dk_partner');
+        return $query->row_array();
+    }
 
     public function getConfigedit($user)
     {
@@ -355,6 +361,23 @@ class AdminModel extends CI_Model
             return $this->db->count_all_results('dk_config');
         }
     }
+    public function getPartner($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT *
+                                FROM dk_partner
+                                LEFT JOIN users ON dk_partner.creator = users.id'. $limit_sql);
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_partner');
+        }
+    }
     public function getPopuler(){
             $user ='shop_categorie';
               $this->db->where('type', $user);
@@ -498,6 +521,28 @@ class AdminModel extends CI_Model
 
         $this->db->where('id_popular_category', $POST['edit']);
         $result =$this->db->update('dk_popular_categories', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updatePartner($POST){
+      $datasession = $this->session->userdata();
+      $this->db->where('name_partner',$POST['name_partner']);
+      $result =$this->db->get('dk_partner');
+
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name_partner' => $POST['name_partner'],
+        'img_partner' => $POST['img_partner'],
+        'editor' => $datasession['authlog']['id'],
+        'edited' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id_partner', $POST['edit']);
+        $result =$this->db->update('dk_partner', $data);
       }else{
         $result =false;
       }
@@ -698,11 +743,33 @@ class AdminModel extends CI_Model
     }
       $result =$this->db->update('dk_config', $data);
     }
+    return $result;
+  }
+
+    public function savePartner($test){
+        $datasession = $this->session->userdata();
+          $this->db->where('name_partner',$test['name_partner']);
+          $result =$this->db->get('dk_partner');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_partner' =>$test['name_partner'],
+              'img_partner' =>$test['img_partner'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_partner', $data);
+
+          }else{
+            $result =false;
+          }
 
 
-return $result;
-}
-    
+      return $result;
+    }
+
+
 
     public function numShopProducts()
     {
@@ -805,6 +872,12 @@ return $result;
     {
         $this->db->where('id_subscribed', $id);
         $result = $this->db->delete('dk_subscribed');
+        return $result;
+    }
+    public function deletePartner($id)
+    {
+        $this->db->where('id_partner', $id);
+        $result = $this->db->delete('dk_partner');
         return $result;
     }
 

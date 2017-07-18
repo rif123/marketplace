@@ -23,7 +23,7 @@ class Subscribed extends ADMIN_Controller
         // CONFIG FOR PAGINATION
         $data['subscribed'] = $this->AdminModel->getSubscribed($this->num_rows, $page, true);
         $rowscount = $this->AdminModel->getSubscribed($this->num_rows, $page, false);
-        $data['links_pagination'] = pagination('admin/populerCategory', $rowscount, $this->num_rows, 3);
+        $data['links_pagination'] = pagination('admin/subscribed', $rowscount, $this->num_rows, 3);
 
         // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
 
