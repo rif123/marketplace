@@ -66,6 +66,10 @@ a.disabled {
                     <th>Logo</th>
                     <th>Skype</th>
                     <th>Logo</th>
+                    <th>Footer Tittle</th>
+                    <th>Credit Card</th>
+                    <th>Favicon</th>
+
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -73,7 +77,7 @@ a.disabled {
                 <tr>
                     <td><?= $i ?></td>
                     <td><?= $user->telp_config ?></td>
-                    <td><img src="<?php echo base_url('/attachments/config/').$user->logofile_config ?>" width="50px"></td>
+                    <td><img src="<?php echo base_url('/attachments/config/').$user->logofile_config ?>" width="30px"></td>
                     <td><?= $user->fb_config ?></td>
                     <td><i class="<?= $user->logo_fb_config ?>"></i></td>
                     <td><?= $user->twit_config ?></td>
@@ -84,6 +88,9 @@ a.disabled {
                     <td><i class="<?= $user->logo_li_config ?>"></i></td>
                     <td><?= $user->skype_config ?></td>
                     <td><i class="<?= $user->logo_skype_config   ?>"></i></td>
+                    <td><?= $user->footer_tittle_config ?></td>
+                    <td><img src="<?php echo base_url('/attachments/config/').$user->cc_config ?>" width="30px"></td>
+                    <td><img src="<?php echo base_url('/attachments/config/').$user->favicon_config ?>" width="30px"></td>
                     <td class="text-center">
                         <div>
                             <a href="?edit=<?= $user->id_config ?>">Edit</a>
@@ -119,7 +126,14 @@ a.disabled {
                         <div class="form-group">
                             <label>Logo</label>
                             <input type="file" name="logofile_config" class="form-control">
-                            <img src="<?php echo base_url('/attachments/config/').$user->logofile_config ?>" width="30px">
+                            <?php
+                              if (isset($edit['logofile_config'])) {
+                                ?>
+                                <img src="<?php echo base_url('/attachments/config/').$edit['logofile_config'] ?>" width="30px">
+
+                                <?php
+                              }
+                             ?>
                         </div>
 
                         <div class="form-group">
@@ -146,6 +160,38 @@ a.disabled {
                             <label for="username">Skype</label>
 
                             <input type="text" name="skype_config" value="<?= isset($edit['skype_config']) ? $edit['skype_config'] : '' ?>" class="form-control" id="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Footer Tittle</label>
+
+                            <input type="text" name="footer_tittle_config" value="<?= isset($edit['footer_tittle_config']) ? $edit['footer_tittle_config'] : '' ?>" class="form-control" id="username">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Credit Card</label>
+                            <input type="file" name="cc_config" class="form-control">
+                            <?php
+                              if (isset($edit['cc_config'])) {
+                                ?>
+                                <img src="<?php echo base_url('/attachments/config/').$edit['cc_config'] ?>" width="30px">
+
+                                <?php
+                              }
+                             ?>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Favicon</label>
+                            <input type="file" name="favicon_config" class="form-control">.
+                            <?php
+                                  if (isset($edit['favicon_config'])) {
+                                    ?>
+                                      <img src="<?php echo base_url('/attachments/config/').$edit['favicon_config'] ?>" width="30px">
+
+                                    <?php
+                                  }
+                                 ?>
+
                         </div>
 
                     <div class="modal-footer">

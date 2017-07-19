@@ -156,6 +156,8 @@
                                     <li><a href="<?= base_url('admin/populerCategory') ?>" <?= urldecode(uri_string()) == 'admin/populerCategory' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Populer Category</a></li>
                                     <li><a href="<?= base_url('admin/subscribed') ?>" <?= urldecode(uri_string()) == 'admin/subscribed' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Subscribed</a></li>
                                     <li><a href="<?= base_url('admin/partner') ?>" <?= urldecode(uri_string()) == 'admin/partner' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Partner</a></li>
+                                    <li><a href="<?= base_url('admin/detailStore') ?>" <?= urldecode(uri_string()) == 'admin/detailStore' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i> Detail Store</a></li>
+                                    <li><a href="<?= base_url('admin/store') ?>" <?= urldecode(uri_string()) == 'admin/store' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Store</a></li>
 
                                 </ul>
                             </div>

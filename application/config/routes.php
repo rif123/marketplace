@@ -170,8 +170,6 @@ $route['admin/adminusers'] = "admin/advanced_settings/adminusers";
 //DATA BANK
 $route['admin/databank'] = "admin/bank/databank";
 $route['admin/databank/(:num)'] = "admin/bank/databank/index/$1";
-$route['admin/bankclient'] = "admin/bank/bankclient";
-$route['admin/client'] = "admin/client/client";
 
 //DATA IDENTITY
 $route['admin/identity'] = "admin/bank/identity";
@@ -198,9 +196,18 @@ $route['admin/populerCategory/(:num)'] = "admin/ecommerce/populerCategory/index/
 //SUBSCRIBED
 $route['admin/subscribed'] = "admin/ecommerce/subscribed";
 $route['admin/subscribed/(:num)'] = "admin/ecommerce/subscribed/index/$1";
-//SUBSCRIBED
+//PARTNER
 $route['admin/partner'] = "admin/ecommerce/partner";
 $route['admin/partner/(:num)'] = "admin/ecommerce/partner/index/$1";
+//DETAIL STORE
+$route['admin/detailStore'] = "admin/store/detailStore";
+$route['admin/detailStore/(:num)'] = "admin/store/detailStore/index/$1";
+//STORE
+$route['admin/store'] = "admin/store/store";
+$route['admin/store/(:num)'] = "admin/store/store/index/$1";
+//BANK CLIENT
+$route['admin/bankclient'] = "admin/bank/bankclient";
+$route['admin/bankclient/(:num)'] = "admin/bank/bankclient/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";

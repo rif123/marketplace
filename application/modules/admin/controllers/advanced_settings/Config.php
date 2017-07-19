@@ -30,8 +30,6 @@ class Config extends ADMIN_Controller
         if (isset($_POST['save'])) {
           // upload file
           $config['upload_path'] = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
-
-
           $config['allowed_types'] = 'gif|jpg|png|jpeg';
           $this->load->library('upload', $config);
           $this->upload->initialize($config);
@@ -41,6 +39,24 @@ class Config extends ADMIN_Controller
           $img = $this->upload->data();
           if ($img['file_name'] != null) {
               $_POST['image'] = $img['file_name'];
+          } else {
+              $this->session->set_flashdata('result_add', 'Image cannot Upload');
+          }
+          if (!$this->upload->do_upload('cc_config')) {
+              log_message('error', 'Image Upload Error: ' . $this->upload->display_errors());
+          }
+          $img = $this->upload->data();
+          if ($img['file_name'] != null) {
+              $_POST['cc_config'] = $img['file_name'];
+          } else {
+              $this->session->set_flashdata('result_add', 'Image cannot Upload');
+          }
+          if (!$this->upload->do_upload('favicon_config')) {
+              log_message('error', 'Image Upload Error: ' . $this->upload->display_errors());
+          }
+          $img = $this->upload->data();
+          if ($img['file_name'] != null) {
+              $_POST['favicon_config'] = $img['file_name'];
           } else {
               $this->session->set_flashdata('result_add', 'Image cannot Upload');
           }

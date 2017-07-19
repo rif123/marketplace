@@ -22,61 +22,16 @@ class bankclient extends ADMIN_Controller
         $head['description'] = '!';
         $head['keywords'] = '';
 
-
-        // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
-
-        if (isset($_POST['save'])) {
-           $result =$this->AdminModel->saveDataBank($_POST);
-              if ($result ==1) {
-                $this->session->set_flashdata('result_add', 'Bank is added!');
-                $this->saveHistory('Create Bank user - ' . $_POST['name_bank']);
-
-              }else{
-                $this->session->set_flashdata('result_fail', 'Problem with Bank add!');
-                $this->saveHistory('Cant add admin user');
-
-              }
-
-              redirect('admin/databank');
-         }
+        // CONFIG FOR PAGINATION
+    $data['bankclient'] = $this->AdminModel->getBankClient($this->num_rows, $page, true);
+    $rowscount = $this->AdminModel->getBankClient($this->num_rows, $page, false);
+    $data['links_pagination'] = pagination('admin/bankclient', $rowscount, $this->num_rows, 3);
 
 
-
-        if (isset($_GET['delete'])) {
-          $result = $this->AdminModel->deleteBank($_GET['delete']);
-            if ($result == true) {
-                $this->saveHistory('Delete user id - ' . $_GET['delete']);
-                $this->session->set_flashdata('result_delete', 'Bank is deleted!');
-            } else {
-                $this->session->set_flashdata('result_delete', 'Problem with Bank delete!');
-            }
-          redirect('admin/databank');
-        }
-
-
-
-        if (isset($_GET['edit'])) {
-            $data['edit']  =$this->AdminModel->getBankedit($_GET['edit']);
-          }
-
-        if (isset($_POST['update'])) {
-          $result  =$this->AdminModel->updateBank($_POST);
-          if ($result ==1) {
-            $this->session->set_flashdata('result_add', 'Bank is Update!');
-            $this->saveHistory('Create Bank user - ' . $_POST['name_bank']);
-
-          }else{
-            $this->session->set_flashdata('result_fail', 'Problem with Bank Update!');
-            $this->saveHistory('Cant add admin user');
-
-          }
-
-          redirect('admin/databank');
-        }
 
 
         //TAMPIL DATA
-        $data['bank'] = $this->AdminModel->getBank($this->num_rows, $page , true);
+
         $this->load->view('_parts/header', $head);
         $this->load->view('bank/bankclient', $data);
         $this->load->view('_parts/footer');

@@ -385,6 +385,84 @@ class AdminModel extends CI_Model
 
         return $query->result_array();
     }
+    public function getDetailStore($limit = null, $start = null, $status){
+     // FOR STATUS TRUE
+     if ($status) {
+         // FOR CONFIG LIMIT
+         $limit_sql = '';
+         if ($limit !== null && $start !== null) {
+             $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+         }
+         $query =$this->db->query('SELECT dk_detail_store.id_detail_store,dk_detail_store.addres_detail_store,dk_detail_store.filelogo_detail_store,dk_detail_store.postal_code,dk_detail_store.desc_detail_store,dk_detail_store.prod_origin_store,dk_detail_store.filelicense_detail_store,dk_detail_store.referal_detail_store,dk_detail_store.created,dk_client.id_client,dk_client.name_client,dk_prov.id_prov,users.username,users.id,
+                                   dk_prov.name AS name_prov,
+                                   dk_city.name AS name_city,
+                                   dk_districts.name AS name_districts,
+                                   dk_type_business.name_type_business AS name_type_business
+                             FROM dk_detail_store
+                             LEFT JOIN users ON dk_detail_store.creator = users.id
+                             LEFT JOIN dk_client ON dk_detail_store.id_client = dk_client.id_client
+                             LEFT JOIN dk_prov ON dk_detail_store.id_prov = dk_prov.id_prov
+                             LEFT JOIN dk_city ON dk_detail_store.id_city = dk_city.id_city
+                             LEFT JOIN dk_districts ON dk_detail_store.id_districts = dk_districts.id_districts
+                             LEFT JOIN dk_type_business ON dk_detail_store.id_type_business = dk_type_business.id_type_business'.$limit_sql);
+
+         return $query;
+
+     } else {
+         // FOR STATUS FALSE
+         return $this->db->count_all_results('dk_detail_store');
+     }
+ }
+ public function getStore($limit = null, $start = null, $status){
+   // FOR STATUS TRUE
+   if ($status) {
+       // FOR CONFIG LIMIT
+       $limit_sql = '';
+       if ($limit !== null && $start !== null) {
+           $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+       }
+       $query =$this->db->query('SELECT dk_store.id_store,dk_store.original_name_store,dk_store.name_store,dk_store.no_identity_store,dk_store.file_identity_store,dk_store.npwp_store,dk_store.address_store,dk_store.postal_code,dk_store.created,dk_client.id_client,dk_client.name_client,users.username,users.id,
+                                 dk_prov.name AS name_prov,
+                                 dk_city.name AS name_city,
+                                 dk_districts.name AS name_districts,
+                                 dk_identity.name_identity AS name_identity
+                           FROM dk_store
+                           LEFT JOIN users ON dk_store.creator = users.id
+                           LEFT JOIN dk_client ON dk_store.id_client = dk_client.id_client
+                           LEFT JOIN dk_prov ON dk_store.id_prov = dk_prov.id_prov
+                           LEFT JOIN dk_city ON dk_store.id_city = dk_city.id_city
+                           LEFT JOIN dk_districts ON dk_store.id_districts = dk_districts.id_districts
+                           LEFT JOIN dk_identity ON dk_store.id_identity = dk_identity.id_identity'.$limit_sql);
+
+       return $query;
+
+   } else {
+       // FOR STATUS FALSE
+       return $this->db->count_all_results('dk_store');
+   }
+}
+public function getBankClient($limit = null, $start = null, $status){
+       // FOR STATUS TRUE
+       if ($status) {
+           // FOR CONFIG LIMIT
+           $limit_sql = '';
+           if ($limit !== null && $start !== null) {
+               $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+           }
+           $query =$this->db->query('SELECT dk_bankClient.id_bankClient,dk_bankClient.substation_bankClient,dk_bankClient.name_rek_bankClient,dk_bankClient.no_rek_bankClient,dk_bankClient.fileBookrek_bankClient,dk_bankClient.created,users.username,users.id,dk_client.id_client,dk_client.name_client,dk_m_bank.id_bank,dk_m_bank.name_bank
+                               FROM dk_bankClient
+                               LEFT JOIN users ON dk_bankClient.creator = users.id
+                               LEFT JOIN dk_client ON dk_bankClient.id_client = dk_client.id_client
+                               LEFT JOIN dk_m_bank ON dk_bankClient.id_bank = dk_m_bank.id_bank'. $limit_sql);
+
+           return $query;
+
+       } else {
+           // FOR STATUS FALSE
+           return $this->db->count_all_results('dk_bankClient');
+       }
+   } 
+
     public function getProvs(){
         $query =$this->db->get('dk_prov');
 
@@ -704,7 +782,10 @@ class AdminModel extends CI_Model
         'li_config' =>$test['li_config'],
         'logo_li_config' =>$test['logo_li_config'],
         'skype_config' =>$test['skype_config'],
-        'logo_skype_config' =>$test['logo_skype_config']
+        'footer_tittle_config' =>$test['footer_tittle_config'],
+        'logo_skype_config' =>$test['logo_skype_config'],
+        'cc_config' =>$test['cc_config'],
+        'favicon_config' =>$test['favicon_config']
 
       );
       $result =$this->db->insert('dk_config', $data);
@@ -722,6 +803,7 @@ class AdminModel extends CI_Model
           'li_config' =>$test['li_config'],
           'logo_li_config' =>$test['logo_li_config'],
           'skype_config' =>$test['skype_config'],
+          'footer_tittle_config' =>$test['footer_tittle_config'],
           'logo_skype_config' =>$test['logo_skype_config']
         );
       }else{
@@ -738,6 +820,7 @@ class AdminModel extends CI_Model
         'li_config' =>$test['li_config'],
         'logo_li_config' =>$test['logo_li_config'],
         'skype_config' =>$test['skype_config'],
+        'footer_tittle_config' =>$test['footer_tittle_config'],
         'logo_skype_config' =>$test['logo_skype_config']
       );
     }
