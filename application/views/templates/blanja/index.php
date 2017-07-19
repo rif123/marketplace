@@ -18,7 +18,7 @@
                     </div>
                     <div class="vertical-menu-content">
                         <!-- menu vertical  -->
-                        	<?php $this->load->view('templates/blanja/feature/categories/vertical', [  'categories' => $home_categories ]); ?>
+                        	<?php $this->load->view('templates/blanja/feature/categories/vertical', ['categories' => $home_categories ]); ?>
                         <!-- menu vertical  -->
                     </div>
                 </div>

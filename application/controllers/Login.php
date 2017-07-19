@@ -14,6 +14,7 @@ class Login extends MY_Controller
         $this->load->Model('LoginModel');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->Model('ProductModel');
     }
 
     public function index()
@@ -24,6 +25,28 @@ class Login extends MY_Controller
         // $this->email->subject('Email Test lagi dan lagi');
         // $this->email->message('Testing the email class.xxxxxxx');
         // $this->email->send();
+        $all_categories = $this->Publicmodel->getShopCategories();
+        /*
+         * Tree Builder for categories menu
+         */
+
+        function buildTree(array $elements, $parentId = 0)
+        {
+            $branch = array();
+            foreach ($elements as $element) {
+                if ($element['sub_for'] == $parentId) {
+                    $children = buildTree($elements, $element['id']);
+                    if ($children) {
+                        $element['children'] = $children;
+                    }
+                    $branch[] = $element;
+                }
+            }
+            return $branch;
+        }
+
+        $parser['home_categories'] = $tree = buildTree($all_categories);
+        $parser['partner'] = $this->ProductModel->getPartner();
         $head = array();
         $parser['template'] = 'templates/blanja/feature/login/index';
         $this->load->view('templates/blanja/base', $parser);

@@ -33,16 +33,30 @@ function getDetailPromo($id){
 
 function getListCategoryPop($shop_categorie){
     $CI =& get_instance();
-    $query = "  select * from products as P
-                LEFT JOIN translations as T on P.shop_categorie = T.for_id
-                where T.type  = 'product' and P.shop_categorie = ".$shop_categorie."
+    $query = " select
+                products.id as idItems,
+                itemsDetail.title as itemNames,
+                products.image as itemImage
+                from translations
+                left join products on translations.for_id = products.shop_categorie
+                LEFT JOIN (select * from translations where translations.type = 'product') as itemsDetail on products.id = itemsDetail.for_id
+                where translations.type = 'shop_categorie' and translations.id = '".$shop_categorie."'
                 LIMIT 10
                 ";
     $allData = $CI->db->query($query)->result_array();
     return $allData;
 }
-
+function generateUrl($pref="p", $itemNames, $idItems){
+    $CI =& get_instance();
+    $url = site_url('/').$pref.'/'.sanitizeStringForUrl($itemNames).'-'.$idItems;
+    return $url;
+}
 function numberToRp($num){
     $rp = number_format($num, 0, ".", ".");
     return "Rp.".$rp;
+}
+function getIdBySlug($slug){
+    $splitSlug  = explode("-", $slug);
+    $id  = end($splitSlug);
+    return $id;
 }

@@ -117,6 +117,7 @@ $route['p/(:any)'] = "Product/detail";
 $route['partner/(:any)'] = "Partner/detail";
 $route['(:any)/(:num)'] = "Product/category";
 
+
 // subscribed
 $route['subscribed'] = "Product/doSend";
 
@@ -126,6 +127,10 @@ $route['subscribed'] = "Product/doSend";
 
 // Global Search
 $route['search'] = "Product/globalSearch";
+
+// review
+$route['(:any)/(:num)'] = "Product/category";
+
 
 /*
  * Admin Controllers Route
@@ -214,6 +219,8 @@ $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1"
 $route['admin/changePageStatus'] = "admin/textual_pages/TextualPages/changePageStatus";
 // LOGOUT
 $route['admin/logout'] = "admin/home/home/logout";
+
+
 // Admin pass change ajax
 $route['admin/changePass'] = "admin/home/home/changePass";
 $route['admin/uploadOthersImages'] = "admin/ecommerce/publish/do_upload_others_images";
@@ -225,10 +232,6 @@ $route['auth/login'] = "Login";
 $route['auth/login/dosave'] = "Login/register";
 $route['auth/login/doLogin'] = "Login/doLogin";
 $route['auth/logout'] = "Login/doLogout";
-
-
-
-
 
 
 $route['api/v1/promobox'] = "api/v1/promoboxs";

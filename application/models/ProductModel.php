@@ -44,5 +44,49 @@ class ProductModel extends CI_Model
             return [];
         }
     }
+    public function getDetailProd($idCategory) {
+        try {
+            $query = "
+                select * from translations as T
+                LEFT JOIN products as P on  T.for_id = P.id
+                where T.for_id = '".$idCategory."' and type = 'product'";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    public function getReleted($shop_categorie, $id) {
+        try {
+            $query = " select
+                        translations.id as kk,
+                        products.id as idItems,
+                        itemsDetail.title as itemNames,
+                        products.image as itemImage,
+                        itemsDetail.price as itemsPrice,
+                        itemsDetail.old_price as itemsOldPrice
+                        from translations
+                        left join products on translations.for_id = products.shop_categorie
+                        LEFT JOIN (select * from translations where translations.type = 'product') as itemsDetail on products.id = itemsDetail.for_id
+                        where translations.type = 'product' and products.shop_categorie = '".$shop_categorie."' and  products.id != ".$id."
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function listReview($id) {
+        try {
+            $query = "select *  from dk_review where id_product   = ".$id;
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+
 
 }

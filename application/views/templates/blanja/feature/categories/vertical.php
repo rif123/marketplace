@@ -1,7 +1,3 @@
-<?php
-    // echo "<pre>";
-    // print_R($categories);die;
-?>
 <ul class="vertical-menu-list">
     <?php
     foreach ($categories as $key => $val) {

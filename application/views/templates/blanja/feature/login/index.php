@@ -1,3 +1,12 @@
+<header id="header">
+    <!-- main header -->
+    	<?php $this->load->view('templates/blanja/component/mainheader'); ?>
+    <!-- ./main header -->
+    <!-- main menu-->
+		<?php $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => $home_categories]); ?>
+    <!-- ./main menu-->
+</header>
+
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <div class="container">
     <div class="row">
