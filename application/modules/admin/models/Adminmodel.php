@@ -346,6 +346,43 @@ class AdminModel extends CI_Model
             return $this->db->count_all_results('dk_subscribed');
         }
     }
+    public function getRiview($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_review.id_review,dk_review.name_review,dk_review.email_review,dk_review.website_review,dk_review.comment_review,dk_review.created,products.image,users.username FROM dk_review
+                                      LEFT JOIN products ON dk_review.id_product = products.id
+                                      LEFT JOIN users ON dk_review.creator = users.id'. $limit_sql);
+
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_review');
+        }
+    }
+    public function getWishlist($limit = null, $start = null, $status){
+        // FOR STATUS TRUE
+        if ($status) {
+            // FOR CONFIG LIMIT
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $query =$this->db->query('SELECT dk_wishlist.created,dk_wishlist.id_whislist,dk_wishlist.created,dk_client.name_client,products.image,users.username FROM dk_wishlist
+                                      LEFT JOIN dk_client ON dk_wishlist.id_user = dk_client.id_client
+                                      LEFT JOIN products ON dk_wishlist.id_prod = products.id
+                                      LEFT JOIN users ON dk_wishlist.creator = users.id'. $limit_sql);
+
+            return $query;
+        } else {
+            // FOR STATUS FALSE
+            return $this->db->count_all_results('dk_review');
+        }
+    }
     public function getConfig($limit = null, $start = null, $status){
         // FOR STATUS TRUE
         if ($status) {
@@ -461,7 +498,7 @@ public function getBankClient($limit = null, $start = null, $status){
            // FOR STATUS FALSE
            return $this->db->count_all_results('dk_bankClient');
        }
-   } 
+   }
 
     public function getProvs(){
         $query =$this->db->get('dk_prov');
@@ -955,6 +992,12 @@ public function getBankClient($limit = null, $start = null, $status){
     {
         $this->db->where('id_subscribed', $id);
         $result = $this->db->delete('dk_subscribed');
+        return $result;
+    }
+    public function deleteReview($id)
+    {
+        $this->db->where('id_review', $id);
+        $result = $this->db->delete('dk_review');
         return $result;
     }
     public function deletePartner($id)
