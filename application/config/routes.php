@@ -115,7 +115,7 @@ $route['^(\w{2})/(.*)$'] = '$2';
 $route['promobox/(:any)'] = "Promobox/detail";
 $route['p/(:any)'] = "Product/detail";
 $route['partner/(:any)'] = "Partner/detail";
-$route['(:any)'] = "Product/category";
+$route['c/(:any)'] = "Product/category";
 
 $route['(:any)/(:num)/(:num)'] = "Product/category";
 
