@@ -196,6 +196,10 @@ $route['admin/identity/(:num)'] = "admin/bank/identity/index/$1";
 $route['admin/business'] = "admin/business/business";
 $route['admin/business/(:num)'] = "admin/business/business/index/$1";
 
+//PROMO
+$route['admin/promo'] = "admin/promo/promo";
+$route['admin/promo/(:num)'] = "admin/promo/promo/index/$1";
+
 //CITY
 $route['admin/city'] = "admin/address/city";
 $route['admin/city/(:num)'] = "admin/address/city/index/$1";

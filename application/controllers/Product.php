@@ -15,7 +15,7 @@ class Product extends MY_Controller
         $this->load->Model('ConfigModel');
         $this->load->library('form_validation');
         $this->load->library('session');
-        $this->load->Model('ConfigModel');
+
     }
 
     public function category() {

@@ -27,8 +27,8 @@
                                         <a href="<?php echo generateUrl('p', $value['title'], $value['id']); ?>"><?php echo $value['title']; ?></a>
                                     </div>
                                     <div class="price-box">
-                                        <span class="product-price"><?php echo $value['price']; ?></span>
-                                        <span class="product-price-old"><?php echo $value['old_price']; ?></span>
+                                        <span class="product-price"><?php echo numberToRp($value['price']); ?></span>
+                                        <span class="product-price-old"><?php echo numberToRp($value['old_price']); ?></span>
                                     </div>
                                     <div class="product-star">
                                         <i class="fa fa-star"></i>

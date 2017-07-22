@@ -160,6 +160,7 @@
                                     <li><a href="<?= base_url('admin/store') ?>" <?= urldecode(uri_string()) == 'admin/store' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Store</a></li>
                                     <li><a href="<?= base_url('admin/riview') ?>" <?= urldecode(uri_string()) == 'admin/riview' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Riview</a></li>
                                     <li><a href="<?= base_url('admin/wishlist') ?>" <?= urldecode(uri_string()) == 'admin/wishlist' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Wishlist</a></li>
+                                    <li><a href="<?= base_url('admin/promo') ?>" <?= urldecode(uri_string()) == 'admin/promo' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Promo</a></li>
 
                                 </ul>
                             </div>
