@@ -144,7 +144,7 @@ class MY_Controller extends MX_Controller
     }
 
     /*
-     * Check for selected template 
+     * Check for selected template
      * and set it in config if exists
      */
 

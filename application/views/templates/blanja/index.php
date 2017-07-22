@@ -1,3 +1,7 @@
+<?php
+    $this->load->view('templates/blanja/_parts/header');
+?>
+
 <header id="header">
     <!-- main header -->
     	<?php $this->load->view('templates/blanja/component/mainheader'); ?>
@@ -475,3 +479,4 @@
 			<?php $this->load->view('templates/blanja/component/footerabout') ?>
 	<!-- ffooter icon & social media -->
 </footer>
+<?php $this->load->view('templates/blanja/_parts/footer') ?>

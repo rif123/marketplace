@@ -60,7 +60,8 @@ class Home extends MY_Controller
         $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
         $data['popularCategori'] = $this->ProductModel->getPopularCategori();
         $data['partner'] = $this->ProductModel->getPartner();
-        $this->render('index', $head, $data);
+        // $this->render('index', $head, $data);
+        $this->load->view('templates/blanja/index', $data);
     }
 
     /*
