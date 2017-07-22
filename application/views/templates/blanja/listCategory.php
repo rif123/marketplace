@@ -133,7 +133,8 @@
                                     foreach ($whereCategory['children'] as $key => $value) {
                                 ?>
                                 <li >
-                                    <a href="<?php echo generateUrl('', $value['name'],  "")."?category=".$whereCategory['idCategory']."&c2=".$value['idCategory']; ?>">
+                                    <a href="<?php echo generateUrl('c', $value['name'],  "")."?category=".$whereCategory['idCategory']."&c2=".$value['idCategory']; ?>">
+
                                         <?php echo $value['name']; ?>
                                     </a>
                                     <ul>
@@ -142,7 +143,7 @@
                                             foreach ($value['children'] as $k => $v) {
                                                 $level3[] = $v;
                                                 ?>
-                                                <li><span></span><a href="<?php echo generateUrl('', $v['name'],  "")."?category=".$whereCategory['idCategory']."&c2=".$value['idCategory']."&c3=".$v['idCategory']; ?>"><?php echo $v['name']; ?></a></li>
+                                                <li><span></span><a href="<?php echo generateUrl('c', $v['name'],  "")."?category=".$whereCategory['idCategory']."&c2=".$value['idCategory']."&c3=".$v['idCategory']; ?>"><?php echo $v['name']; ?></a></li>
                                             <?php } ?>
                                         <?php } ?>
                                     </ul>

@@ -116,6 +116,7 @@ $route['promobox/(:any)'] = "Promobox/detail";
 $route['p/(:any)'] = "Product/detail";
 $route['partner/(:any)'] = "Partner/detail";
 $route['c/(:any)'] = "Product/category";
+$route['c/(:any)/(:num)'] = "Product/category";
 
 $route['(:any)/(:num)/(:num)'] = "Product/category";
 

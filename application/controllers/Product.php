@@ -39,12 +39,12 @@ class Product extends MY_Controller
         $parser['home_categories'] = $tree = buildTree($all_categories);
 
         $parser['partner'] = $this->ProductModel->getPartner();
-        $segmentPage = $this->uri->segment(2);
+        $segmentPage = $this->uri->segment(3);
         $page = !empty($segmentPage) ? $segmentPage : "0";
         $category = $this->input->get('category');
         $c2 = $this->input->get('c2');
         $c3 = $this->input->get('c3');
-        $url  = $this->uri->segment('1');
+        $url  = $this->uri->segment('1')."/".$this->uri->segment('2');
         if (!empty($category) && !empty($c2) && !empty($c3)) {
             $idCategory = $c3;
             $idCategoryOrigin = $c3;
@@ -66,7 +66,7 @@ class Product extends MY_Controller
         }
 
         $parser['whereCategory'] = $getWhereCategory;
-        $parser['nameCategory'] = getUnIdBySlug($this->uri->segment(1));
+        $parser['nameCategory'] = getUnIdBySlug($this->uri->segment(2));
         // for category
         $itemsDetail  = $this->ProductModel->getDetailProd($idCategory);
         $parser['reletedProduction']  = $this->ProductModel->getReleted($itemsDetail[0]['shop_categorie'], $itemsDetail[0]['id']);
@@ -76,8 +76,7 @@ class Product extends MY_Controller
         $parser['item'] = $itemsDetail;
         $parser['listItems'] = $this->ProductModel->listItems($this->num_rows,$page, $idCategoryOrigin, false);
         $countProd = $this->ProductModel->listItems($this->num_rows,$page, $idCategoryOrigin, true);
-
-        $parser['links_pagination'] = paginationFrontEnd($url, $countProd, $this->num_rows, 2);
+        $parser['links_pagination'] = paginationFrontEnd($url, $countProd, $this->num_rows, 3);
 
 
         $parser['bestSellers'] = $this->Publicmodel->getbestSellers();
