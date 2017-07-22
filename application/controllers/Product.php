@@ -12,6 +12,7 @@ class Product extends MY_Controller
         parent::__construct();
         $this->load->helper(array('pagination'));
         $this->load->Model('ProductModel');
+        $this->load->Model('ConfigModel');
         $this->load->library('form_validation');
         $this->load->library('session');
     }
@@ -137,6 +138,7 @@ class Product extends MY_Controller
         $itemsDetail  = $this->ProductModel->getDetailProd($idCategory);
         $parser['reletedProduction']  = $this->ProductModel->getReleted($itemsDetail[0]['shop_categorie'], $itemsDetail[0]['id']);
         $data['partner'] = $this->ProductModel->getPartner();
+        $parser['config'] = $this->ConfigModel->getConfig();
         $parser['listReview'] = $this->ProductModel->listReview($itemsDetail[0]['id']);
         $parser['item'] = $itemsDetail;
         $parser['template'] = 'templates/blanja/feature/login/index';
