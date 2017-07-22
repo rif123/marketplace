@@ -17,7 +17,7 @@ class Product extends MY_Controller
     }
 
     public function category() {
-    
+
         $all_categories = $this->Publicmodel->getShopCategories();
         /*
          * Tree Builder for categories menu
@@ -86,7 +86,25 @@ class Product extends MY_Controller
     }
 
     public function globalSearch() {
-        print_R($_GET);die;
+        $all_categories = $this->Publicmodel->getShopCategories();
+        function buildTree(array $elements, $parentId = 0)
+        {
+            $branch = array();
+            foreach ($elements as $element) {
+                if ($element['sub_for'] == $parentId) {
+                    $children = buildTree($elements, $element['id']);
+                    if ($children) {
+                        $element['children'] = $children;
+                    }
+                    $branch[] = $element;
+                }
+            }
+            return $branch;
+        }
+        $parser['home_categories'] = $tree = buildTree($all_categories);
+        $parser['partner'] = $this->ProductModel->getPartner();
+
+        $this->load->view('templates/blanja/globalSearch',$parser);
     }
 
     public function detail() {
