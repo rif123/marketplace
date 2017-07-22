@@ -35,11 +35,11 @@
                             <div class="product-container">
                                 <div class="product-left">
                                     <div class="product-thumb">
-                                        <a class="product-img" href="#">
+                                        <a class="product-img" href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title']).'-'.$itm['id']; ?>">
                                             <img style="width:250px; height:250px" src="<?php echo base_url('attachments/shop_images/').$itm['image']; ?>" alt="<?php echo $itm['title']; ?>"
                                             onerror="this.onerror=null;this.src='<?php echo base_url('assets/tempdkantin/data/option2/p21.jpg'); ?>'">
                                         </a>
-                                        <a title="Quick View" href="#" class="btn-quick-view">Quick View</a>
+                                        <a title="Quick View" href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title']).'-'.$itm['id']; ?>" class="btn-quick-view">Quick View</a>
                                     </div>
                                 </div>
                                 <div class="product-right">

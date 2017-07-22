@@ -114,7 +114,7 @@
             <div class="col-sm-12">
 
             </div>
-            <!-- ./block tabs -->``
+            <!-- ./block tabs -->
     </div>
 </div>
 <div class="container">

@@ -15,6 +15,7 @@ class Login extends MY_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->Model('ProductModel');
+        $this->load->Model('ConfigModel');
     }
 
     public function index()
@@ -47,6 +48,7 @@ class Login extends MY_Controller
 
         $parser['home_categories'] = $tree = buildTree($all_categories);
         $parser['partner'] = $this->ProductModel->getPartner();
+            $parser['config'] = $this->ConfigModel->getConfig();
         $head = array();
         $parser['template'] = 'templates/blanja/feature/login/index';
         $this->load->view('templates/blanja/base', $parser);

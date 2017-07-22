@@ -18,8 +18,8 @@
                             <div class="product-container">
                                 <div class="product-left">
                                     <div class="product-thumb">
-                                        <a class="product-img" href="#"><img src="<?php echo base_url('/attachments/shop_images/').$value['image']; ?>" alt="Product" style="width:201px; height:210px"></a>
-                                        <a title="Quick View" href="#" class="btn-quick-view">Quick View</a>
+                                        <a class="product-img" href="<?php echo generateUrl('p', $value['title'], $value['id']); ?>"><img src="<?php echo base_url('/attachments/shop_images/').$value['image']; ?>" alt="Product" style="width:201px; height:210px"></a>
+                                        <a title="Quick View" href=<?php echo generateUrl('p', $value['title'], $value['id']); ?>" class="btn-quick-view">Quick View</a>
                                     </div>
                                 </div>
                                 <div class="product-right">
