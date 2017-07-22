@@ -27,7 +27,7 @@
             <!-- block search -->
             <div class="col-sm-5 col-md-7">
                 <div class="advanced-search box-radius">
-                    <form class="form-inline" action="<?php echo site_url('/search'); ?>">
+                    <form class="form-inline" action="<?php echo site_url('/global/search'); ?>">
                         <div class="form-group search-category">
                             <select id="category-select" class="search-category-select" name="category">
                                 <option value="">All Categories</option>

@@ -152,6 +152,7 @@ class Publicmodel extends CI_Model
         $this->db->order_by('position', 'asc');
         $this->db->join('shop_categories', 'shop_categories.id = translations.for_id', 'INNER');
         $query = $this->db->get('translations');
+        // print_R($this->db->last_query());die;
         $arr = array();
         if ($query !== false) {
             foreach ($query->result_array() as $row) {

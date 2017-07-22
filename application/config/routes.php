@@ -115,7 +115,14 @@ $route['^(\w{2})/(.*)$'] = '$2';
 $route['promobox/(:any)'] = "Promobox/detail";
 $route['p/(:any)'] = "Product/detail";
 $route['partner/(:any)'] = "Partner/detail";
-$route['(:any)/(:num)'] = "Product/category";
+$route['(:any)'] = "Product/category";
+
+$route['(:any)/(:num)/(:num)'] = "Product/category";
+
+
+
+$route['(:any)/(:num)/(:num)/(:num)'] = "Product/category";
+$route['(:any)/(:num)/(:num)/(:num)/(:num)'] = "Product/category";
 
 
 // subscribed
@@ -125,13 +132,13 @@ $route['subscribed'] = "Product/doSend";
 $route['subscribed'] = "Product/doSend";
 
 
-// Global Search
-$route['search'] = "Product/globalSearch";
+
 
 // review
 $route['(:any)/(:num)'] = "Product/category";
 
-
+// Global Search
+$route['global/search'] = "Product/globalSearch";
 /*
  * Admin Controllers Route
  */

@@ -17,7 +17,7 @@
                                 foreach ($listCategory as $k => $val) {
                             ?>
                             <li class="dropdown">
-                                    <a href="<?php echo site_url('/').sanitizeStringForUrl($val['name']).'/'.$val['id']; ?>" class="dropdown-toggle" data-toggle="dropdown">
+                                    <a href="<?php echo site_url('/').sanitizeStringForUrl($val['name']).'?category='.$val['id']; ?>" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="<?php echo base_url('assets/tempdkantin/data/icon_sale.png'); ?>" alt="<?php echo $val['name']; ?>" />
                                     <?php echo $val['name']; ?></a>
                                     <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 850px;">
@@ -38,7 +38,7 @@
                                                 foreach ($val['children'] as $ky => $v){
                                             ?>
                                                 <li class="link_container">
-                                                    <a href="<?php echo site_url('/').sanitizeStringForUrl($v['name']).'/'.$v['id']; ?>">
+                                                    <a href="<?php echo site_url('/').sanitizeStringForUrl($v['name']).'?category='.$val['id']."&c2=".$v['id']; ?>">
                                                         <?php echo $v['name']; ?>
                                                     </a>
                                                 </li>

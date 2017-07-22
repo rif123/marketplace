@@ -48,7 +48,11 @@ function getListCategoryPop($shop_categorie){
 }
 function generateUrl($pref="p", $itemNames, $idItems){
     $CI =& get_instance();
-    $url = site_url('/').$pref.'/'.sanitizeStringForUrl($itemNames).'-'.$idItems;
+    if (!empty($pref)) {
+        $url = site_url('/').$pref.'/'.sanitizeStringForUrl($itemNames).'-'.$idItems;
+    } else {
+        $url = site_url('/').sanitizeStringForUrl($itemNames).'-'.$idItems;
+    }
     return $url;
 }
 function numberToRp($num){
@@ -59,4 +63,23 @@ function getIdBySlug($slug){
     $splitSlug  = explode("-", $slug);
     $id  = end($splitSlug);
     return $id;
+}
+function getUnIdBySlug($slug){
+    $splitSlug  = str_replace("-", " ", $slug);
+    return $splitSlug;
+}
+function getCountItems($value){
+    $CI =& get_instance();
+    $query = " select
+                products.id as idItems,
+                itemsDetail.title as itemNames,
+                products.image as itemImage
+                from translations
+                left join products on translations.for_id = products.shop_categorie
+                LEFT JOIN (select * from translations where translations.type = 'product') as itemsDetail on products.id = itemsDetail.for_id
+                where translations.type = 'shop_categorie' and products.shop_categorie = '".$value['idCategory']."'
+                ";
+    $allData = $CI->db->query($query)->num_rows();
+    return $allData;
+
 }

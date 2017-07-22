@@ -33,58 +33,7 @@
                             </form>
 						</div>
 					</div>
-					<div class="wrap-block-cl col-sm-3 col-md-3 col-lg-2">
-
-					</div>
-					<div class="block-wrap-cart col-sm-3 col-md-3 col-lg-2">
-						<div class="iner-block-cart box-radius">
-							<a href="cart.html">
-								<span class="total">$459.00</span>
-							</a>
-						</div>
-						<div class="block-mini-cart">
-							<div class="mini-cart-content">
-                            <h5 class="mini-cart-head">2 Items in my cart</h5>
-                            <div class="mini-cart-list">
-                                <ul>
-	                                <li class="product-info">
-	                                    <div class="p-left">
-	                                        <a href="#" class="remove_link"></a>
-	                                        <a href="#">
-	                                        <img class="img-responsive" src="data/p1.jpg" alt="Product">
-	                                        </a>
-	                                    </div>
-	                                    <div class="p-right">
-	                                        <p class="p-name">Donec Ac Tempus</p>
-	                                        <p class="product-price">$139.98</p>
-	                                        <p>Qty: 1</p>
-	                                    </div>
-	                                </li>
-	                                <li class="product-info">
-	                                    <div class="p-left">
-	                                        <a href="#" class="remove_link"></a>
-	                                        <a href="#">
-	                                        <img class="img-responsive" src="data/p2.jpg" alt="Product">
-	                                        </a>
-	                                    </div>
-	                                    <div class="p-right">
-	                                        <p class="p-name">Donec Ac Tempus</p>
-	                                        <p class="product-price">$139.98</p>
-	                                        <p>Qty: 1</p>
-	                                    </div>
-	                                </li>
-	                            </ul>
-	                            </div>
-	                            <div class="toal-cart">
-	                                <span>Total</span>
-	                                <span class="toal-price pull-right">$279.96</span>
-	                            </div>
-	                            <div class="cart-buttons">
-	                                <a href="checkout.html" class="button-radius btn-check-out">Checkout<span class="icon"></span></a>
-	                            </div>
-	                        </div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			<!-- ./box header -->
