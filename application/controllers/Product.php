@@ -102,7 +102,8 @@ class Product extends MY_Controller
         }
         $parser['home_categories'] = $tree = buildTree($all_categories);
         $parser['partner'] = $this->ProductModel->getPartner();
-
+        $keyWord = $this->input->get('keyWords');
+        $parser['listItems'] = $this->ProductModel->getItemsList($keyWord);
         $this->load->view('templates/blanja/globalSearch',$parser);
     }
 

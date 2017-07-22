@@ -137,4 +137,22 @@ class ProductModel extends CI_Model
         }
     }
 
+    public function getItemsList($keyWord) {
+        $query = " select
+                translations.id as kk,
+                products.id as idItems,
+                itemsDetail.title as itemNames,
+                products.image as itemImage,
+                itemsDetail.price as itemsPrice,
+                itemsDetail.old_price as itemsOldPrice,
+                itemsDetail.description as decItems
+                from translations
+                left join products on translations.for_id = products.shop_categorie
+                LEFT JOIN (select * from translations where translations.type = 'product') as itemsDetail on products.id = itemsDetail.for_id
+                where translations.type = 'product' and  itemsDetail.title like '%".$keyWord."%'
+            ";
+        $alldata = $this->db->query($query)->result_array();
+        return $alldata;
+    }
+
 }

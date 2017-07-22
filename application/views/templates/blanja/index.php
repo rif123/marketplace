@@ -449,9 +449,7 @@
 
             <!-- block tabs -->
             <div class="col-sm-12">
-                <!--
-                    <?php $this->load->view('templates/blanja/feature/newArrivals/Arrivals', ['hotdeal' => $promoHorizontal ]); ?>
-                 -->
+
             </div>
             <!-- ./block tabs -->
         </div>
