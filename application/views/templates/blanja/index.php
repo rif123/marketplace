@@ -4,7 +4,7 @@
 
 <header id="header">
     <!-- main header -->
-    	<?php $this->load->view('templates/blanja/component/mainheader'); ?>
+    	<?php $this->load->view('templates/blanja/component/mainheader', ['config' => $config]); ?>
     <!-- ./main header -->
     <!-- main menu-->
 		<?php $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => $home_categories]); ?>
@@ -451,7 +451,7 @@
             <div class="col-sm-12">
 
             </div>
-            <!-- ./block tabs -->
+            <!-- ./block tabs -->``
         </div>
     </div>
 </div>
@@ -470,11 +470,10 @@
 	<!-- footer information -->
 
 	<!-- footer icon & social media -->
-			<?php $this->load->view('templates/blanja/component/footermiddleicon') ?>
+			<?php $this->load->view('templates/blanja/component/footermiddleicon',['config',$config ]) ?>
 	<!-- ffooter icon & social media -->
 
 	<!-- footer icon & social media -->
-			<?php $this->load->view('templates/blanja/component/footerabout') ?>
+			<?php $this->load->view('templates/blanja/component/footerabout',['config',$config ]) ?>
 	<!-- ffooter icon & social media -->
-</footer>
-<?php $this->load->view('templates/blanja/_parts/footer') ?>
+<?php $this->load->view('templates/blanja/_parts/footer'); ?>

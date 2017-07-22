@@ -1,3 +1,4 @@
+
 <div class="container">
     <div class="row">
         <div class="main-header">
@@ -5,7 +6,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <div class="logo">
                         <a href="<?php echo site_url('/'); ?>">
-                            <img src="<?php echo base_url('assets/tempdkantin/data/option1/logo.png'); ?>" alt="Logo">
+                            <img src="<?php echo base_url('/attachments/config/').$config[0]['logofile_config']; ?>" alt="Logo" style="width:123px; height:46px;">
                         </a>
                     </div>
                 </div>
@@ -15,7 +16,7 @@
                             <li class="item">
                                 <a href="#">
                                 <span class="icon phone"></span>
-                                <span class="line1">Call us:<br><strong>0904567823</strong></span>
+                                <span class="line1">Call us:<br><strong><?php echo $config[0]['telp_config']; ?></strong></span>
                                 </a>
                             </li>
                             <li class="item">

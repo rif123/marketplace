@@ -14,6 +14,7 @@ class Home extends MY_Controller
         $this->load->Model('AdminModel');
         $this->load->Model('PromoboxModel');
         $this->load->Model('ProductModel');
+        $this->load->Model('ConfigModel');
     }
 
     public function index($page = 0)
@@ -60,6 +61,9 @@ class Home extends MY_Controller
         $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
         $data['popularCategori'] = $this->ProductModel->getPopularCategori();
         $data['partner'] = $this->ProductModel->getPartner();
+        $data['config'] = $this->ConfigModel->getConfig();
+
+        
         // $this->render('index', $head, $data);
         $this->load->view('templates/blanja/index', $data);
     }
