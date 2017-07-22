@@ -182,4 +182,17 @@ class ProductModel extends CI_Model
         return $alldata;
     }
 
+    public function addWishlist($getIdProd) {
+        $data  = [
+            'id_user' => 1,
+            'id_prod' => $getIdProd,
+            'created' => date('Y-m-d H:i:s')
+        ];
+        $this->db->insert('dk_wishlist', $data);
+
+    }
+    public function delWishlist($getIdProd) {
+        $this->db->delete('dk_wishlist', array('id_whislist' => $getIdProd));
+    }
+
 }

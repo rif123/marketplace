@@ -117,6 +117,10 @@ $route['p/(:any)'] = "Product/detail";
 $route['partner/(:any)'] = "Partner/detail";
 $route['c/(:any)'] = "Product/category";
 $route['c/(:any)/(:num)'] = "Product/category";
+$route['wishlist'] = "Product/wishlist";
+$route['add-wishlist'] = "Product/addWishlist";
+$route['delete-wishlist'] = "Product/delWishlist";
+
 
 $route['(:any)/(:num)/(:num)'] = "Product/category";
 

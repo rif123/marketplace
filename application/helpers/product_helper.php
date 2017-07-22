@@ -81,5 +81,13 @@ function getCountItems($value){
                 ";
     $allData = $CI->db->query($query)->num_rows();
     return $allData;
-
+}
+function getWishlist() {
+    $CI =& get_instance();
+    $query = "select * from dk_wishlist LEFT JOIN dk_client on dk_wishlist.id_user = dk_client.id_client
+    left JOIN translations on dk_wishlist.id_prod  = translations.for_id
+    where translations.type = 'product'  and  dk_wishlist.id_user = 1
+    ";
+    $allData = $CI->db->query($query);
+    return $allData;
 }

@@ -29,7 +29,7 @@
                         ?>
                     </div>
                     <div class="product-button">
-                        <a class="btn-add-wishlist" title="Add to Wishlist" href="#">Add Wishlist</a>
+                        <a class="btn-add-wishlist" title="Add to Wishlist" href="<?php echo site_url('/add-wishlist')."?id=".$v['idItems']?>">Add Wishlist</a>
                         <a class="button-radius btn-add-cart" title="Add to Cart" href="#">Buy<span class="icon"></span></a>
                     </div>
                 </div>

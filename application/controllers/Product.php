@@ -160,4 +160,40 @@ class Product extends MY_Controller
         redirect('/');
     }
 
+    public function wishlist() {
+        $all_categories = $this->Publicmodel->getShopCategories();
+        function buildTree(array $elements, $parentId = 0)
+        {
+            $branch = array();
+            foreach ($elements as $element) {
+                if ($element['sub_for'] == $parentId) {
+                    $children = buildTree($elements, $element['id']);
+                    if ($children) {
+                        $element['children'] = $children;
+                    }
+                    $branch[] = $element;
+                }
+            }
+            return $branch;
+        }
+        $s = $this->uri->segment(3);
+        $page = !empty($s) ? $s : 0;
+        $url = "global/search";
+        $parser['home_categories'] = $tree = buildTree($all_categories);
+        $parser['config'] = $this->ConfigModel->getConfig();
+        $parser['partner'] = $this->ProductModel->getPartner();
+        $this->load->view('templates/blanja/wishlist', $parser);
+    }
+
+    public function addWishlist() {
+        $getIdProd = $this->input->get('id');
+        $this->ProductModel->addWishlist($getIdProd);
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function delWishlist() {
+        $getIdProd = $this->input->get('idProd');
+        $this->ProductModel->delWishlist($getIdProd);
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
 }

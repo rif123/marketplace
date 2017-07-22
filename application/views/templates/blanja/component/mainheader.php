@@ -20,7 +20,7 @@
                                 </a>
                             </li>
                             <li class="item">
-                                <a href="wishlist.html">
+                                <a href="<?php echo site_url('/wishlist'); ?>">
                                 <span class="icon wish-list"></span>
                                 <span class="line1">Wish<br><strong>List</strong></span>
                                 </a>
