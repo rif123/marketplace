@@ -1,6 +1,8 @@
 
 <ul class="products list">
     <?php
+      if (!empty($promobox)) {
+
         foreach ($promobox as $k => $v){
     ?>
     <li class="product">
@@ -21,6 +23,7 @@
                         </a>
                     </div>
                     <div class="price-box">
+                          <span class="product-price"><?php echo numberToRp($v['price']); ?></span>
                         <span class="product-price-old"><?php echo numberToRp($v['old_price']); ?></span>
                     </div>
                     <div class="desc">
@@ -36,5 +39,14 @@
             </div>
         </div>
     </li>
-    <?php } ?>
+    <?php
+   }
+  }else{
+    ?>
+    <div class="alert alert-success" style="margin-top:20%" role="alert">
+        Maaf Barang Belum Tersedia.
+      </div>
+<?php
+  }
+  ?>
 </ul>
