@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product extends MY_Controller
 {
 
-    private $num_rows = 1;
+    private $num_rows = 10;
     private $parser = [];
     public function __construct()
     {
@@ -15,6 +15,7 @@ class Product extends MY_Controller
         $this->load->Model('ConfigModel');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->Model('ConfigModel');
     }
 
     public function category() {
@@ -78,7 +79,7 @@ class Product extends MY_Controller
         $parser['listItems'] = $this->ProductModel->listItems($this->num_rows,$page, $idCategoryOrigin, false);
         $countProd = $this->ProductModel->listItems($this->num_rows,$page, $idCategoryOrigin, true);
         $parser['links_pagination'] = paginationFrontEnd($url, $countProd, $this->num_rows, 3);
-
+        $parser['config'] = $this->ConfigModel->getConfig();
 
         $parser['bestSellers'] = $this->Publicmodel->getbestSellers();
         $this->load->view('templates/blanja/listCategory',$parser);
@@ -101,10 +102,19 @@ class Product extends MY_Controller
             }
             return $branch;
         }
+        $s = $this->uri->segment(3);
+        $page = !empty($s) ? $s : 0;
+        $url = "global/search";
+
         $parser['home_categories'] = $tree = buildTree($all_categories);
         $parser['partner'] = $this->ProductModel->getPartner();
         $keyWord = $this->input->get('keyWords');
-        $parser['listItems'] = $this->ProductModel->getItemsList($keyWord);
+        $parser['currentUrl'] = base_url(uri_string())."?keyWords=".$keyWord;
+        $parser['listItems'] = $this->ProductModel->getItemsList($this->num_rows,$page, $keyWord, false);
+        $countProd = $this->ProductModel->getItemsList($this->num_rows,$page, $keyWord, true);
+        $parser['links_pagination'] = paginationFrontEnd($url, $countProd, $this->num_rows, 3);
+        $parser['config'] = $this->ConfigModel->getConfig();
+
         $this->load->view('templates/blanja/globalSearch',$parser);
     }
 

@@ -63,7 +63,7 @@ class Home extends MY_Controller
         $data['partner'] = $this->ProductModel->getPartner();
         $data['config'] = $this->ConfigModel->getConfig();
 
-        
+
         // $this->render('index', $head, $data);
         $this->load->view('templates/blanja/index', $data);
     }

@@ -6,7 +6,7 @@
 	<header id="header">
 		<!-- Top bar -->
         <!-- main header -->
-            <?php $this->load->view('templates/blanja/component/mainheader'); ?>
+            <?php $this->load->view('templates/blanja/component/mainheader', ['config', $config]); ?>
         <!-- ./main header -->
 		<!-- Top bar -->
 		<div class="container">

@@ -122,82 +122,34 @@
         <div class="row">
             <div class="category-products">
                 <div class="sortPagiBar">
-    				<ul class="display-product-option">
-                        <li class="view-as-grid">
-                            <span>grid</span>
-                        </li>
-                        <li class="view-as-list selected">
-                            <span>list</span>
-                        </li>
-                    </ul>
     				<div class="sortPagiBar-inner">
     					<nav>
-                          <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">Next »</span>
-                              </a>
-                            </li>
-                          </ul>
+                            <?php echo $links_pagination; ?>
                         </nav>
-                        <div class="show-product-item">
-                        	<select class="">
-    	                    	<option value="1">Show 6</option>
-    	                    	<option value="1">Show 12</option>
-    	                    </select>
-                        </div>
-
                         <div class="sort-product">
-                        	<select>
-    	                    	<option value="1">Postion</option>
-    	                    	<option value="1">Product name</option>
-    	                    </select>
+                            <select name="price" class="price">
+                                <option value="" <?php echo $this->input->get('sort') == '' ? "selected='selected'" : "" ?>>Harga</option>
+                                <
+                                <option value="desc" <?php echo $this->input->get('sort') == 'desc' ? "selected='selected'" : "" ?> >Product Termurah</option>
+                                <option value="asc" <?php echo $this->input->get('sort') == 'asc' ? "selected='selected'" : "" ?>>Product Tertinggi</option>
+                            </select>
     	                    <div class="icon"><i class="fa fa-sort-alpha-asc"></i></div>
                         </div>
     				</div>
     			</div>
                 <?php $this->load->view('templates/blanja/feature/search/globalSearch', ['listItems' => $listItems] ); ?>
                 <div class="sortPagiBar">
-    				<ul class="display-product-option">
-                        <li class="view-as-grid selected">
-                            <span>grid</span>
-                        </li>
-                        <li class="view-as-list">
-                            <span>list</span>
-                        </li>
-                    </ul>
     				<div class="sortPagiBar-inner">
     					<nav>
-                          <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">Next »</span>
-                              </a>
-                            </li>
-                          </ul>
+                            <?php echo $links_pagination; ?>
                         </nav>
-                        <div class="show-product-item">
-                        	<select class="">
-    	                    	<option value="1">Show 6</option>
-    	                    	<option value="1">Show 12</option>
-    	                    </select>
-                        </div>
-
                         <div class="sort-product">
-                        	<select>
-    	                    	<option value="1">Postion</option>
-    	                    	<option value="1">Product name</option>
-    	                    </select>
+                            <select name="price" class="price">
+                                <option value="" <?php echo $this->input->get('sort') == '' ? "selected='selected'" : "" ?>>Harga</option>
+                                <
+                                <option value="desc" <?php echo $this->input->get('sort') == 'desc' ? "selected='selected'" : "" ?> >Product Termurah</option>
+                                <option value="asc" <?php echo $this->input->get('sort') == 'asc' ? "selected='selected'" : "" ?>>Product Tertinggi</option>
+                            </select>
     	                    <div class="icon"><i class="fa fa-sort-alpha-asc"></i></div>
                         </div>
     				</div>
@@ -228,11 +180,7 @@
     var getView = "<?php echo !empty($view) ? $view : '' ?>";
     var sort = "<?php echo $this->input->get('sort'); ?>";
         $('.price').change(function(){
-            if (getView != ""){
-                window.location = current_base_url+"&sort="+$(this).val()+"&view="+getView;
-            } else {
-                window.location = current_base_url+"&sort="+$(this).val();
-            }
+            window.location = current_base_url+"&sort="+$(this).val();
         });
         $('.view-as-grid').click(function(){
             if (sort != ""){

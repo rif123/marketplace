@@ -7,14 +7,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<span class="how-to animated fadeInRightBig"><img src="<?= base_url('template/imgs/slide-title-border.png') ?>" alt=""> Научете <span>как</span> да <img src="<?= base_url('template/imgs/slide-title-border.png') ?>" alt=""></span>
 	<h2 class="animated fadeInLeftBig">Спечели битката с<h2>
 	<h1 class="animated fadeInRightBig">Наднорменото тегло</h1>
-	<a href="" class="btn btn-lg btn-primary animated fadeInUpBig">Вземи сега</a> 
+	<a href="" class="btn btn-lg btn-primary animated fadeInUpBig">Вземи сега</a>
 	</div>
 	<img src="<?= base_url('template/imgs/woman.png') ?>" class="woman-right animated flipInX" alt="">
 	<img src="<?= base_url('template/imgs/bottle.png') ?>" class="bottle-right animated flipInY" alt="">
 </div>
 <div class="after-main">
 <div class="container">
-<p>Как да постигнете мечтаното от Вас тяло, и то бързо? С помоща на Forskolin 1020/cAMP! 
+<p>Как да постигнете мечтаното от Вас тяло, и то бързо? С помоща на Forskolin 1020/cAMP!
 ВЪЗМОЖНО ЛИ Е НАИСТИНА ДА СТОПИТЕ ДО 21 КГ ?*</p>
 </div>
 </div>
@@ -50,7 +50,7 @@ Forskolin 1020 е натурален продукт с основна актив
 </div>
 <div class="before-products">
 <div class="container">
-<p>Как да постигнете мечтаното от Вас тяло, и то бързо? С помоща на Forskolin 1020/cAMP! 
+<p>Как да постигнете мечтаното от Вас тяло, и то бързо? С помоща на Forskolin 1020/cAMP!
 ВЪЗМОЖНО ЛИ Е НАИСТИНА ДА СТОПИТЕ ДО 21 КГ ?*</p>
 </div>
 </div>

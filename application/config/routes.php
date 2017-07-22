@@ -140,6 +140,7 @@ $route['(:any)/(:num)'] = "Product/category";
 
 // Global Search
 $route['global/search'] = "Product/globalSearch";
+$route['global/search/(:num)'] = "Product/globalSearch";
 /*
  * Admin Controllers Route
  */
