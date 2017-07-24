@@ -202,6 +202,9 @@ $route['admin/promo/(:num)'] = "admin/promo/promo/index/$1";
 //PROMO SLIDER
 $route['admin/promoSlider'] = "admin/promo/promoSlider";
 $route['admin/promoSlider/(:num)'] = "admin/promo/promoSlider/index/$1";
+//PROMO ITEM
+$route['admin/promoItem'] = "admin/promo/promoItem";
+$route['admin/promoItem/(:num)'] = "admin/promo/promoItem/index/$1";
 
 //CITY
 $route['admin/city'] = "admin/address/city";

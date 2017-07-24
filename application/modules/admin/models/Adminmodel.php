@@ -195,6 +195,12 @@ class AdminModel extends CI_Model
         $query = $this->db->get('dk_promo');
         return $query->row_array();
     }
+    public function getPromoItemedit($user)
+    {
+        $this->db->where('id_promo_items', $user);
+        $query = $this->db->get('dk_promo_items');
+        return $query->row_array();
+    }
     public function getPromoSlideredit($user)
     {
         $this->db->where('dk_promotion_id', $user);
@@ -448,6 +454,24 @@ class AdminModel extends CI_Model
                 return $this->db->count_all_results('dk_promo');
             }
         }
+        public function getPromoItem($limit = null, $start = null, $status){
+            // FOR STATUS TRUE
+            if ($status) {
+                // FOR CONFIG LIMIT
+                $limit_sql = '';
+                if ($limit !== null && $start !== null) {
+                    $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+                }
+                $query =$this->db->query('SELECT dk_promo_items.id_promo_items,dk_promo_items.created,dk_promo_items.edited,dk_promo.dk_head_title,product.title,users.username
+                                          FROM dk_promo_items
+                                          LEFT JOIN dk_promo ON dk_promo_items.dk_promotion_id = dk_promo.dk_promotion_id
+                                          LEFT JOIN (SELECT * FROM translations WHERE type ="product") AS product ON dk_promo_items.id_prod = product.id
+                                          LEFT JOIN users ON dk_promo_items.creator = users.id'. $limit_sql);
+                return $query;
+            } else {
+              return $this->db->count_all_results('dk_promo_items');
+            }
+        }
         public function getPromoSlider($limit = null, $start = null, $status){
             // FOR STATUS TRUE
             if ($status) {
@@ -553,6 +577,18 @@ public function getBankClient($limit = null, $start = null, $status){
        }
    }
 
+    public function getPromos(){
+
+        $query =$this->db->query('SELECT dk_promo.dk_promotion_id,dk_promo.dk_head_title FROM dk_promo');
+
+        return $query->result_array();
+    }
+    public function getProduct(){
+
+        $query =$this->db->query('SELECT translations.id,translations.title FROM translations WHERE type="product"');
+
+        return $query->result_array();
+    }
     public function getProvs(){
         $query =$this->db->get('dk_prov');
 
@@ -785,7 +821,28 @@ public function getBankClient($limit = null, $start = null, $status){
         return $result;
 
     }
+    public function updatePromoItem($POST){
+      $datasession = $this->session->userdata();
 
+      $result =$this->db->query('SELECT * FROM dk_promo_items WHERE dk_promotion_id="'.$POST['dk_promotion_id'].'" AND id_prod ="'.$POST['id_prod'].'"');
+
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'dk_promotion_id' => $POST['dk_promotion_id'],
+        'id_prod' => $POST['id_prod'],
+        'editor' => $datasession['authlog']['id'],
+        'edited' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id_promo_items', $POST['edit']);
+        $result =$this->db->update('dk_promo_items', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
 
     public function saveDataBank($test){
         $datasession = $this->session->userdata();
@@ -845,6 +902,28 @@ public function getBankClient($limit = null, $start = null, $status){
 
             );
             $result =$this->db->insert('dk_promo', $data);
+
+      return $result;
+    }
+    public function savePromoItem($test){
+        $datasession = $this->session->userdata();
+
+          $result =$this->db->query('SELECT * FROM dk_promo_items WHERE dk_promotion_id="'.$test['dk_promotion_id'].'" AND id_prod ="'.$test['id_prod'].'"');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'dk_promotion_id' =>$test['dk_promotion_id'],
+              'id_prod' =>$test['id_prod'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_promo_items', $data);
+
+          }else{
+            $result =false;
+          }
+
 
       return $result;
     }
@@ -1177,6 +1256,12 @@ public function getBankClient($limit = null, $start = null, $status){
     {
         $this->db->where('dk_promotion_id', $id);
         $result = $this->db->delete('dk_promo');
+        return $result;
+    }
+    public function deletePromoItem($id)
+    {
+        $this->db->where('id_promo_items', $id);
+        $result = $this->db->delete('dk_promo_items');
         return $result;
     }
 
