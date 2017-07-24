@@ -106,7 +106,6 @@
                      ?>
                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 
-                     <input type="hidden" name="update" value="<?= isset($data['id_city']) ? $data['id_city'] : '0' ?>">
                      <button type="submit" class="btn btn-primary" name="update">Edit</button>
                  <?php
                }else {

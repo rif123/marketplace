@@ -8,7 +8,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Promo extends ADMIN_Controller
+class PromoSlider extends ADMIN_Controller
 {
     private $num_rows = 10;
     public function index($page=0)
@@ -18,14 +18,14 @@ class Promo extends ADMIN_Controller
         //HEAD
         $data = array();
         $head = array();
-        $head['title'] = 'Administration - Promo';
+        $head['title'] = 'Administration - Promo Slider';
         $head['description'] = '!';
         $head['keywords'] = '';
 
         // CONFIG FOR PAGINATION
-    $data['promo'] = $this->AdminModel->getPromo($this->num_rows, $page, true);
-    $rowscount = $this->AdminModel->getPromo($this->num_rows, $page, false);
-    $data['links_pagination'] = pagination('admin/promo', $rowscount, $this->num_rows, 3);
+    $data['promo'] = $this->AdminModel->getPromoSlider($this->num_rows, $page, true);
+    $rowscount = $this->AdminModel->getPromoSlider($this->num_rows, $page, false);
+    $data['links_pagination'] = pagination('admin/promoSlider', $rowscount, $this->num_rows, 3);
 
     if (isset($_POST['save'])) {
 
@@ -58,8 +58,21 @@ class Promo extends ADMIN_Controller
 
       $_POST['dk_start_date_promotion'] = $yearsFrom.'-'.$monthFrom.'-'.$dateFrom.' '.$hoursFrom.':'.$minutesFrom.':'.$seconds;
       $_POST['dk_end_date_promotion'] = $yearsTo.'-'.$monthTo.'-'.$dateTo.' '.$hoursTo.':'.$minutesTo.':'.$seconds;
-
-      $result =$this->AdminModel->savePromo($_POST);
+      //UPLOAD FILE
+      $config['upload_path'] = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'slider' . DIRECTORY_SEPARATOR;
+      $config['allowed_types'] = 'gif|jpg|png|jpeg';
+      $this->load->library('upload', $config);
+      $this->upload->initialize($config);
+      if (!$this->upload->do_upload('dk_banner_promotion')) {
+          log_message('error', 'Image Upload Error: ' . $this->upload->display_errors());
+      }
+      $img = $this->upload->data();
+      if ($img['file_name'] != null) {
+          $_POST['dk_banner_promotion'] = $img['file_name'];
+      } else {
+          $this->session->set_flashdata('result_add', 'Image cannot Upload');
+      }
+      $result =$this->AdminModel->savePromoSlider($_POST);
          if ($result ==1) {
            $this->session->set_flashdata('result_add', 'Promo is added!');
            $this->saveHistory('Create Promo user - ' . $_POST['dk_head_title']);
@@ -70,12 +83,12 @@ class Promo extends ADMIN_Controller
 
          }
 
-         redirect('admin/promo');
+         redirect('admin/promoSlider');
 
       }
       //EDIT DATA
       if (isset($_GET['edit'])) {
-          $data['edit']  =$this->AdminModel->getPromoedit($_GET['edit']);
+          $data['edit']  =$this->AdminModel->getPromoSlideredit($_GET['edit']);
 
       }
       // ACTION UPDATE
@@ -110,7 +123,21 @@ class Promo extends ADMIN_Controller
         $_POST['dk_start_date_promotion'] = $yearsFrom.'-'.$monthFrom.'-'.$dateFrom.' '.$hoursFrom.':'.$minutesFrom.':'.$seconds;
         $_POST['dk_end_date_promotion'] = $yearsTo.'-'.$monthTo.'-'.$dateTo.' '.$hoursTo.':'.$minutesTo.':'.$seconds;
 
-        $result  =$this->AdminModel->updatePromo($_POST);
+        //UPLOAD FILE
+        $config['upload_path'] = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'slider' . DIRECTORY_SEPARATOR;
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload('dk_banner_promotion')) {
+            log_message('error', 'Image Upload Error: ' . $this->upload->display_errors());
+        }
+        $img = $this->upload->data();
+        if ($img['file_name'] != null) {
+            $_POST['dk_banner_promotion'] = $img['file_name'];
+        } else {
+            $this->session->set_flashdata('result_add', 'Image cannot Upload');
+        }
+        $result  =$this->AdminModel->updatePromoSlider($_POST);
         if ($result ==1) {
           $this->session->set_flashdata('result_add', 'Promo is Update!');
           $this->saveHistory('Create City  - ' . $_POST['dk_head_title']);
@@ -121,24 +148,24 @@ class Promo extends ADMIN_Controller
 
         }
 
-        redirect('admin/promo');
+        redirect('admin/promoSlider');
       }
       // ACTION DELETE
       if (isset($_GET['delete'])) {
-        $result = $this->AdminModel->deletePromo($_GET['delete']);
+        $result = $this->AdminModel->deletePromoSlider($_GET['delete']);
           if ($result == true) {
               $this->saveHistory('Delete Promo id - ' . $_GET['delete']);
               $this->session->set_flashdata('result_delete', 'Promo is deleted!');
           } else {
               $this->session->set_flashdata('result_delete', 'Problem with Promo delete!');
           }
-        redirect('admin/promo');
+        redirect('admin/promoSlider');
       }
 
         //TAMPIL DATA
 
         $this->load->view('_parts/header', $head);
-        $this->load->view('promo/promo', $data);
+        $this->load->view('promo/promoSlider', $data);
         $this->load->view('_parts/footer');
         $this->saveHistory('Go to Admin Users');
 

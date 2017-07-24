@@ -189,6 +189,18 @@ class AdminModel extends CI_Model
         $query = $this->db->get('dk_config');
         return $query->row_array();
     }
+    public function getPromoedit($user)
+    {
+        $this->db->where('dk_promotion_id', $user);
+        $query = $this->db->get('dk_promo');
+        return $query->row_array();
+    }
+    public function getPromoSlideredit($user)
+    {
+        $this->db->where('dk_promotion_id', $user);
+        $query = $this->db->get('dk_promo');
+        return $query->row_array();
+    }
 
     public function getBank($limit = null, $start = null, $status){
         // FOR STATUS TRUE
@@ -415,6 +427,47 @@ class AdminModel extends CI_Model
             return $this->db->count_all_results('dk_partner');
         }
     }
+
+        public function getPromo($limit = null, $start = null, $status){
+            // FOR STATUS TRUE
+            if ($status) {
+                // FOR CONFIG LIMIT
+                $limit_sql = '';
+                if ($limit !== null && $start !== null) {
+                    $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+                }
+                $query =$this->db->query('SELECT dk_promo.dk_promotion_id,dk_promo.dk_head_title,dk_promo.dk_title_promotion,dk_promo.dk_description_promotion,dk_promo.dk_start_date_promotion,dk_promo.dk_end_date_promotion,dk_promo.dk_banner_promotion,dk_promo.dk_promotion_type,dk_promo.dk_promotion_db,dk_promo.dk_status,dk_promo.created,dk_promo.edited,users.username
+                                    FROM dk_promo
+                                    LEFT JOIN users ON dk_promo.creator = users.id
+                    								WHERE dk_promotion_type ="1"'. $limit_sql);
+                return $query;
+            } else {
+                // FOR STATUS FALSE
+                $promotionType =1;
+                        $this->db->where('dk_promotion_type',$promotionType);
+                return $this->db->count_all_results('dk_promo');
+            }
+        }
+        public function getPromoSlider($limit = null, $start = null, $status){
+            // FOR STATUS TRUE
+            if ($status) {
+                // FOR CONFIG LIMIT
+                $limit_sql = '';
+                if ($limit !== null && $start !== null) {
+                    $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+                }
+                $query =$this->db->query('SELECT dk_promo.dk_promotion_id,dk_promo.dk_head_title,dk_promo.dk_title_promotion,dk_promo.dk_description_promotion,dk_promo.dk_start_date_promotion,dk_promo.dk_end_date_promotion,dk_promo.dk_banner_promotion,dk_promo.dk_promotion_type,dk_promo.dk_promotion_db,dk_promo.dk_status,dk_promo.created,dk_promo.edited,users.username
+                                    FROM dk_promo
+                                    LEFT JOIN users ON dk_promo.creator = users.id
+                    								WHERE dk_promotion_type ="2"'. $limit_sql);
+                return $query;
+            } else {
+                // FOR STATUS FALSE
+                $promotionType =2;
+                        $this->db->where('dk_promotion_type',$promotionType);
+                return $this->db->count_all_results('dk_promo');
+            }
+        }
     public function getPopuler(){
             $user ='shop_categorie';
               $this->db->where('type', $user);
@@ -665,6 +718,74 @@ public function getBankClient($limit = null, $start = null, $status){
         return $result;
 
     }
+    public function updatePromo($test){
+      $datasession = $this->session->userdata();
+      $result =$this->db->get('dk_partner');
+        $data = array(
+            'dk_head_title' =>$test['dk_head_title'],
+            'dk_title_promotion' =>$test['dk_title_promotion'],
+            'dk_description_promotion' =>$test['dk_description_promotion'],
+            'dk_start_date_promotion' =>$test['dk_start_date_promotion'],
+            'dk_end_date_promotion' =>$test['dk_end_date_promotion'],
+            'dk_banner_promotion' =>$test['dk_banner_promotion'],
+            'dk_promotion_type' =>1,
+            'dk_promotion_db' =>'dk_promo_discount',
+            'dk_status' =>$test['dk_status'],
+            'editor' => $datasession['authlog']['id'],
+            'edited' => date('Y-m-d H:i:s')
+
+          );
+
+        $this->db->where('dk_promotion_id', $test['edit']);
+        $result =$this->db->update('dk_promo', $data);
+
+        return $result;
+
+    }
+    public function updatePromoSlider($test){
+      $datasession = $this->session->userdata();
+      $result =$this->db->get('dk_partner');
+
+      if (!empty($test['dk_banner_promotion'])) {
+
+        $data = array(
+            'dk_head_title' =>$test['dk_head_title'],
+            'dk_title_promotion' =>$test['dk_title_promotion'],
+            'dk_description_promotion' =>$test['dk_description_promotion'],
+            'dk_start_date_promotion' =>$test['dk_start_date_promotion'],
+            'dk_end_date_promotion' =>$test['dk_end_date_promotion'],
+            'dk_banner_promotion' =>$test['dk_banner_promotion'],
+            'dk_promotion_type' =>2,
+            'dk_promotion_db' =>'dk_promo_sliders',
+            'dk_status' =>$test['dk_status'],
+            'editor' => $datasession['authlog']['id'],
+            'edited' => date('Y-m-d H:i:s')
+
+          );
+        }else{
+          $data = array(
+            'dk_head_title' =>$test['dk_head_title'],
+            'dk_title_promotion' =>$test['dk_title_promotion'],
+            'dk_description_promotion' =>$test['dk_description_promotion'],
+            'dk_start_date_promotion' =>$test['dk_start_date_promotion'],
+            'dk_end_date_promotion' =>$test['dk_end_date_promotion'],
+            'dk_promotion_type' =>2,
+            'dk_promotion_db' =>'dk_promo_sliders',
+            'dk_status' =>$test['dk_status'],
+            'editor' => $datasession['authlog']['id'],
+            'edited' => date('Y-m-d H:i:s')
+
+          );
+
+        }
+
+        $this->db->where('dk_promotion_id', $test['edit']);
+        $result =$this->db->update('dk_promo', $data);
+
+        return $result;
+
+    }
+
 
     public function saveDataBank($test){
         $datasession = $this->session->userdata();
@@ -684,6 +805,46 @@ public function getBankClient($limit = null, $start = null, $status){
             $result =false;
           }
 
+
+      return $result;
+    }
+    public function savePromo($test){
+        $datasession = $this->session->userdata();
+          $data = array(
+              'dk_head_title' =>$test['dk_head_title'],
+              'dk_title_promotion' =>$test['dk_title_promotion'],
+              'dk_description_promotion' =>$test['dk_description_promotion'],
+              'dk_start_date_promotion' =>$test['dk_start_date_promotion'],
+              'dk_end_date_promotion' =>$test['dk_end_date_promotion'],
+              'dk_banner_promotion' =>$test['dk_banner_promotion'],
+              'dk_promotion_type' =>1,
+              'dk_promotion_db' =>'dk_promo_discount',
+              'dk_status' =>$test['dk_status'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_promo', $data);
+
+      return $result;
+    }
+    public function savePromoSlider($test){
+        $datasession = $this->session->userdata();
+          $data = array(
+              'dk_head_title' =>$test['dk_head_title'],
+              'dk_title_promotion' =>$test['dk_title_promotion'],
+              'dk_description_promotion' =>$test['dk_description_promotion'],
+              'dk_start_date_promotion' =>$test['dk_start_date_promotion'],
+              'dk_end_date_promotion' =>$test['dk_end_date_promotion'],
+              'dk_banner_promotion' =>$test['dk_banner_promotion'],
+              'dk_promotion_type' =>2,
+              'dk_promotion_db' =>'dk_promo_sliders',
+              'dk_status' =>$test['dk_status'],
+              'creator' => $datasession['authlog']['id'],
+              'created' => date('Y-m-d H:i:s')
+
+            );
+            $result =$this->db->insert('dk_promo', $data);
 
       return $result;
     }
@@ -1004,6 +1165,18 @@ public function getBankClient($limit = null, $start = null, $status){
     {
         $this->db->where('id_partner', $id);
         $result = $this->db->delete('dk_partner');
+        return $result;
+    }
+    public function deletePromo($id)
+    {
+        $this->db->where('dk_promotion_id', $id);
+        $result = $this->db->delete('dk_promo');
+        return $result;
+    }
+    public function deletePromoSlider($id)
+    {
+        $this->db->where('dk_promotion_id', $id);
+        $result = $this->db->delete('dk_promo');
         return $result;
     }
 

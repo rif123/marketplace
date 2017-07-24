@@ -9,7 +9,7 @@ if (isset($edit)) {
 
 
 <div id="users">
-    <h1><img src="<?= base_url('assets/imgs/admin-user.png') ?>" class="header-img" style="margin-top:-3px;"> PROMO</h1>
+    <h1><img src="<?= base_url('assets/imgs/admin-user.png') ?>" class="header-img" style="margin-top:-3px;"> PROMO SLIDER</h1>
     <hr>
     <?php if (validation_errors()) { ?>
         <hr>
@@ -40,7 +40,7 @@ if (isset($edit)) {
         <?php
     }
     ?>
-   <a href="javascript:void(0);" data-toggle="modal" data-target="#add_edit_users" class="btn btn-primary btn-xs pull-right" style="margin-bottom:10px;"><b>+</b> Add new promo</a>
+   <a href="javascript:void(0);" data-toggle="modal" data-target="#add_edit_users" class="btn btn-primary btn-xs pull-right" style="margin-bottom:10px;"><b>+</b> Add new promo slider</a>
    <?php
    if ($promo->result()) {
        ?>
@@ -69,7 +69,7 @@ if (isset($edit)) {
                    <td><?= $user->dk_description_promotion ?></td>
                    <td><?= date('d-m-Y H:i:s', strtotime($user->dk_start_date_promotion)) ?></td>
                    <td><?= date('d-m-Y H:i:s', strtotime($user->dk_end_date_promotion)) ?></td>
-                   <td style="background:<?= $user->dk_banner_promotion ?>;"></td>
+                   <td><img src="<?php echo base_url('/attachments/slider/').$user->dk_banner_promotion ?>" width="30px"></td>
                    <td><?= $user->dk_promotion_db ?></td>
                    <td><?= $user->dk_status ?></td>
                    <td><?= $user->username ?></td>
@@ -120,8 +120,16 @@ if (isset($edit)) {
                            <input type="text" name="daterange" value="<?php echo isset($cik) ? $cik :''; ?>" class="form-control" id="username">
                        </div>
                        <div class="form-group">
-                         <label for="username">Banner</label>
-                         <input type="text" name="dk_banner_promotion" value="<?php echo  isset($edit['dk_banner_promotion']) ? $edit['dk_banner_promotion'] : '' ; ?>" class="form-control" id="username">
+                           <label>Banner</label>
+                           <input type="file" name="dk_banner_promotion" class="form-control">
+                           <?php
+                             if (isset($edit['dk_banner_promotion'])) {
+                               ?>
+                               <img src="<?php echo base_url('/attachments/slider/').$edit['dk_banner_promotion'] ?>" width="30px">
+
+                               <?php
+                             }
+                            ?>
                        </div>
                        <?php
                        $status= ['Active','No-active'];
