@@ -242,6 +242,12 @@ $route['admin/riview/(:num)'] = "admin/ecommerce/riview/index/$1";
 //WISHLIST
 $route['admin/wishlist'] = "admin/ecommerce/wishlist";
 $route['admin/wishlist/(:num)'] = "admin/ecommerce/wishlist/index/$1";
+//MENU KAMPUS
+$route['admin/menuKampus'] = "admin/menu/menuKampus";
+$route['admin/menuKampus/(:num)'] = "admin/menu/menuKampus/index/$1";
+//MENU KOTA
+$route['admin/menuKota'] = "admin/menu/menuKota";
+$route['admin/menuKota/(:num)'] = "admin/menu/menuKota/index/$1";
 
 // TEXTUAL PAGES
 $route['admin/pageedit/(:any)'] = "admin/textual_pages/TextualPages/pageEdit/$1";

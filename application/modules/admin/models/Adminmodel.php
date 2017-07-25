@@ -143,6 +143,18 @@ class AdminModel extends CI_Model
         $query = $this->db->get('dk_prov');
         return $query->row_array();
     }
+    public function getMenuKotadit($user)
+    {
+        $this->db->where('id_menu_kota', $user);
+        $query = $this->db->get('dk_menu_kota');
+        return $query->row_array();
+    }
+    public function getMenuKampusedit($user)
+    {
+        $this->db->where('id_menu_kampus', $user);
+        $query = $this->db->get('dk_menu_kampus');
+        return $query->row_array();
+    }
     public function getCityedit($user)
     {
       $query =$this->db->query('SELECT dk_city.id_city,
@@ -492,6 +504,36 @@ class AdminModel extends CI_Model
                 return $this->db->count_all_results('dk_promo');
             }
         }
+        public function getMenuKota($limit = null, $start = null, $status){
+            // FOR STATUS TRUE
+            if ($status) {
+                // FOR CONFIG LIMIT
+                $limit_sql = '';
+                if ($limit !== null && $start !== null) {
+                    $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+                }
+                $query =$this->db->query('SELECT * FROM dk_menu_kota'. $limit_sql);
+                return $query;
+            } else {
+
+              return $this->db->count_all_results('dk_menu_kota');
+            }
+        }
+        public function getMenuKampus($limit = null, $start = null, $status){
+            // FOR STATUS TRUE
+            if ($status) {
+                // FOR CONFIG LIMIT
+                $limit_sql = '';
+                if ($limit !== null && $start !== null) {
+                    $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+                }
+                $query =$this->db->query('SELECT dk_menu_kampus.id_menu_kampus,dk_menu_kampus.name_menu_kampus,dk_menu_kota.id_menu_kota,dk_menu_kota.name_menu_kota FROM dk_menu_kampus LEFT JOIN dk_menu_kota ON dk_menu_kampus.id_menu_kota = dk_menu_kota.id_menu_kota'. $limit_sql);
+                return $query;
+            } else {
+
+              return $this->db->count_all_results('dk_menu_kota');
+            }
+        }
     public function getPopuler(){
             $user ='shop_categorie';
               $this->db->where('type', $user);
@@ -594,6 +636,11 @@ public function getBankClient($limit = null, $start = null, $status){
 
         return $query->result_array();
     }
+    public function getMenuKotas(){
+        $query =$this->db->get('dk_menu_kota');
+
+        return $query->result_array();
+    }
     public function getCitys(){
         $query =$this->db->get('dk_city');
 
@@ -687,6 +734,41 @@ public function getBankClient($limit = null, $start = null, $status){
 
         $this->db->where('id_city', $POST['edit']);
         $result =$this->db->update('dk_city', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updateMenuKota($POST){
+      $this->db->where('name_menu_kota',$POST['name_menu_kota']);
+      $result =$this->db->get('dk_menu_kota');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'name_menu_kota' => $POST['name_menu_kota'],
+        );
+
+        $this->db->where('id_menu_kota', $POST['edit']);
+        $result =$this->db->update('dk_menu_kota', $data);
+      }else{
+        $result =false;
+      }
+
+        return $result;
+
+    }
+    public function updateMenuKampus($POST){
+
+      $result =$this->db->query('SELECT * FROM dk_menu_kampus WHERE id_menu_kota ="'.$POST['id_menu_kota'].'" AND name_menu_kampus = "'.$POST['name_menu_kampus'].'" ');
+      if ($result->num_rows() == 0) {
+        $data = array(
+        'id_menu_kota' => $POST['id_menu_kota'],
+        'name_menu_kampus' => $POST['name_menu_kampus']
+        );
+
+        $this->db->where('id_menu_kampus', $POST['edit']);
+        $result =$this->db->update('dk_menu_kampus', $data);
       }else{
         $result =false;
       }
@@ -1004,6 +1086,41 @@ public function getBankClient($limit = null, $start = null, $status){
 
       return $result;
     }
+    public function saveMenuKota($test){
+          $this->db->where('name_menu_kota',$test['name_menu_kota']);
+          $result =$this->db->get('dk_menu_kota');
+
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_menu_kota' =>$test['name_menu_kota']
+            );
+            $result =$this->db->insert('dk_menu_kota', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+    public function saveMenuKampus($test){
+
+          $this->db->where('name_menu_kampus',$test['name_menu_kampus']);
+          $result =$this->db->get('dk_menu_kampus');
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'id_menu_kota' =>$test['id_menu_kota'],
+              'name_menu_kampus' =>$test['name_menu_kampus']
+            );
+            $result =$this->db->insert('dk_menu_kampus', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
     public function saveDistricts($test){
           $this->db->where('name',$test['name']);
           $result =$this->db->get('dk_districts');
@@ -1262,6 +1379,18 @@ public function getBankClient($limit = null, $start = null, $status){
     {
         $this->db->where('id_promo_items', $id);
         $result = $this->db->delete('dk_promo_items');
+        return $result;
+    }
+    public function deleteMenuKampus($id)
+    {
+        $this->db->where('id_menu_kampus', $id);
+        $result = $this->db->delete('dk_menu_kampus');
+        return $result;
+    }
+    public function deleteMenuKota($id)
+    {
+        $this->db->where('id_menu_kota', $id);
+        $result = $this->db->delete('dk_menu_kota');
         return $result;
     }
 

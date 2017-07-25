@@ -163,6 +163,8 @@
                                     <li><a href="<?= base_url('admin/promo') ?>" <?= urldecode(uri_string()) == 'admin/promo' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Promo</a></li>
                                     <li><a href="<?= base_url('admin/promoSlider') ?>" <?= urldecode(uri_string()) == 'admin/promoSlider' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Promo Slide</a></li>
                                     <li><a href="<?= base_url('admin/promoItem') ?>" <?= urldecode(uri_string()) == 'admin/promoItem' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Promo Item</a></li>
+                                    <li><a href="<?= base_url('admin/menuKampus') ?>" <?= urldecode(uri_string()) == 'admin/menuKampus' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Menu Kampus</a></li>
+                                    <li><a href="<?= base_url('admin/menuKota') ?>" <?= urldecode(uri_string()) == 'admin/menuKota' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Menu Kota</a></li>
 
                                 </ul>
                             </div>
