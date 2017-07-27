@@ -17,55 +17,58 @@ class Home extends MY_Controller
         $this->load->Model('ConfigModel');
     }
 
+    public function landing() {
+        $this->load->view('templates/blanja/landing');
+    }
     public function index($page = 0)
     {
-        $data = array();
-        $head = array();
-        $arrSeo = $this->Publicmodel->getSeo('page_home');
-        $head['title'] = @$arrSeo['title'];
-        $head['description'] = @$arrSeo['description'];
-        $head['keywords'] = str_replace(" ", ",", $head['title']);
-        $all_categories = $this->Publicmodel->getShopCategories();
-        /*
-         * Tree Builder for categories menu
-         */
+            $data = array();
+            $head = array();
+            $arrSeo = $this->Publicmodel->getSeo('page_home');
+            $head['title'] = @$arrSeo['title'];
+            $head['description'] = @$arrSeo['description'];
+            $head['keywords'] = str_replace(" ", ",", $head['title']);
+            $all_categories = $this->Publicmodel->getShopCategories();
+            /*
+             * Tree Builder for categories menu
+             */
 
-        function buildTree(array $elements, $parentId = 0)
-        {
-            $branch = array();
-            foreach ($elements as $element) {
-                if ($element['sub_for'] == $parentId) {
-                    $children = buildTree($elements, $element['id']);
-                    if ($children) {
-                        $element['children'] = $children;
+            function buildTree(array $elements, $parentId = 0)
+            {
+                $branch = array();
+                foreach ($elements as $element) {
+                    if ($element['sub_for'] == $parentId) {
+                        $children = buildTree($elements, $element['id']);
+                        if ($children) {
+                            $element['children'] = $children;
+                        }
+                        $branch[] = $element;
                     }
-                    $branch[] = $element;
                 }
+                return $branch;
             }
-            return $branch;
-        }
 
-        $data['home_categories'] = $tree = buildTree($all_categories);
-        $data['all_categories'] = $all_categories;
-        $data['countQuantities'] = $this->Publicmodel->getCountQuantities();
-        $data['bestSellers'] = $this->Publicmodel->getbestSellers();
-        $data['sliderProducts'] = $this->Publicmodel->getSliderProducts();
-        $data['products'] = $this->Publicmodel->getProducts($this->num_rows, $page, $_GET);
-        $rowscount = $this->Publicmodel->productsCount($_GET);
-        $data['shippingOrder'] = $this->AdminModel->getValueStore('shippingOrder');
-        $data['showOutOfStock'] = $this->AdminModel->getValueStore('outOfStock');
-        $data['showBrands'] = $this->AdminModel->getValueStore('showBrands');
-        $data['brands'] = $this->AdminModel->getBrands();
-        $data['links_pagination'] = pagination('home', $rowscount, $this->num_rows);
-        $data['promoHorizontal'] = $this->PromoboxModel->getPromoHorizontal(1);
-        $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
-        $data['popularCategori'] = $this->ProductModel->getPopularCategori();
-        $data['partner'] = $this->ProductModel->getPartner();
-        $data['config'] = $this->ConfigModel->getConfig();
+            $data['home_categories'] = $tree = buildTree($all_categories);
+            $data['all_categories'] = $all_categories;
+            $data['countQuantities'] = $this->Publicmodel->getCountQuantities();
+            $data['bestSellers'] = $this->Publicmodel->getbestSellers();
+            $data['sliderProducts'] = $this->Publicmodel->getSliderProducts();
+            $data['products'] = $this->Publicmodel->getProducts($this->num_rows, $page, $_GET);
+            $rowscount = $this->Publicmodel->productsCount($_GET);
+            $data['shippingOrder'] = $this->AdminModel->getValueStore('shippingOrder');
+            $data['showOutOfStock'] = $this->AdminModel->getValueStore('outOfStock');
+            $data['showBrands'] = $this->AdminModel->getValueStore('showBrands');
+            $data['brands'] = $this->AdminModel->getBrands();
+            $data['links_pagination'] = pagination('home', $rowscount, $this->num_rows);
+            $data['promoHorizontal'] = $this->PromoboxModel->getPromoHorizontal(1);
+            $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
+            $data['popularCategori'] = $this->ProductModel->getPopularCategori();
+            $data['partner'] = $this->ProductModel->getPartner();
+            $data['config'] = $this->ConfigModel->getConfig();
 
 
-        // $this->render('index', $head, $data);
-        $this->load->view('templates/blanja/index', $data);
+            // $this->render('index', $head, $data);
+            $this->load->view('templates/blanja/index', $data);
     }
 
     /*
