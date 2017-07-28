@@ -13,7 +13,7 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="<?php echo site_url('/'); ?>">Home</a></li>
-                            <?php
+                            <!-- <?php
                                 foreach ($listCategory as $k => $val) {
                             ?>
                             <li class="dropdown">
@@ -76,7 +76,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <?php } ?>
+                            <?php } ?> -->
                             <li><a href="blog.html">Blog</a></li>
                         </ul>
                     </div>

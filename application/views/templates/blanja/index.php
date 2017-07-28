@@ -4,10 +4,10 @@
 
 <header id="header">
     <!-- main header -->
-    	<?php $this->load->view('templates/blanja/component/mainheader', ['config' => $config]); ?>
+    	<?php $this->load->view('templates/blanja/component/mainheader'); ?>
     <!-- ./main header -->
     <!-- main menu-->
-		<?php $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => $home_categories]); ?>
+		<?php $this->load->view('templates/blanja/component/mainmenu'); ?>
     <!-- ./main menu-->
 </header>
 
@@ -22,7 +22,7 @@
                     </div>
                     <div class="vertical-menu-content">
                         <!-- menu vertical  -->
-                        	<?php $this->load->view('templates/blanja/feature/categories/vertical', ['categories' => $home_categories ]); ?>
+                        	<?php $this->load->view('templates/blanja/feature/categories/vertical'); ?>
                         <!-- menu vertical  -->
                     </div>
                 </div>
@@ -128,7 +128,7 @@
 
 <footer id="footer">
 	<!-- footer information -->
-			<?php $this->load->view('templates/blanja/component/footermenuvertical', ['partner', $partner]) ?>
+			<?php $this->load->view('templates/blanja/component/footermenuvertical') ?>
 	<!-- footer information -->
 
 	<!-- footer icon & social media -->

@@ -11,6 +11,45 @@ class ProductModel extends CI_Model
         parent::__construct();
         $this->load->helper('EncryptNative');
     }
+
+    public function getSideCategory() {
+        try {
+            $query = "select
+                    	dmk.id_menu_kota as idKota,
+                    	dmk.name_menu_kota as nameKota,
+                    	dmk.icon as icKota
+                     from dk_menu_kota as dmk
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    public function getCampus($idKota) {
+        try {
+            $query = "select
+                    	dmk.id_menu_kota as idKota,
+                    	dmk.name_menu_kota as nameKota,
+                    	dmk.icon as icKota,
+                    	k.id_menu_kampus as idKampus,
+                    	k.name_menu_kampus as nameKampus
+                     from dk_menu_kota as dmk
+                    LEFT JOIN dk_menu_kampus as k on dmk.id_menu_kota = k.id_menu_kota
+                    where dmk.id_menu_kota = '".$idKota."'
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+
+
+
+
     public function getPopularCategori() {
         try {
             $query = "select * from dk_popular_categories as dpc

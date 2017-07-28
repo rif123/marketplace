@@ -9,6 +9,30 @@ if (!defined('BASEPATH')) {
  * Returns only hostname
  */
 
+/**
+ * config global
+ */
+
+function getPartner() {
+    $CI =& get_instance();
+    return $CI->ProductModel->getPartner();
+}
+
+/**
+ * get Side category
+ */
+function getSideCategory() {
+     $CI =& get_instance();
+     return $CI->ProductModel->getSideCategory();
+}
+/**
+ * get Campus
+ */
+function getCampus($idKota) {
+     $CI =& get_instance();
+     return $CI->ProductModel->getCampus($idKota);
+}
+
 function getCategoryMenu($id){
     $CI =& get_instance();
     $query = 'select * from translations as T

@@ -1,3 +1,6 @@
+<?php
+    $partner = getPartner();
+?>
 <div class="footer-top">
     <div class="container">
         <div class="row">

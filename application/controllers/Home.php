@@ -28,28 +28,8 @@ class Home extends MY_Controller
             $head['title'] = @$arrSeo['title'];
             $head['description'] = @$arrSeo['description'];
             $head['keywords'] = str_replace(" ", ",", $head['title']);
-            $all_categories = $this->Publicmodel->getShopCategories();
-            /*
-             * Tree Builder for categories menu
-             */
 
-            function buildTree(array $elements, $parentId = 0)
-            {
-                $branch = array();
-                foreach ($elements as $element) {
-                    if ($element['sub_for'] == $parentId) {
-                        $children = buildTree($elements, $element['id']);
-                        if ($children) {
-                            $element['children'] = $children;
-                        }
-                        $branch[] = $element;
-                    }
-                }
-                return $branch;
-            }
 
-            $data['home_categories'] = $tree = buildTree($all_categories);
-            $data['all_categories'] = $all_categories;
             $data['countQuantities'] = $this->Publicmodel->getCountQuantities();
             $data['bestSellers'] = $this->Publicmodel->getbestSellers();
             $data['sliderProducts'] = $this->Publicmodel->getSliderProducts();
@@ -63,11 +43,8 @@ class Home extends MY_Controller
             $data['promoHorizontal'] = $this->PromoboxModel->getPromoHorizontal(1);
             $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
             $data['popularCategori'] = $this->ProductModel->getPopularCategori();
-            $data['partner'] = $this->ProductModel->getPartner();
+
             $data['config'] = $this->ConfigModel->getConfig();
-
-
-            // $this->render('index', $head, $data);
             $this->load->view('templates/blanja/index', $data);
     }
 
