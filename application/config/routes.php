@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 // $route['default_controller'] = 'landing';
 
-$route['default_controller'] = 'home/landing';
+$route['default_controller'] = 'home';
 
 $route['home'] = 'home';
 
@@ -152,6 +152,7 @@ $route['global/search/(:num)'] = "Product/globalSearch";
  */
 // HOME / LOGIN
 $route['admin'] = "admin/home/login";
+
 // ECOMMERCE GROUP
 $route['admin/publish'] = "admin/ecommerce/publish";
 $route['admin/publish/(:num)'] = "admin/ecommerce/publish/index/$1";
