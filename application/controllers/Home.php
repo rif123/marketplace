@@ -28,8 +28,6 @@ class Home extends MY_Controller
             $head['title'] = @$arrSeo['title'];
             $head['description'] = @$arrSeo['description'];
             $head['keywords'] = str_replace(" ", ",", $head['title']);
-
-
             $data['countQuantities'] = $this->Publicmodel->getCountQuantities();
             $data['bestSellers'] = $this->Publicmodel->getbestSellers();
             $data['sliderProducts'] = $this->Publicmodel->getSliderProducts();

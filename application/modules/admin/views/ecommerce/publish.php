@@ -21,11 +21,11 @@ if ($this->session->flashdata('result_publish')) {
 <form method="POST" action="" enctype="multipart/form-data">
     <input type="hidden" value="<?= isset($_POST['folder']) ? $_POST['folder'] : $timeNow ?>" name="folder">
     <?php foreach ($languages->result() as $language) { ?>
-        <input type="hidden" name="translations[]" value="<?= $language->abbr ?>">
+        <input type="hidden" name="translations" value="<?= $language->abbr ?>">
     <?php } foreach ($languages->result() as $language) { ?>
-        <div class="form-group"> 
+        <div class="form-group">
             <label>Title (<?= $language->name ?><img src="<?= base_url('attachments/lang_flags/' . $language->flag) ?>" alt="">)</label>
-            <input type="text" name="title[]" value="<?= $trans_load != null && isset($trans_load[$language->abbr]['title']) ? $trans_load[$language->abbr]['title'] : '' ?>" class="form-control">
+            <input type="text" name="title" value="<?= isset($trans_load['titleProd']) ? $trans_load['titleProd'] : '' ?>" class="form-control">
         </div>
         <?php
     } $i = 0;
@@ -39,7 +39,7 @@ if ($this->session->flashdata('result_publish')) {
             ?>
             <div class="form-group">
                 <label for="basic_description<?= $i ?>">Slider Description (<?= $language->name ?><img src="<?= base_url('attachments/lang_flags/' . $language->flag) ?>" alt="">)</label>
-                <textarea name="basic_description[]" id="basic_description<?= $i ?>" rows="50" class="form-control"><?= $trans_load != null && isset($trans_load[$language->abbr]['basic_description']) ? $trans_load[$language->abbr]['basic_description'] : '' ?></textarea>
+                <textarea name="basic_description" id="basic_description<?= $i ?>" rows="50" class="form-control"><?= isset($trans_load['basicProd']) ? $trans_load['basicProd'] : '' ?></textarea>
                 <script>
                     CKEDITOR.replace('basic_description<?= $i ?>');
                 </script>
@@ -47,7 +47,7 @@ if ($this->session->flashdata('result_publish')) {
             <?php
             $i++;
         }
-        ?> 
+        ?>
     </div>
     <?php
     $i = 0;
@@ -55,7 +55,7 @@ if ($this->session->flashdata('result_publish')) {
         ?>
         <div class="form-group">
             <label for="description<?= $i ?>">Description (<?= $language->name ?><img src="<?= base_url('attachments/lang_flags/' . $language->flag) ?>" alt="">)</label>
-            <textarea name="description[]" id="description<?= $i ?>" rows="50" class="form-control"><?= $trans_load != null && isset($trans_load[$language->abbr]['description']) ? $trans_load[$language->abbr]['description'] : '' ?></textarea>
+            <textarea name="description" id="description<?= $i ?>" rows="50" class="form-control"><?= isset($trans_load['descProd']) ? $trans_load['descProd'] : '' ?></textarea>
             <script>
                 CKEDITOR.replace('description<?= $i ?>');
             </script>
@@ -66,28 +66,41 @@ if ($this->session->flashdata('result_publish')) {
     ?>
     <div class="form-group bordered-group">
         <?php
-        if (isset($_POST['image']) && $_POST['image'] != null) {
-            $image = 'attachments/shop_images/' . $_POST['image'];
-            if (!file_exists($image)) {
-                $image = 'attachments/no-image.png';
+            if (!empty($trans_load)) {
+                $image = 'attachments/shop_images/' .$trans_load['imgProd'];
+                if (!file_exists($image)) {
+                    $image = 'attachments/no-image.png';
+                }
+                ?>
+                <p>Current image:</p>
+                <div>
+                    <img src="<?= base_url($image) ?>" class="img-responsive img-thumbnail" style="max-width:300px; margin-bottom: 5px;">
+                </div>
+                <?php if (isset($_GET['to_lang'])) { ?>
+                    <input type="hidden" name="image" value="<?= $trans_load['imgProd'] ?>">
+                    <?php
+                }
             }
-            ?>
-            <p>Current image:</p>
-            <div>
-                <img src="<?= base_url($image) ?>" class="img-responsive img-thumbnail" style="max-width:300px; margin-bottom: 5px;">
-            </div>
-            <?php if (isset($_GET['to_lang'])) { ?>
-                <input type="hidden" name="image" value="<?= $_POST['image'] ?>">
-                <?php
-            }
-        }
         ?>
         <label for="userfile">Cover Image</label>
         <input type="file" id="userfile" name="userfile">
     </div>
     <div class="form-group bordered-group">
         <div class="others-images-container">
-            <?= $otherImgs ?>
+            <?php
+            foreach ($otherImgs as $i => $value) {
+                $dir = '/attachments/shop_images/';
+                $output = '
+                    <div class="other-img" id="image-container-' . $value['id_image_prod'] . '">
+                        <img src="' . base_url($dir . $value['name_image_prod']) . '" style="width:100px; height: 100px;">
+                        <a href="javascript:void(0);" onclick="removeSecondaryProductImage(\'' . $value['name_image_prod'] . '\',' . $value['id_image_prod']. ')">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </div>
+                   ';
+                echo $output;
+           }
+            ?>
         </div>
         <a href="javascript:void(0);" data-toggle="modal" data-target="#modalMoreImages" class="btn btn-default">Upload more images</a>
     </div>
@@ -95,14 +108,8 @@ if ($this->session->flashdata('result_publish')) {
         <label>Shop Categories</label>
         <select class="selectpicker form-control show-tick show-menu-arrow" name="shop_categorie">
             <?php foreach ($shop_categories as $key_cat => $shop_categorie) { ?>
-                <option <?= isset($_POST['shop_categorie']) && $_POST['shop_categorie'] == $key_cat ? 'selected=""' : '' ?> value="<?= $key_cat ?>">
-                    <?php
-                    foreach ($shop_categorie['info'] as $nameAbbr) {
-                        if ($nameAbbr['abbr'] == $this->config->item('language_abbr')) {
-                            echo $nameAbbr['name'];
-                        }
-                    }
-                    ?>
+                <option <?= !empty($trans_load['id_category'])  && $trans_load['id_category'] == $shop_categorie['id_category'] ? 'selected=""' : '' ?> value="<?= $shop_categorie['id_category'] ?>">
+                    <?php echo  $shop_categorie['name_category']; ?>
                 </option>
             <?php } ?>
         </select>
@@ -113,16 +120,16 @@ if ($this->session->flashdata('result_publish')) {
         ?>
         <div class="form-group for-shop">
             <label>Price (<?= $language->name ?><img src="<?= base_url('attachments/lang_flags/' . $language->flag) ?>" alt="">)</label>
-            <input type="text" name="price[]" placeholder="without currency at the end" value="<?= $trans_load != null && isset($trans_load[$language->abbr]['price']) ? $trans_load[$language->abbr]['price'] : '' ?>" class="form-control">
+            <input type="text" name="price" placeholder="without currency at the end" value="<?= isset($trans_load['priceProd']) ? $trans_load['priceProd'] : '' ?>" class="form-control">
         </div>
         <div class="form-group for-shop">
             <label>Old Price (<?= $language->name ?><img src="<?= base_url('attachments/lang_flags/' . $language->flag) ?>" alt="">)</label>
-            <input type="text" name="old_price[]" placeholder="without currency at the end" value="<?= $trans_load != null && isset($trans_load[$language->abbr]['old_price']) ? $trans_load[$language->abbr]['old_price'] : '' ?>" class="form-control">
+            <input type="text" name="old_price" placeholder="without currency at the end" value="<?= isset($trans_load['oldPriceProd']) ? $trans_load['oldPriceProd'] : '' ?>" class="form-control">
         </div>
     <?php } ?>
     <div class="form-group for-shop">
         <label>Quantity</label>
-        <input type="text" placeholder="number" name="quantity" value="<?= @$_POST['quantity'] ?>" class="form-control" id="quantity">
+        <input type="text" placeholder="number" name="quantity" value="<?= isset($trans_load['qtyProd']) ? $trans_load['qtyProd'] : '' ?>" class="form-control" id="quantity">
     </div>
     <?php if ($showBrands == 1) { ?>
         <div class="form-group for-shop">
@@ -135,18 +142,16 @@ if ($this->session->flashdata('result_publish')) {
         </div>
     <?php } ?>
     <div class="form-group for-shop">
-        <label>In Slider</label>
-        <select class="selectpicker" name="in_slider">
-            <option value="1" <?= isset($_POST['in_slider']) && $_POST['in_slider'] == 1 ? 'selected' : '' ?>>Yes</option>
-            <option value="0" <?= isset($_POST['in_slider']) && $_POST['in_slider'] == 0 || !isset($_POST['in_slider']) ? 'selected' : '' ?>>No</option>
-        </select>
-    </div>
-    <div class="form-group for-shop">
-        <label>Position</label>
-        <input type="text" placeholder="Position number" name="position" value="<?= @$_POST['position'] ?>" class="form-control">
-    </div>
-    <div class="form-group for-shop">
         <a class="btn btn-default btn-xs" data-target="#modalConvertor" data-toggle="modal" href="javascript:void(0)">Convert currency <span class="glyphicon glyphicon-euro"></span></a>
+    </div>
+    <div class="ortherImage">
+        <?php
+            if (!empty($otherImgs)) {
+                foreach ($otherImgs as $key => $value) {
+                    echo "<input type='hidden' class='remove-image-".$value['id_image_prod']."' name='otherImages[]' value='".$value['name_image_prod']."' />";
+                }
+            }
+        ?>
     </div>
     <button type="submit" name="submit" class="btn btn-lg btn-default">Publish</button>
     <?php if ($this->uri->segment(3) !== null) { ?>

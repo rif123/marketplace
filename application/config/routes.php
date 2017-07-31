@@ -264,6 +264,19 @@ $route['admin/changePass'] = "admin/home/home/changePass";
 $route['admin/uploadOthersImages'] = "admin/ecommerce/publish/do_upload_others_images";
 $route['admin/loadOthersImages'] = "admin/ecommerce/publish/loadOthersImages";
 
+// WARUNG
+$route['admin/category'] = "admin/category/category";
+
+
+// warung
+$route['admin/warung'] = "admin/warung/warung";
+$route['admin/warung/(:num)'] = "admin/warung/warung/index/$1";
+
+
+// warung
+$route['admin/variant'] = "admin/variant/variant";
+$route['admin/variant/(:num)'] = "admin/warung/warung/index/$1";
+
 
 // LOGIN
 $route['auth/login'] = "Login";

@@ -10,18 +10,18 @@ if (!defined('BASEPATH')) {
 
 class Publish extends ADMIN_Controller
 {
-
+    private $title = 'Product';
     public function index($id = 0)
     {
-    
         $this->login_check();
         $is_update = false;
         $trans_load = null;
         if ($id > 0 && $_POST == null) {
-            $_POST = $this->AdminModel->getOneproduct($id);
-            $trans_load = $this->AdminModel->getTranslations($id, 'product');
+            $trans_load = $this->AdminModel->getProductOne($id);
         }
+
         if (isset($_POST['submit'])) {
+
             if ($id > 0) {
                 $is_update = true;
             }
@@ -40,37 +40,25 @@ class Publish extends ADMIN_Controller
             if (isset($_GET['to_lang'])) {
                 $id = 0;
             }
-            $translations = array(
-                'abbr' => $_POST['translations'],
-                'title' => $_POST['title'],
-                'basic_description' => $_POST['basic_description'],
-                'description' => $_POST['description'],
-                'price' => $_POST['price'],
-                'old_price' => $_POST['old_price']
-            );
-            $flipped = array_flip($_POST['translations']);
-            $_POST['title_for_url'] = $_POST['title'][$flipped[MY_DEFAULT_LANGUAGE_ABBR]];
-            unset($_POST['translations'], $_POST['title'], $_POST['basic_description'], $_POST['description'], $_POST['price'], $_POST['old_price']); //remove for product
-            $result = $this->AdminModel->setProduct($_POST, $id);
-            if ($result !== false) {
-                $this->AdminModel->setProductTranslation($translations, $result, $is_update); // send to translation table
-                $this->session->set_flashdata('result_publish', 'product is published!');
-                if ($id == 0) {
-                    $this->saveHistory('Success published product');
+
+            if ($is_update) {
+                $result = $this->AdminModel->updateProduct($_POST, $id);
+                $this->AdminModel->updateUploadProd($_POST, $id);
+                if ( $result ==1 ) {
+                    $this->session->set_flashdata('result_add', $this->title.' is added!');
+                    $this->saveHistory('Create City  - ' . $_POST['name']);
                 } else {
-                    $this->saveHistory('Success updated product');
+                    $this->session->set_flashdata('result_fail', 'Problem with '. $this->title.' add!');
+                    $this->saveHistory('Cant add '.$this->title);
+
                 }
-                if (isset($_SESSION['filter']) && $id > 0) {
-                    $get = '';
-                    foreach ($_SESSION['filter'] as $key => $value) {
-                        $get .= trim($key) . '=' . trim($value) . '&';
-                    }
-                    redirect(base_url('admin/products?' . $get));
-                } else {
-                    redirect('admin/products');
-                }
+                redirect('admin/publish');
             } else {
-                $this->session->set_flashdata('result_publish', 'Problem with product publish!');
+                $result = $this->AdminModel->saveProduct($_POST);
+                $this->AdminModel->saveUploadProd($_POST, $result);
+                $this->session->set_flashdata('result_add',$this->title. ' is added!');
+                $this->saveHistory('Create City  - ' . $_POST['name']);
+                  redirect('admin/publish');
             }
         }
         $data = array();
@@ -81,9 +69,9 @@ class Publish extends ADMIN_Controller
         $data['id'] = $id;
         $data['trans_load'] = $trans_load;
         $data['languages'] = $this->AdminModel->getLanguages();
-        $data['shop_categories'] = $this->AdminModel->getShopCategories();
+        $data['shop_categories'] = $this->AdminModel->getCategoryWarung();
         $data['brands'] = $this->AdminModel->getBrands();
-        $data['otherImgs'] = $this->loadOthersImages();
+        $data['otherImgs'] = $this->AdminModel->getImageProd($id);
         $this->load->view('_parts/header', $head);
         $this->load->view('ecommerce/publish', $data);
         $this->load->view('_parts/footer');
@@ -97,15 +85,14 @@ class Publish extends ADMIN_Controller
     public function do_upload_others_images()
     {
         if ($this->input->is_ajax_request()) {
-            $upath = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'shop_images' . DIRECTORY_SEPARATOR . $_POST['folder'] . DIRECTORY_SEPARATOR;
+            $upath = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'shop_images' . DIRECTORY_SEPARATOR;
             if (!file_exists($upath)) {
                 mkdir($upath, 0777);
             }
-
             $this->load->library('upload');
-
             $files = $_FILES;
             $cpt = count($_FILES['others']['name']);
+
             for ($i = 0; $i < $cpt; $i++) {
                 unset($_FILES);
                 $_FILES['others']['name'] = $files['others']['name'][$i];
@@ -113,46 +100,41 @@ class Publish extends ADMIN_Controller
                 $_FILES['others']['tmp_name'] = $files['others']['tmp_name'][$i];
                 $_FILES['others']['error'] = $files['others']['error'][$i];
                 $_FILES['others']['size'] = $files['others']['size'][$i];
-
                 $this->upload->initialize(array(
                     'upload_path' => $upath,
                     'allowed_types' => $this->allowed_img_types
                 ));
-                $this->upload->do_upload('others');
+
+                $result = $this->upload->do_upload('others');
+                $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+                $file_name = $upload_data['file_name'];
+                $response = [
+                        'filename' => $file_name,
+                        'htmlfile' => "<input type='hidden' name='otherImages[]' value='".$file_name."' />"
+                    ];
             }
+            echo json_encode($response);
         }
     }
 
     public function loadOthersImages()
     {
         $output = '';
-        if (isset($_POST['folder']) && $_POST['folder'] != null) {
-            $dir = 'attachments' . DIRECTORY_SEPARATOR . 'shop_images' . DIRECTORY_SEPARATOR . $_POST['folder'] . DIRECTORY_SEPARATOR;
-            if (is_dir($dir)) {
-                if ($dh = opendir($dir)) {
-                    $i = 0;
-                    while (($file = readdir($dh)) !== false) {
-                        if (is_file($dir . $file)) {
-                            $output .= '
-                                <div class="other-img" id="image-container-' . $i . '">
-                                    <img src="' . base_url($dir . $file) . '" style="width:100px; height: 100px;">
-                                    <a href="javascript:void(0);" onclick="removeSecondaryProductImage(\'' . $file . '\', \'' . $_POST['folder'] . '\', ' . $i . ')">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </a>
-                                </div>
-                               ';
-                        }
-                        $i++;
-                    }
-                    closedir($dh);
-                }
-            }
+        if (isset($_POST['filename']) && $_POST['filename'] != null) {
+            $dir = 'attachments' . DIRECTORY_SEPARATOR . 'shop_images' . DIRECTORY_SEPARATOR;
+            $i=1;
+            $file = $_POST['filename'];
+            $output .= '
+                <div class="other-img" id="image-container-' . $i . '">
+                    <img src="' . base_url($dir . $_POST['filename']) . '" style="width:100px; height: 100px;">
+                    <a href="javascript:void(0);" onclick="removeSecondaryProductImage(\'' . $file . '\',' . $i . ')">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+               ';
         }
-        if ($this->input->is_ajax_request()) {
-            echo $output;
-        } else {
-            return $output;
-        }
+        $response['html'] = $output;
+        echo json_encode($response);
     }
 
     /*
@@ -162,8 +144,12 @@ class Publish extends ADMIN_Controller
     public function removeSecondaryImage()
     {
         if ($this->input->is_ajax_request()) {
-            $img = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'shop_images' . DIRECTORY_SEPARATOR . '' . $_POST['folder'] . DIRECTORY_SEPARATOR . $_POST['image'];
-            unlink($img);
+            $img = '.' . DIRECTORY_SEPARATOR . 'attachments' . DIRECTORY_SEPARATOR . 'shop_images' . DIRECTORY_SEPARATOR . ''. $_POST['image'];
+            $this->db->where('name_image_prod', $_POST['image']);
+            $this->db->delete('dk_image_prod');
+            if (file_exists($img)){
+                unlink($img);
+            }
         }
     }
 

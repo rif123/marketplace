@@ -11,7 +11,7 @@ if (!defined('BASEPATH')) {
 class Products extends ADMIN_Controller
 {
 
-    private $num_rows = 10;
+    private $num_rows = 2;
 
     public function index($page = 0)
     {
@@ -52,8 +52,8 @@ class Products extends ADMIN_Controller
             $this->saveHistory('Search for product code - ' . $category);
         }
         $data['products_lang'] = $products_lang = $this->session->userdata('admin_lang_products');
-        $rowscount = $this->AdminModel->productsCount($search_title, $category);
-        $data['products'] = $this->AdminModel->getproducts($this->num_rows, $page, $search_title, $orderby, $category);
+        $rowscount = $this->AdminModel->listProduct($this->num_rows, $page, false, $search_title, $orderby, $category);
+        $data['products'] = $this->AdminModel->listProduct($this->num_rows, $page, true, $search_title, $orderby, $category);
         $data['links_pagination'] = pagination('admin/products', $rowscount, $this->num_rows, 3);
         $data['num_shop_art'] = $this->AdminModel->numShopproducts();
         $data['languages'] = $this->AdminModel->getLanguages();

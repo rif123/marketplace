@@ -309,7 +309,6 @@
                         <div class="sort-product">
                             <select name="price" class="price">
                                 <option value="" <?php echo $this->input->get('sort') == '' ? "selected='selected'" : "" ?>>Harga</option>
-                                <
                                 <option value="desc" <?php echo $this->input->get('sort') == 'desc' ? "selected='selected'" : "" ?> >Product Termurah</option>
                                 <option value="asc" <?php echo $this->input->get('sort') == 'asc' ? "selected='selected'" : "" ?>>Product Tertinggi</option>
                             </select>
@@ -354,6 +353,7 @@
                 window.location = current_base_url+"&sort="+$(this).val();
             }
         });
+
         $('.view-as-grid').click(function(){
             if (sort != ""){
                 window.location = current_base_url+"&sort="+sort+"&view=grid";

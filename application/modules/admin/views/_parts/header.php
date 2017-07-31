@@ -164,7 +164,9 @@
                                     <li><a href="<?= base_url('admin/promoSlider') ?>" <?= urldecode(uri_string()) == 'admin/promoSlider' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Promo Slide</a></li>
                                     <li><a href="<?= base_url('admin/promoItem') ?>" <?= urldecode(uri_string()) == 'admin/promoItem' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Promo Item</a></li>
                                     <li><a href="<?= base_url('admin/menuKampus') ?>" <?= urldecode(uri_string()) == 'admin/menuKampus' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Menu Kampus</a></li>
-                                    <li><a href="<?= base_url('admin/menuKota') ?>" <?= urldecode(uri_string()) == 'admin/menuKota' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Menu Kota</a></li>
+                                    <li><a href="<?= base_url('admin/kategory') ?>" <?= urldecode(uri_string()) == 'admin/menuKota' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Menu Kota</a></li>
+                                    <li><a href="<?= base_url('admin/category') ?>" <?= urldecode(uri_string()) == 'admin/category' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Menu category</a></li>
+                                    <li><a href="<?= base_url('admin/warung') ?>" <?= urldecode(uri_string()) == 'admin/warung' ? 'class="active"' : '' ?>><i class="fa fa-credit-card" aria-hidden="true"></i>Warung</a></li>
 
                                 </ul>
                             </div>

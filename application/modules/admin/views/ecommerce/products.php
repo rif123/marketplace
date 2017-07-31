@@ -20,16 +20,16 @@
     <hr>
     <div class="row">
         <div class="col-xs-12">
-            <div class="well hidden-xs"> 
+            <div class="well hidden-xs">
                 <div class="row">
                     <form method="GET" id="searchProductsForm" action="">
                         <div class="col-sm-4">
                             <label>Order:</label>
                             <select name="order_by" class="form-control selectpicker change-products-form">
-                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'id=desc' ? 'selected=""' : '' ?> value="id=desc">Newest</option>
-                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'id=asc' ? 'selected=""' : '' ?> value="id=asc">Latest</option>
-                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'quantity=asc' ? 'selected=""' : '' ?> value="quantity=asc">Low Quantity</option>
-                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'quantity=desc' ? 'selected=""' : '' ?> value="quantity=desc">High Quantity</option>
+                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'dp.id_product desc' ? 'selected=""' : '' ?> value="dp.id_product desc">Newest</option>
+                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'dp.id_product asc' ? 'selected=""' : '' ?> value="dp.id_product asc">Latest</option>
+                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'dp.quantity_product desc' ? 'selected=""' : '' ?> value="dp.quantity_product desc">Low Quantity</option>
+                                <option <?= isset($_GET['order_by']) && $_GET['order_by'] == 'dp.quantity_product asc' ? 'selected=""' : '' ?> value="dp.quantity_product asc">High Quantity</option>
                             </select>
                         </div>
                         <div class="col-sm-4">
@@ -65,7 +65,7 @@
             </div>
             <hr>
             <?php
-            if ($products->result()) {
+            if (!empty($products)) {
                 ?>
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -74,53 +74,53 @@
                                 <th>Image</th>
                                 <th>Title</th>
                                 <th>Price</th>
+                                <th>Old Price </th>
                                 <th>Quantity</th>
-                                <th>Position</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($products->result() as $row) {
+                            foreach ($products as $row) {
                                 $u_path = 'attachments/shop_images/';
-                                if ($row->image != null && file_exists($u_path . $row->image)) {
-                                    $image = base_url($u_path . $row->image);
+                                if ($row['imgProd'] != null && file_exists($u_path . $row['imgProd'])) {
+                                    $image = base_url($u_path . $row['imgProd']);
                                 } else {
                                     $image = base_url('attachments/no-image.png');
                                 }
                                 ?>
-
                                 <tr>
                                     <td>
                                         <img src="<?= $image ?>" alt="No Image" class="img-thumbnail" style="height:100px;">
                                     </td>
                                     <td>
-                                        <?= $row->title ?>
+                                        <?= $row['titleProd'] ?>
                                     </td>
+                                    <td><?= $row['oldPriceProd'] ?></td>
                                     <td>
-                                        <?= $row->price ?>
+                                        <?= $row['priceProd'] ?>
                                     </td>
                                     <td>
                                         <?php
-                                        if ($row->quantity > 5) {
+                                        if ($row['qtyProd'] > 5) {
                                             $color = 'label-success';
                                         }
-                                        if ($row->quantity <= 5) {
+                                        if ($row['qtyProd'] <= 5) {
                                             $color = 'label-warning';
                                         }
-                                        if ($row->quantity == 0) {
+                                        if ($row['qtyProd']== 0) {
                                             $color = 'label-danger';
                                         }
                                         ?>
                                         <span style="font-size:12px;" class="label <?= $color ?>">
-                                            <?= $row->quantity ?>
+                                            <?= $row['qtyProd'] ?>
                                         </span>
                                     </td>
-                                    <td><?= $row->position ?></td>
+
                                     <td>
                                         <div class="pull-right">
-                                            <a href="<?= base_url('admin/publish/' . $row->id) ?>" class="btn btn-info">Edit</a>
-                                            <a href="<?= base_url('admin/products?delete=' . $row->id) ?>"  class="btn btn-danger confirm-delete">Delete</a>
+                                            <a href="<?= base_url('admin/publish/' .$row['idProd']) ?>" class="btn btn-info">Edit</a>
+                                            <a href="<?= base_url('admin/products?delete=' . $row['idProd']) ?>"  class="btn btn-danger confirm-delete">Delete</a>
                                         </div>
                                     </td>
                                 </tr>

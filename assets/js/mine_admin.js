@@ -226,7 +226,7 @@ $(document).ready(function () {
 
 // Password strenght starts here
 $(document).ready(function () {
-    //PassStrength 
+    //PassStrength
     checkPass();
     $(".new-pass-field").on('keyup', function () {
         checkPass();
@@ -337,11 +337,11 @@ function changeTextualPageStatus(id) {
 }
 
 //products publish
-function removeSecondaryProductImage(image, folder, container) {
+function removeSecondaryProductImage(image, container) {
     $.ajax({
         type: "POST",
         url: urls.removeSecondaryImage,
-        data: {image: image, folder: folder}
+        data: {image: image}
     }).done(function (data) {
         $('#image-container-' + container).remove();
     });
@@ -454,20 +454,36 @@ $('.finish-upload').click(function () {
         data: formData,
         contentType: false,
         cache: false,
+        dataType : 'json',
         processData: false,
         success: function (data)
         {
             $('.finish-upload .finish-text').show();
             $('.finish-upload .loadUploadOthers').hide();
-            reloadOthersImagesContainer();
+            $('.ortherImage').append(data.htmlfile);
+            reloadOthersImagesContainer(data.filename);
             $('#modalMoreImages').modal('hide');
             document.getElementById("uploadImagesForm").reset();
         }
     });
 });
-function reloadOthersImagesContainer() {
-    $('.others-images-container').empty();
-    $('.others-images-container').load(urls.loadOthersImages, {"folder": $('[name="folder"]').val()});
+    function reloadOthersImagesContainer(filename) {
+
+    if (filename != '') {
+        $.ajax({
+            url: urls.loadOthersImages,
+            type: "POST",
+            data: {'filename' : filename},
+            dataType : 'json',
+            success: function (data)
+            {
+                $('.others-images-container').append(data.html);
+            }
+        });
+    } else {
+        $('.others-images-container').empty();
+        $('.others-images-container').load(urls.loadOthersImages, {"folder": $('[name="folder"]').val()});
+    }
 }
 
 // Edit Categories Positions

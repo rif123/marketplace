@@ -18,6 +18,259 @@ class AdminModel extends CI_Model
         }
         return $resultArray;
     }
+// ======================= Category ======================= //
+    public function getCategoryNew($limit, $start, $status = null, $where=[]) {
+
+        if ($status) {
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+
+            $query = "select * from dk_category ".$limit_sql;
+            $result = $this->db->query($query);
+            return $result->result_array();
+        }
+    }
+    public function getCategoryEdit($id) {
+            $query = "select * from dk_category where id_category = ".$id;
+            $result = $this->db->query($query);
+            $res = $result->result_array();
+            if(!empty($res)) {
+                $res = $res[0];
+            }
+            return $res;
+    }
+    public function updateCategory($POST) {
+        $this->db->where('name_category',$POST['name_category']);
+        $result =$this->db->get('dk_category');
+        if ($result->num_rows() == 0) {
+            $data = array(
+              'name_category' => $POST['name_category'],
+            );
+          $this->db->where('id_category', $POST['edit']);
+          $result =$this->db->update('dk_category', $data);
+        }else{
+          $result =false;
+        }
+        return $result;
+    }
+    public function deleteCategory($id) {
+        $this->db->where('id_category', $id);
+        $result = $this->db->delete('dk_category');
+        return $result;
+    }
+// ======================= Category ======================= //
+
+// ======================= WARUNG ======================= //
+    public function getWarung($limit, $start, $status = null, $where=[]) {
+        $query = "select
+            dw.id_warung as idWarung,
+            dw.name_warung as nameWarung,
+            dc.name_category as nameCategory,
+            dcl.name_client as nameClient,
+            dmk.name_menu_kampus as nameKampus
+            from dk_warung as dw
+            LEFT JOIN  dk_category as dc on dw.id_category = dc.id_category
+            LEFT JOIN dk_client as dcl on dw.id_client = dcl.id_client
+            LEFT JOIN dk_menu_kampus as dmk on dw.id_kampus = dmk.id_menu_kampus
+        ";
+        if ($status) {
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+
+            $query.$limit_sql;
+            $result = $this->db->query($query);
+            return $result->result_array();
+        } else {
+            return $this->db->query($query)->num_rows();
+        }
+    }
+
+    public function getWarungEdit($id) {
+            $query = "select * from dk_warung where id_warung= ".$id;
+            $result = $this->db->query($query);
+            $res = $result->result_array();
+            if(!empty($res)) {
+                $res = $res[0];
+            }
+            return $res;
+    }
+
+    public function getCategoryWarung() {
+        return $this->db->get('dk_category')->result_array();
+    }
+    public function getClienWarung() {
+        return $this->db->get('dk_client')->result_array();
+    }
+    public function getKampusWarung() {
+        return $this->db->get('dk_menu_kampus')->result_array();
+    }
+
+
+    public function saveWarung($post){
+        $datasession = $this->session->userdata();
+        $data = array(
+            'name_warung' =>$post['name_warung'],
+            'id_category' =>$post['id_category'],
+            'id_client' =>$post['id_client'],
+            'id_kampus' =>$post['id_kampus'],
+            'creator' => $datasession['authlog']['id'],
+            'created' => date('Y-m-d H:i:s')
+        );
+        $result =$this->db->insert('dk_warung', $data);
+        return $result;
+    }
+
+    public function updateWarung($post) {
+        $datasession = $this->session->userdata();
+        $data = array(
+            'name_warung' =>$post['name_warung'],
+            'id_category' =>$post['id_category'],
+            'id_client' =>$post['id_client'],
+            'id_kampus' =>$post['id_kampus'],
+            'editor' => $datasession['authlog']['id'],
+            'edited' => date('Y-m-d H:i:s')
+        );
+        $this->db->where('id_warung', $post['edit']);
+        $result =$this->db->update('dk_warung', $data);
+        return $result;
+    }
+    public function deleteWarung($id_warung) {
+        $this->db->where('id_warung', $id_warung);
+        $result = $this->db->delete('dk_warung');
+        return $result;
+    }
+// ======================= WARUNG ======================= //
+
+
+
+// ======================= savePRODUCT ======================= //
+    public function saveProduct($post) {
+        $datasession = $this->session->userdata();
+        $datasave['title_product'] = $post['title'];
+        $datasave['desc_product'] = $post['description'];
+        $datasave['basic_produc'] = $post['basic_description'];
+        $datasave['price_product'] = $post['price'];
+        $datasave['old_price_product'] = $post['old_price'];
+        $datasave['quantity_product'] = $post['quantity'];
+        // $datasave['id_warung'] = $post['id_warung'];
+        $datasave['image_product'] = $post['image'];
+        $datasave['creator'] = $datasession['authlog']['id'];
+        $datasave['created'] = date('Y-m-d H:i:s');
+        $this->db->insert('dk_product', $datasave);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+    }
+    public function updateProduct($post, $id) {
+        $datasession = $this->session->userdata();
+        $datasave['title_product'] = $post['title'];
+        $datasave['desc_product'] = $post['description'];
+        $datasave['basic_produc'] = $post['basic_description'];
+        $datasave['price_product'] = $post['price'];
+        $datasave['old_price_product'] = $post['old_price'];
+        $datasave['quantity_product'] = $post['quantity'];
+        // $datasave['id_warung'] = $post['id_warung'];
+        if (!empty($post['image'])) {
+            $datasave['image_product'] = $post['image'];
+        }
+        $datasave['editor'] = $datasession['authlog']['id'];
+        $datasave['edited'] = date('Y-m-d H:i:s');
+        $this->db->where('id_product', $id);
+        return $this->db->update('dk_product', $datasave);
+    }
+    public function saveUploadProd($post, $id) {
+        $datasession = $this->session->userdata();
+        foreach ($post['otherImages'] as $key => $value) {
+            $datasave['name_image_prod'] = $value;
+            $datasave['id_product'] = $id;
+            $datasave['created'] = $datasession['authlog']['id'];
+            $datasave['creator'] = date('Y-m-d H:i:s');
+            $this->db->insert('dk_image_prod', $datasave);
+        }
+    }
+    public function updateUploadProd($post, $id) {
+        $datasession = $this->session->userdata();
+        $this->db->where('id_product', $id);
+        $this->db->delete('dk_image_prod');
+        foreach ($post['otherImages'] as $key => $value) {
+            $datasave['name_image_prod'] = $value;
+            $datasave['id_product'] = $id;
+            $datasave['editor'] = $datasession['authlog']['id'];
+            $datasave['edited'] = date('Y-m-d H:i:s');
+            $this->db->insert('dk_image_prod', $datasave);
+        }
+    }
+    public function getImageProd($id) {
+        $this->db->where('id_product', $id);
+        return $this->db->get('dk_image_prod')->result_array();
+
+    }
+    public function listProduct($limit, $start, $status = null, $search_title="", $orderby="", $category) {
+        $query = "select
+                dp.id_product as idProd,
+                dp.title_product as titleProd,
+                dp.desc_product as descProd,
+                dp.basic_produc as basicProd,
+                dp.price_product as priceProd,
+                dp.old_price_product as oldPriceProd,
+                dp.quantity_product as qtyProd,
+                dp.image_product as imgProd
+                from dk_product as dp
+        ";
+        if ($status) {
+            $limit_sql = '';
+            if ($limit !== null && $start !== null) {
+                $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+            }
+            $where = "";
+            if (!empty($search_title)){
+                $where = "WHERE title_product like '%".$search_title."%'";
+            }
+
+            if (!empty($orderby)){
+                $orderby = "ORDER BY ".$orderby;
+            } else {
+                $orderby = "ORDER BY dp.id_product desc ";
+            }
+
+            $query  = $query.$where.$orderby.$limit_sql;
+
+            $result = $this->db->query($query);
+            return $result->result_array();
+        } else {
+            $where = "";
+            if (!empty($search_title)){
+                $where = "WHERE title_product like '%".$search_title."%'";
+            }
+            $query  = $query.$where;
+            return $this->db->query($query)->num_rows();
+        }
+    }
+
+    public function getProductOne($id) {
+
+        $query = "select
+                dp.id_product as idProd,
+                dp.title_product as titleProd,
+                dp.desc_product as descProd,
+                dp.basic_produc as basicProd,
+                dp.price_product as priceProd,
+                dp.old_price_product as oldPriceProd,
+                dp.quantity_product as qtyProd,
+                dp.image_product as imgProd
+                from dk_product as dp
+                where dp.id_product = '".$id."'
+        ";
+        $listData = $this->db->query($query)->result_array();
+        return !empty($listData[0]) ? $listData[0] : [];
+    }
+// ======================= Category ======================= //
+
+
+
 
     public function getMaxProductId()
     {
@@ -1078,6 +1331,23 @@ public function getBankClient($limit = null, $start = null, $status){
               'name' =>$test['name']
             );
             $result =$this->db->insert('dk_city', $data);
+
+          }else{
+            $result =false;
+          }
+
+
+      return $result;
+    }
+    public function saveCategory($value){
+
+          $this->db->where('name_category',$value['name_category']);
+          $result =$this->db->get('dk_category');
+          if ($result->num_rows() == 0) {
+            $data = array(
+              'name_category' =>$value['name_category']
+            );
+            $result =$this->db->insert('dk_category', $data);
 
           }else{
             $result =false;
