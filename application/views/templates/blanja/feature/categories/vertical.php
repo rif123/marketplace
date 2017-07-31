@@ -16,7 +16,7 @@
                             ?>
                             <div class="col-sm-4 mega-product">
                                 <div class="product-name">
-                                    <a href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($v['nameKampus']).'-'.$v['idKampus']; ?>"><?php echo $v['nameKampus']; ?></a>
+                                    <a href="<?php echo site_url('/c').'/'.sanitizeStringForUrl($v['nameKampus']).'?kampus='.$v['idKampus']; ?>"><?php echo $v['nameKampus']; ?></a>
                                 </div>
                             </div>
                             <?php  } ?>

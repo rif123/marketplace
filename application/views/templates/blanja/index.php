@@ -43,7 +43,7 @@
                             </select>
                         </div>
                         <div class="form-group search-input">
-                            <input type="text" placeholder="Mau Makan apa hari ini?" name="keyWords">
+                            <input type="text" placeholder="Mau Makan apa hari inis?" name="keyWords">
                         </div>
                         <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
                     </form>

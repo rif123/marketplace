@@ -26,6 +26,194 @@ class ProductModel extends CI_Model
             return [];
         }
     }
+    public function getSideMenu($test) {
+        try {
+            $query = " select
+                        dmk.name_menu_kampus as nameKampus
+                        from dk_menu_kampus as dmk
+                        where dmk.id_menu_kampus  = '".$test."'
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getSideBaru($test) {
+        try {
+            $query = " select
+                          dw.id_warung as idWarung,
+                          dmk.id_menu_kampus as idKampus,
+                          dc.id_category as idCategory,
+                          dmk.name_menu_kampus as nameKampus,
+                          dw.name_warung as nameWarung,
+                          dc.name_category as nameCategory
+                          from dk_menu_kampus as dmk
+                          right join dk_warung as dw on dmk.id_menu_kampus = dw.id_kampus
+                          right join dk_category as dc on dw.id_category = dc.id_category
+                          where dmk.id_menu_kampus = '".$test."'
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getSearch() {
+        try {
+            $query = " select
+                        dc.id_category as idCategory,
+                        dc.name_category as nameCategory
+                        from dk_category as dc
+
+                        GROUP BY dc.name_category
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getTopSeller($test) {
+        try {
+          $category ="";
+                  if (!empty($this->input->get('category'))) {
+                      $category = "and dc.id_category  = ".$this->input->get('category');
+                  }
+            $query = " select dp.id_product  as idProd,
+                      	dp.title_product as titleProd,
+                      	dp.image_product as imageProd,
+                      	dp.price_product as priceProd,
+                      	dp.old_price_product as oldPriceProd,
+                      	dp.quantity_product as qtyProd
+                        from dk_favorite_product as dfp
+                        LEFT JOIN dk_product as dp on dfp.id_product = dp.id_product
+                        LEFT JOIN dk_warung as dw on dw.id_warung =  dp.id_warung
+                        LEFT JOIN dk_category as dc on dw.id_category = dc.id_category
+                        where dw.id_kampus = '".$test."' $category
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getListItems($test, $limit=NULL,$start=NULL) {
+
+        try {
+
+          $limit_sql = '';
+                  if ($limit !== null && $start !== null) {
+                  $limit_sql = ' LIMIT ' . $start . ',' . $limit;
+                  }
+          $order ="";
+                    if (!empty($this->input->get('sort'))) {
+                      $order ="ORDER BY priceProd ".$this->input->get('sort');
+
+                    }
+            $category ="";
+                    if (!empty($this->input->get('category'))) {
+                        $category = "and dw.id_warung = ".$this->input->get('category');
+                    }
+            $gc ="";
+                    if (!empty($this->input->get('GC'))) {
+                        $gc = "and dw.id_category = ".$this->input->get('GC');
+                    }
+            $search ="";
+                    if (!empty($this->input->get('search'))) {
+                        $search = "and   dp.title_product LIKE '%".$this->input->get('search')."%'";
+                    }
+
+
+            $query = " select
+                          dp.id_product as idProd,
+                          dp.title_product as titleProd,
+                          dp.desc_product as descProd,
+                          dp.basic_produc as basicProd,
+                          dp.price_product as priceProd,
+                          dp.old_price_product as oldPriceProd,
+                          dp.image_product as imageProd
+                          from dk_product as dp
+                          LEFT JOIN dk_warung as dw on dp.id_warung = dw.id_warung
+                          where dw.id_kampus = '".$test."' $category $search $gc
+                          $order
+
+                          $limit_sql
+                    ";
+                    // print_r($query);die;
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getListItemsCount() {
+        try {
+          $category ="";
+                  if (!empty($this->input->get('category'))) {
+                      $category = "and dw.id_warung = ".$this->input->get('category');
+                  }
+                  $search ="";
+                          if (!empty($this->input->get('search'))) {
+                              $search = "and   dp.title_product LIKE '%".$this->input->get('search')."%'";
+                          }
+                  $gc ="";
+                          if (!empty($this->input->get('GC'))) {
+                              $gc = "and dw.id_category = ".$this->input->get('GC');
+                          }
+        $id_campus =$this->input->get('kampus');
+            $query = " select
+                          dp.id_product as idProd,
+                          dp.title_product as titleProd,
+                          dp.desc_product as descProd,
+                          dp.basic_produc as basicProd,
+                          dp.price_product as priceProd,
+                          dp.old_price_product as oldPriceProd,
+                          dp.image_product as imageProd
+                          from dk_product as dp
+                          LEFT JOIN dk_warung as dw on dp.id_warung = dw.id_warung
+                          where dw.id_kampus = '".$id_campus."' $category $search $gc
+                    ";
+            $alldata = $this->db->query($query)->num_rows();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getBestSeller() {
+        try {
+
+            $query = "select dc.id_category  as idCategory,
+                    	dc.name_category as nameCategory,
+                    	dc.logo_category as logoCategory,
+                    	dc.id_warung as idWarung
+                    from dk_category as dc
+                                        ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+    public function getSeller($value) {
+        try {
+            $query = "select dp.id_product  as idProd,
+                        	dp.title_product as titleProd,
+                        	dp.image_product as imageProd,
+                        	dp.price_product as priceProd,
+                        	dp.old_price_product as oldPriceProd,
+                        	dp.quantity_product as qtyProd from dk_favorite_product as dfp
+                      LEFT JOIN dk_product as dp on dfp.id_product = dp.id_product
+                      LEFT JOIN dk_warung as dw on dw.id_warung =  dp.id_warung
+                      LEFT JOIN dk_category as dc on dw.id_category = dc.id_category
+                      where dc.id_category = '".$value."'
+                    ";
+            $alldata = $this->db->query($query)->result_array();
+            return $alldata;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 
     public function getCampus($idKota) {
         try {
