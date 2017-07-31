@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product extends MY_Controller
 {
 
-    private $num_rows = 10;
+    private $num_rows = 1;
     private $parser = [];
     public function __construct()
     {
@@ -20,68 +20,35 @@ class Product extends MY_Controller
 
     public function category() {
 
-        $all_categories = $this->Publicmodel->getShopCategories();
-        /*
-         * Tree Builder for categories menu
-         */
-        function buildTree(array $elements, $parentId = 0)
-        {
-            $branch = array();
-            foreach ($elements as $element) {
-                if ($element['sub_for'] == $parentId) {
-                    $children = buildTree($elements, $element['id']);
-                    if ($children) {
-                        $element['children'] = $children;
-                    }
-                    $branch[] = $element;
-                }
+        $segment = $this->uri->segment(3);
+        $page = !empty($segment) ? $segment :0;
+
+           $print =$this->input->get('kampus');
+        $sideBaru = $this->ProductModel->getSideBaru($print);
+        $side =[];
+          foreach ($sideBaru as $key => $value) {
+                $side[$value['nameCategory'].'|||'.$value['idCategory']][] =$value;
             }
-            return $branch;
-        }
-        $parser['home_categories'] = $tree = buildTree($all_categories);
 
-        $parser['partner'] = $this->ProductModel->getPartner();
-        $segmentPage = $this->uri->segment(3);
-        $page = !empty($segmentPage) ? $segmentPage : "0";
-        $category = $this->input->get('category');
-        $c2 = $this->input->get('c2');
-        $c3 = $this->input->get('c3');
-        $url  = $this->uri->segment('1')."/".$this->uri->segment('2');
-        if (!empty($category) && !empty($c2) && !empty($c3)) {
-            $idCategory = $c3;
-            $idCategoryOrigin = $c3;
-            $parser['currentUrl'] = base_url(uri_string())."?category=".$category."&c2=".$c2."&c3=".$c3;
-        }  else if (!empty($category) && !empty($c2)) {
-            $idCategory = $c2;
-            $idCategoryOrigin = $c2;
-            $parser['currentUrl'] = base_url(uri_string())."?category=".$category."&c2=".$c2;
-        } else {
-            $idCategory = $category;
-            $idCategoryOrigin = $category;
-            $parser['currentUrl'] = base_url(uri_string())."?category=".$category;
-        }
-        $getWhereCategory = [];
-        foreach ($parser['home_categories'] as $key => $value) {
-            if ($value['idCategory'] == $category) {
-                $getWhereCategory = $value;
-            }
-        }
-
-        $parser['whereCategory'] = $getWhereCategory;
-        $parser['nameCategory'] = getUnIdBySlug($this->uri->segment(2));
-        // for category
-        $itemsDetail  = $this->ProductModel->getDetailProd($idCategory);
-        $parser['reletedProduction']  = $this->ProductModel->getReleted($itemsDetail[0]['shop_categorie'], $itemsDetail[0]['id']);
-        $data['partner'] = $this->ProductModel->getPartner();
-        $parser['listReview'] = $this->ProductModel->listReview($itemsDetail[0]['id']);
-
-        $parser['item'] = $itemsDetail;
-        $parser['listItems'] = $this->ProductModel->listItems($this->num_rows,$page, $idCategoryOrigin, false);
-        $countProd = $this->ProductModel->listItems($this->num_rows,$page, $idCategoryOrigin, true);
+        $parser['sideBaru'] = $side;
+        $parser['topSeller']= $this->ProductModel->getTopSeller($print);
+        $parser['listItemss']= $this->ProductModel->getListItems($print, $this->num_rows,$page);
+        $parser['sideMenu'] = $this->ProductModel->getSideMenu($print);
+        $parser['home_categories'] = $this->ProductModel->getSearch();
+        $parser['links_pagination'] ='';
+        $keyWord = $this->input->get('keyWords');
+        $kampus = $this->input->get('kampus');
+        $url ="c/".$this->uri->segment(2);
+        $countProd = $this->ProductModel->getListItemsCount();
         $parser['links_pagination'] = paginationFrontEnd($url, $countProd, $this->num_rows, 3);
-        $parser['config'] = $this->ConfigModel->getConfig();
+        $category ="";
+        if (!empty($this->input->get('category'))) {
+          $category = "&category=".$this->input->get('category');
+        }
+        $parser['currentUrl'] = base_url(uri_string())."?keyWords=".$keyWord."&kampus=".$kampus.$category;
+;
 
-        $parser['bestSellers'] = $this->Publicmodel->getbestSellers();
+        $parser['config'] = $this->ConfigModel->getConfig();
         $this->load->view('templates/blanja/listCategory',$parser);
 
     }

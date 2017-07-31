@@ -26,6 +26,21 @@ function getSideCategory() {
      return $CI->ProductModel->getSideCategory();
 }
 /**
+ * get Side category
+ */
+function getBestSeller() {
+     $CI =& get_instance();
+     return $CI->ProductModel->getBestSeller();
+}
+/**
+/**
+ * get Side category
+ */
+function getSeller($value) {
+     $CI =& get_instance();
+     return $CI->ProductModel->getSeller($value);
+}
+/**
  * get Campus
  */
 function getCampus($idKota) {
@@ -79,8 +94,11 @@ function generateUrl($pref="p", $itemNames, $idItems){
     }
     return $url;
 }
+
 function numberToRp($num){
-    $rp = number_format($num, 0, ".", ".");
+
+     $rp = number_format($num, 0, ".",".");
+      print_r($rp);die;
     return "Rp.".$rp;
 }
 function getIdBySlug($slug){
