@@ -98,7 +98,7 @@ function generateUrl($pref="p", $itemNames, $idItems){
 function numberToRp($num){
 
      $rp = number_format($num, 0, ".",".");
-      print_r($rp);die;
+    
     return "Rp.".$rp;
 }
 function getIdBySlug($slug){
