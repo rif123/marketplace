@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/tempdkantin/css/style.css');?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/tempdkantin/css/responsive.css');?>" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-	<title>Edo - Product detail</title>
+	  <link rel="stylesheet" href="<?php echo base_url('assets/tempdkantin/plugins/alert/sweetalert.css')?> ">
+	<title>Dkantin</title>
 </head>
 <body>

@@ -14,26 +14,9 @@
 			<div class="row">
 				<div class="box-header">
 					<div class="col-sm-12 col-md-12 col-lg-3"></div>
-					<div class="block-wrap-search col-sm-6 col-md-6 col-lg-5">
-						<div class="advanced-search box-radius">
-                            <form class="form-inline" action="<?php echo site_url('/global/search'); ?>">
-                                <div class="form-group search-category">
-                                    <select id="category-select" class="search-category-select" name="category">
-                                        <option value="">All Categories</option>
-                                        <?php
-                                            foreach ($home_categories as $key => $value) {
-                                                echo "<option value='".$value['id']."'>".$value['name']."</option>";
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group search-input">
-                                    <input type="text" placeholder="Mau Makan apa hari ini?" name="keyWords">
-                                </div>
-                                <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
-                            </form>
-						</div>
-					</div>
+          <!-- main header -->
+          <?php $this->load->view('templates/blanja/feature/product/search', ['home_categories', $home_categories,'$currentUrl',$currentUrl]); ?>
+          <!-- ./main header -->
 					<div class="wrap-block-cl col-sm-3 col-md-3 col-lg-2">
 
 					</div>
@@ -100,7 +83,7 @@
 		<!-- main menu-->
 		<div class="main-menu">
             <!-- main menu-->
-        		<?php $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => $home_categories]); ?>
+        		<?php $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => []]); ?>
             <!-- ./main menu-->
 		</div>
 		<!-- ./main menu-->
@@ -119,18 +102,126 @@
 				</ul>
 			</div>
 		</div>
-    <div class="category-products">
-                  <!-- product list-->
-                  <?php $this->load->view('templates/blanja/feature/promo/promobox', ['promobox' => $promobox]); ?>
-                  <!-- product list-->
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                  <!-- Side Level 2 -->
+                    <?php
+                        if (!empty($sideMenu)) {
+                     ?>
+                      <?php $this->load->view('templates/blanja/feature/promo/sideMenuLevel2Promo', ['sideMenu', $sideMenu ,'sideBaru' ,$sideBaru ]); ?>
+                    <?php  } ?>
+                  <!-- ./Side Level 2 -->
+                  <!-- Catalog -->
+                      <?php $this->load->view('templates/blanja/feature/product/catalog'); ?>
+                  <!-- ./Catalog -->
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-9">
+                <?php
+                    if ($typePromo == 1) {
+                ?>
+                <h3 class="page-title">
+                    <div class="" style="background-color:<?php echo $backcolor; ?>; padding:20px;">
+                        <span style="color:#fff;">
+                            <center>
+                                <?php echo $namePromo ?>
+                            </center>
+                        </span>
+                    </div>
+                </h3>
+                <?php  } else { ?>
+                    <div class="block block-categories-slider">
+                        <div class="list kt-owl-carousel owl-carousel owl-theme owl-loaded">
+                            <div class="owl-item" style="width: 849px; margin-right: 0px;">
+                                <a href="#"><img src="<?php echo base_url('/attachments/slider/').$backcolor; ?>" alt="slider-cat.jpg" style="width:850px; height:230px"></a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php if (empty($listItems)) {?>
+                <div class="sortPagiBar">
+                    <?php
+                        $view = $this->input->get('view');
+                        $sel = "";
+                        if ($view == 'list') {
+                            $sel ='selected';
+                        }
+                    ?>
+                    <ul class="display-product-option">
+                        <li class="view-as-grid <?php echo $sel == '' ? 'selected' : ''?>">
+                            <span>grid</span>
+                        </li>
+                        <li class="view-as-list <?php echo $sel; ?>">
+                            <span>list</span>
+                        </li>
+                    </ul>
+                    <div class="sortPagiBar-inner">
+                        <nav>
+                            <nav>
+                                <?php echo $links_pagination; ?>
+                            </nav>
+                        </nav>
+                        <div class="sort-product">
+                            <select name="price" class="price">
+                                <option value="" <?php echo $this->input->get('sort') == '' ? "selected='selected'" : "" ?>>Harga</option>
+                                <option value="asc" <?php echo $this->input->get('sort') == 'asc' ? "selected='selected'" : "" ?> >Product Termurah</option>
+                                <option value="desc" <?php echo $this->input->get('sort') == 'desc' ? "selected='selected'" : "" ?>>Product Tertinggi</option>
+                            </select>
+                            <div class="icon"><i class="fa fa-sort-alpha-asc"></i></div>
+                        </div>
+                    </div>
+                </div>
 
-              </div>
+                <?php
+                        if ($view == 'list') {
+                    ?>
+                    <div class="category-products">
+                        <!-- product list-->
+                    		<?php $this->load->view('templates/blanja/feature/promo/productlistpromo', ['listItems' => $listItemss, 'links_pagination' => $links_pagination]); ?>
+                        <!-- product list-->
+                    </div>
+                    <?php } else { ?>
+                    <div class="category-products">
+                        <!-- product list-->
+                            <?php $this->load->view('templates/blanja/feature/promo/productGridPromo', ['listItems' => $listItemss, 'links_pagination' => $links_pagination]); ?>
+                        <!-- product list-->
+                    </div>
+                    <?php } ?>
+                <div class="sortPagiBar">
+                    <ul class="display-product-option">
+                        <li class="view-as-grid <?php echo $sel == '' ? 'selected' : ''?>">
+                            <span>grid</span>
+                        </li>
+                        <li class="view-as-list <?php echo $sel; ?>">
+                            <span>list</span>
+                        </li>
+                    </ul>
+                    <div class="sortPagiBar-inner">
+                        <nav>
+                            <?php echo $links_pagination; ?>
+                        </nav>
+                        <div class="sort-product">
+                            <select name="price" class="price">
+                                <option value="" <?php echo $this->input->get('sort') == '' ? "selected='selected'" : "" ?>>Harga</option>
+                                <option value="asc" <?php echo $this->input->get('sort') == 'asc' ? "selected='selected'" : "" ?> >Product Termurah</option>
+                                <option value="desc" <?php echo $this->input->get('sort') == 'desc' ? "selected='selected'" : "" ?>>Product Tertinggi</option>
+                            </select>
+                            <div class="icon"><i class="fa fa-sort-alpha-asc"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <?php }  else { ?>
+                    <div class="alert alert-success" style="margin-top:20%"role="alert">
+                        Maaf barang belum tersedia.
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
 
 	</div>
 	<!-- footer -->
 	<footer id="footer">
         <!-- footer information -->
-                <?php $this->load->view('templates/blanja/component/footermenuvertical', ['partner', $partner]) ?>
+                <?php $this->load->view('templates/blanja/component/footermenuvertical', ['partner', [] ]) ?>
         <!-- footer information -->
 
         <!-- footer icon & social media -->
@@ -155,6 +246,7 @@
                 window.location = current_base_url+"&sort="+$(this).val();
             }
         });
+
         $('.view-as-grid').click(function(){
             if (sort != ""){
                 window.location = current_base_url+"&sort="+sort+"&view=grid";

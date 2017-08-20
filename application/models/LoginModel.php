@@ -26,10 +26,8 @@ class LoginModel extends CI_Model
             return false;
         }
     }
-
     public function doLogin($input) {
-
-        $query = $this->db->get_where('dk_client', array('name_client' => $input['name_client'], 'password_client' => md5($input['password_client'])));
+        $query = $this->db->get_where('dk_client', array('name_client' => $input['name_client'], 'password_client' => md5($input['password_client']), 'status_client' => '3') );
         if ($query->num_rows() >= 1) {
             $data['status']  = true;
             $data['content']  = $query->row();

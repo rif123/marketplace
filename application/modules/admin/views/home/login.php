@@ -9,7 +9,7 @@
 </style>
 <div class="container">
     <div class="login-container">
-        <div id="output">       
+        <div id="output">
             <?php
             if ($this->session->flashdata('err_login')) {
                 ?>

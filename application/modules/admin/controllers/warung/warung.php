@@ -20,6 +20,7 @@ class Warung extends ADMIN_Controller
         $head['title'] = 'Administration -Menu Kota';
         $head['description'] = '!';
         $head['keywords'] = '';
+        
         // CONFIG FOR PAGINATION
         $data['lists'] = $this->AdminModel->getwarung($this->num_rows, $page, true);
         $rowscount = $this->AdminModel->getwarung($this->num_rows, $page, false);

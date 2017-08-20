@@ -60,10 +60,53 @@ function getCategoryMenu($id){
 
 function getDetailPromo($id){
     $CI =& get_instance();
-    $query = "select * from dk_promo_items as dpi
-                LEFT JOIN translations as T on dpi.id_prod = T.id and T.type='product'
-                LEFT JOIN products as P on T.for_id = P.id
+    $query = "  select * from dk_promo_items as dpi
+                LEFT JOIN dk_product as dp on dpi.id_prod  = dp.id_product
                 where dpi.dk_promotion_id = '".$id."'
+                LIMIT 10
+                ";
+
+    $allData = $CI->db->query($query)->result_array();
+    return $allData;
+}
+function getDetailPromoCategory($id){
+    $CI =& get_instance();
+    $loc = $CI->session->userdata('location');
+    $where = "";
+    if (!empty($loc['kampus'])) {
+        $where .= " AND dw.id_kampus = ".$loc['kampus'];
+    }
+    if (!empty($loc['kota'])) {
+        $where .= " AND dpi.id_menu_kota = ".$loc['kota'];
+    }
+    $query = "  select * from dk_promo_items as dpi
+                LEFT JOIN dk_product as dp on dpi.id_prod  = dp.id_product
+                LEFT JOIN dk_warung as dw on dw.id_warung = dp.id_warung
+                LEFT JOIN dk_category as dc on dw.id_category = dc.id_category
+                where dc.id_category = '".$id."'
+                ".$where."
+                LIMIT 10
+                ";
+        $allData = $CI->db->query($query)->result_array();
+    return $allData;
+}
+function getItemsPopuler($id){
+    $CI =& get_instance();
+    $loc = $CI->session->userdata('location');
+    $where = "";
+    if (!empty($loc['kampus'])) {
+        $where .= " AND dw.id_kampus = ".$loc['kampus'];
+    }
+    if (!empty($loc['kota'])) {
+        $where .= " AND dmkot.id_menu_kota = ".$loc['kota'];
+    }
+    $query = "  select * from dk_product as dp
+                LEFT JOIN dk_warung as dw on dw.id_warung = dp.id_warung
+                LEFT JOIN dk_category as dc on dw.id_category = dc.id_category
+                LEFT JOIN dk_menu_kampus as dmk on dw.id_kampus = dmk.id_menu_kampus
+                LEFT JOIN dk_menu_kota as dmkot on dmk.id_menu_kota = dmkot.id_menu_kota
+                where dc.id_category = '".$id."'
+                ".$where."
                 LIMIT 10
                 ";
     $allData = $CI->db->query($query)->result_array();
@@ -98,7 +141,7 @@ function generateUrl($pref="p", $itemNames, $idItems){
 function numberToRp($num){
 
      $rp = number_format($num, 0, ".",".");
-    
+
     return "Rp.".$rp;
 }
 function getIdBySlug($slug){
@@ -132,4 +175,87 @@ function getWishlist() {
     ";
     $allData = $CI->db->query($query);
     return $allData;
+}
+function generateQueryString($custom=[]) {
+    $CI =& get_instance();
+    $query  =  $_GET;
+    $url = http_build_query($query);
+    if (!empty($url)) {
+        $url = "?".$url;
+    }
+
+    if (!empty($custom)) {
+        foreach ($custom as $key => $value) {
+            // if (empty($CI->input->get($key))) {
+
+                if (!empty($url)) {
+                    if (!empty($value)) {
+                        $url .=  "&".$key."=".$value;
+                    }
+                } else {
+                    $url =  "?".$key."=".$value;
+                }
+            // }
+        }
+    }
+    return $url;
+}
+
+function getImageOther($idProd) {
+    $CI =& get_instance();
+    $CI->db->where('id_product', $idProd);
+    $allData = $CI->db->get('dk_image_prod')->result_array();
+    return $allData;
+}
+
+
+function getSession(){
+    $CI =& get_instance();
+    $auth = $CI->session->userdata('auth');
+    return $auth;
+}
+
+
+function getCountCart(){
+    $CI =& get_instance();
+    $session = getSession();
+    if (!empty($session->id_client)) {
+        $q  = " select
+                sum(dp.price_product * dc.quantity) as priceTotal from dk_cart as dc
+                LEFT JOIN dk_product as dp on dc.id_product = dp.id_product
+                where dc.id_client = '".$session->id_client."'
+                ";
+        $result  = $CI->db->query($q)->row();
+        $return =  $result->priceTotal;
+    } else {
+        $return = 0;
+    }
+    return $return;
+}
+function getListProduct($id_order) {
+    $CI =& get_instance();
+    $session = getSession();
+    if (!empty($session->id_client)) {
+        $q  = "
+                select dod.id_order_detail, dod.quantity, dod.id_product, dp.title_product, dp.price_product, dp.image_product
+                from dk_order_detail as dod
+                LEFT JOIN dk_product as dp on dod.id_product = dp.id_product
+                WHERE dod.id_order = '".$id_order."'
+                ";
+        $return  = $CI->db->query($q)->result_array();
+    } else {
+        $return = [];
+    }
+    return $return;
+}
+function getShipping($id_shipping) {
+    $CI =& get_instance();
+    $query = "select * , dc.`name` as kota, dp.`name` as prov
+            from dk_shipping as dks
+            LEFT JOIN dk_city as dc on dks.id_city = dc.id_city
+            LEFT JOIN dk_prov as dp on dc.id_prov = dp.id_prov
+            where dks.id_shipping = '".$id_shipping."'
+            ";
+    $result = $CI->db->query($query)->row();
+    return $result;
 }

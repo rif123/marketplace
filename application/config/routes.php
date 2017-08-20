@@ -53,8 +53,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // $route['default_controller'] = 'landing';
 
 $route['default_controller'] = 'home';
-
 $route['home'] = 'home';
+$route['landing'] = 'home/landing';
+$route['landing/getkota'] = 'product/getKota';
+$route['landing/set-kota-kampus'] = 'product/setKotaKampus';
+
+$route['lokasi/switch-loc'] = 'product/switchLoc';
+
 
 // Load default conrtoller when have only currency from multilanguage
 $route['^(\w{2})$'] = $route['default_controller'];
@@ -106,15 +111,16 @@ $route['(\w{2})/shopping-cart'] = "ShoppingCartPage";
 $route['page/(:any)'] = "page/index/$1";
 $route['(\w{2})/page/(:any)'] = "page/index/$2";
 
-// Confirm link
-$route['confirm/(:any)'] = "home/confirmLink/$1";
-
 // Site Multilanguage
 $route['^(\w{2})/(.*)$'] = '$2';
 
 
 // PROMOBOX
 $route['promobox/(:any)'] = "Promobox/detail";
+$route['promobox/(:any)/(:num)'] = "Promobox/detail";
+
+
+
 $route['p/(:any)'] = "Product/detail";
 $route['partner/(:any)'] = "Partner/detail";
 $route['c/(:any)'] = "Product/category";
@@ -123,6 +129,20 @@ $route['wishlist'] = "Product/wishlist";
 $route['add-wishlist'] = "Product/addWishlist";
 $route['delete-wishlist'] = "Product/delWishlist";
 
+$route['cart'] = "Product/cart";
+$route['cart/order'] = "Product/cartOrder";
+$route['cart/update-order'] = "Product/updateCartOrder";
+$route['cart/delete-order'] = "Product/deleteCartOrder";
+
+$route['shipping/order'] = "Product/orderShipping";
+$route['shipping/add-shipping'] = "Product/doaddShipping";
+$route['shipping/get-city'] = "Product/getCity";
+$route['shipping/payment'] = "Product/dopayment";
+$route['shipping/order-store'] = "Product/doOrderStore";
+$route['shipping/order-status'] = "Product/doOrderStatus";
+$route['confirm/pay-order'] = "Product/confirmOrder";
+$route['confirm/post-order'] = "Product/doConfirmOrder";
+$route['history/order'] = "HistoryOrder/order";
 
 $route['(:any)/(:num)/(:num)'] = "Product/category";
 
@@ -146,7 +166,7 @@ $route['(:any)/(:num)'] = "Product/category";
 
 // Global Search
 $route['global/search'] = "Product/globalSearch";
-$route['global/search/(:num)'] = "Product/globalSearch";
+$route['global/search/(:num)'] = "Product/globalSearch/$1";
 /*
  * Admin Controllers Route
  */
@@ -175,7 +195,7 @@ $route['admin/blogpublish/(:num)'] = "admin/blog/BlogPublish/index/$1";
 $route['admin/blog'] = "admin/blog/blog";
 $route['admin/blog/(:num)'] = "admin/blog/blog/index/$1";
 // SETTINGS GROUP
-$route['admin/settings'] = "admin/settings/settings";
+
 $route['admin/styling'] = "admin/settings/styling";
 $route['admin/templates'] = "admin/settings/templates";
 $route['admin/titles'] = "admin/settings/titles";
@@ -264,7 +284,7 @@ $route['admin/changePass'] = "admin/home/home/changePass";
 $route['admin/uploadOthersImages'] = "admin/ecommerce/publish/do_upload_others_images";
 $route['admin/loadOthersImages'] = "admin/ecommerce/publish/loadOthersImages";
 
-// WARUNG
+// category
 $route['admin/category'] = "admin/category/category";
 
 
@@ -273,16 +293,35 @@ $route['admin/warung'] = "admin/warung/warung";
 $route['admin/warung/(:num)'] = "admin/warung/warung/index/$1";
 
 
+
+// merchant
+$route['admin/prod-merchant'] = "admin/adminMerchant/adminMerchant";
+$route['admin/prod-merchant/(:num)'] = "admin/adminMerchant/adminMerchant/index/$1";
+$route['admin/prod-order-merchant'] = "admin/adminMerchant/adminMerchant/orderMerchant";
+
+
+$route['admin/prod-list-merchant'] = "admin/adminMerchant/adminMerchant/listProdMerchant";
+$route['admin/settings'] = "admin/settings/settings";
+
+
+// users
+$route['admin/merchant'] = "admin/merchant/merchant";
+$route['admin/merchant/(:num)'] = "admin/merchant/merchant/index/$1";
 // warung
 $route['admin/variant'] = "admin/variant/variant";
 $route['admin/variant/(:num)'] = "admin/warung/warung/index/$1";
 
+$route['admin/promo-product'] = "admin/promo/promoItem/getProduct";
 
 // LOGIN
 $route['auth/login'] = "Login";
 $route['auth/login/dosave'] = "Login/register";
 $route['auth/login/doLogin'] = "Login/doLogin";
 $route['auth/logout'] = "Login/doLogout";
+
+$route['auth/merchant'] = "MerchantController/authMerchant";
+$route['auth/merchant/doLogin'] = "MerchantController/doLogin";
+
 
 
 $route['api/v1/promobox'] = "api/v1/promoboxs";

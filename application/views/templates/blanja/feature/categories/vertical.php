@@ -4,7 +4,10 @@
     foreach ($categories as $key => $val) {
     ?>
     <li class="ef4896">
-        <a href="#"><img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/').$val['icKota']; ?>"><?php echo $val['nameKota']; ?></a>
+        <a href="#" class="kotaEvent" data-id-kota="<?php  echo $val['idKota']; ?>">
+            <img class="icon-menu" alt="Funky roots" src="<?php echo base_url('assets/tempdkantin/data/').$val['icKota']; ?>">
+            <?php echo $val['nameKota']; ?>
+        </a>
         <div class="vertical-dropdown-menu">
             <div class="vertical-groups col-sm-12">
                 <div class="row">

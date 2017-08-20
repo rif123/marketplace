@@ -18,14 +18,13 @@ class PopulerCategory extends ADMIN_Controller
         $head['title'] = 'Administration -Popular Category';
         $head['description'] = '!';
         $head['keywords'] = '';
-
         $data['form'] = $this->AdminModel->getPopuler();
 
+        $data['listKota'] = $this->AdminModel->getKota();
         // CONFIG FOR PAGINATION
         $data['populerCategory'] = $this->AdminModel->getPopulerCategory($this->num_rows, $page, true);
         $rowscount = $this->AdminModel->getPopulerCategory($this->num_rows, $page, false);
         $data['links_pagination'] = pagination('admin/populerCategory', $rowscount, $this->num_rows, 3);
-
         // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
 
         // ACTION SAVE

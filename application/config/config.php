@@ -583,7 +583,34 @@ $config['from'] = 'rifky.rachman@gmail.com';
 $config['label'] = 'Admin DKantin';
 
 
+
+$config['listGender']= [
+    'Pria',
+    'Wanita'
+];
+
+
 $config['statusPromo']= [
     'Active',
     'No-Active'
+];
+$config['statusOrder']= [
+    '1' => 'Belum Di bayar',
+    '2' => 'Menunggu Pembayaran',
+    '3' => 'On Confirmasi',
+    '4' => 'Sedang Dikemas',
+    '5' => 'Sedang Dikirim',
+    '6' => 'Pesan sudah di terima',
+    '7' => 'Gagal',
+];
+$config['actionOrder']= [
+    '4' => 'Dikemas',
+    '5' => 'Dikirim',
+    '6' => 'Success',
+    '7' => 'Reject',
+];
+$config['statusClient']= [
+    '1' => 'Admin',
+    '2' => 'Merchant',
+    '3' => 'client',
 ];

@@ -22,14 +22,12 @@
                     <ul>
                         <?php
                           foreach ($value as $k => $v) {
-
                          ?>
                       <li><span></span><a href="<?php echo site_url('/c').'/'.sanitizeStringForUrl($v['nameKampus']).'?kampus='.$v['idKampus'].'&category='.$v['idWarung']; ?>"><?php echo $v['nameWarung'] ?></a></li>
-
                       <?php } ?>
                     </ul>
                 </li>
-                    <?php } ?>
+                <?php } ?>
             </ul>
         </div>
     </div>

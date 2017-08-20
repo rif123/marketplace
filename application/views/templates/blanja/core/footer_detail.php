@@ -12,5 +12,10 @@
 <!-- ./COUNTDOWN -->
 <script type="text/javascript" src="<?php echo base_url('assets/tempdkantin/js/jquery.actual.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/tempdkantin/js/script.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/tempdkantin/plugins/alert/sweetalert.min.js'); ?>"></script>
+
+<?php     $this->load->view('templates/blanja/core/alertNotif');  ?>
+
 </body>
 </html>

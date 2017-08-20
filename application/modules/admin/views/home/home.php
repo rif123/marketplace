@@ -22,10 +22,7 @@
                             <i class="fa fa-clock-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">
-                                <div style="font-size: 25px;"><?= date('d.m.Y', $_SESSION['last_login']) ?></div>
-                                <div style="font-size: 16px;"><?= date('H:i:s', $_SESSION['last_login']) ?></div>
-                            </div>
+                            
                             <div>Last login!</div>
                         </div>
                     </div>
@@ -308,7 +305,7 @@
     });
     });
     /*
-     * Chart for orders by mount/year 
+     * Chart for orders by mount/year
      */
     $(function () {
     Highcharts.chart('container-by-month', {

@@ -19,15 +19,22 @@
                                 <span class="line1">Call us:<br><strong><?php echo $config[0]['telp_config']; ?></strong></span>
                                 </a>
                             </li>
-                            <li class="item">
-                                <a href="<?php echo site_url('/wishlist'); ?>">
-                                <span class="icon wish-list"></span>
-                                <span class="line1">Wish<br><strong>List</strong></span>
-                                </a>
-                            </li>
                             <?php
                                 if ($this->session->userdata('auth')) {
                             ?>
+                            <li class="item">
+                                <a href="<?php echo site_url('/confirm/pay-order')?>">
+                                <span class="icon"><i class="fa fa-exchange"></i></span>
+                                <span class="line1">Konfirmasi<br>Pembayaran</span>
+                                </a>
+                            </li>
+
+                            <li class="item">
+                                <a href="<?php echo site_url('/history/order')?>">
+                                <span class="icon"><i class="fa fa-history" aria-hidden="true"></i></span>
+                                <span class="line1">History<br>Order</span>
+                                </a>
+                            </li>
                             <li class="item">
                                 <a href="<?php echo site_url('/auth/logout'); ?>">
                                     <span class="icon login"></span>
@@ -41,7 +48,12 @@
                                         <span class="line1">Login/Registrasi<br><strong>Masuk Website</strong></span>
                                     </a>
                                 </li>
-
+                                <li class="item">
+                                    <a href="<?php echo site_url('/auth/merchant'); ?>">
+                                        <span class="icon login"></span>
+                                        <span class="line1">Login Merchant<br><strong>Masuk Dashboard</strong></span>
+                                    </a>
+                                </li>
                             <?php } ?>
                             <?php if ($this->session->userdata('chart')) { ?>
                             <li class="item">
@@ -51,10 +63,14 @@
                                 </a>
                             </li>
                             <?php } ?>
+
+
                             <li class="item item-cart block-wrap-cart">
-                                <a href="cart.html">
+                                <a href="<?php echo site_url('/cart/order'); ?>">
                                 <span class="icon cart"></span>
-                                <span class="line1">Shopping Cart<br><strong>$0.00</strong></span>
+                                <span class="line1">Shopping Cart<br>
+                                    <strong><?php echo numberToRp(getCountCart()); ?></strong>
+                                </span>
                                 </a>
                                 <?php if ($this->session->userdata('chart')) { ?>
                                 <div class="block-mini-cart">

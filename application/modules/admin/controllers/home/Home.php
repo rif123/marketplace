@@ -51,8 +51,20 @@ class Home extends ADMIN_Controller
 
     public function logout()
     {
+        $authlog = $this->session->userdata('authlog');
+        switch ($authlog['status_client']) {
+            case 3:
+                $url = "admin";
+                break;
+            case 2:
+                $url = "auth/merchant";
+                break;
+            default:
+                $url = "admin";
+                break;
+        }
         $this->session->sess_destroy();
-        redirect('admin');
+        redirect($url);
     }
 
 }

@@ -1,17 +1,12 @@
-<?php
-  $bestSellers = getBestSeller();
-
- ?>
-
+<?php $bestSellers = getBestSeller();?>
 <div class="col-sm-12">
     <div class="block 18 block-tabs">
         <div class="block-head">
             <div class="block-title">
-                <div class="block-title-text text-lg">new arrivals</div>
+                <div class="block-title-text text-lg">PENJUALAN TERBAIK</div>
             </div>
             <ul class="nav-tab">
             <?php
-
             $status =0;
             foreach ($bestSellers as $key => $value) {
               $active ="active";
@@ -19,9 +14,9 @@
                 $active ="";
               }
              ?>
-                <li class="<?php echo $active; ?>"><a data-toggle="tab" href="#tab-<?php echo $value['idCategory'];?>" ><?php echo $value['nameCategory']; ?></a></li>
-
-
+                <li class="<?php echo $active; ?>">
+                    <a data-toggle="tab" href="#tab-<?php echo $value['idCategory'];?>" ><?php echo $value['nameCategory']; ?></a>
+                </li>
             <?php $status = 1; }   ?>
           </ul>
         </div>
@@ -50,7 +45,8 @@
                             <div class="product-container">
                                 <div class="product-left">
                                     <div class="product-thumb">
-                                        <a class="product-img" href="#"><img src="<?php echo base_url('assets/tempdkantin/data/').$value['imageProd']; ?>" alt="Product"></a>
+                                        <a class="product-img" href="#">
+                                            <img src="<?php echo base_url('attachments/shop_images/').$value['imageProd']; ?>" alt="Product"></a>
                                         <a title="Quick View" href="#" class="btn-quick-view">Quick View</a>
                                     </div>
                                 </div>

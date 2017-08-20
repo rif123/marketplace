@@ -11,6 +11,11 @@ if (!defined('BASEPATH')) {
 class Publish extends ADMIN_Controller
 {
     private $title = 'Product';
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->Model('ProductModel');
+    }
     public function index($id = 0)
     {
         $this->login_check();
@@ -72,6 +77,9 @@ class Publish extends ADMIN_Controller
         $data['shop_categories'] = $this->AdminModel->getCategoryWarung();
         $data['brands'] = $this->AdminModel->getBrands();
         $data['otherImgs'] = $this->AdminModel->getImageProd($id);
+        $data['listWarung'] = $this->ProductModel->getWarung();
+        // echo "<pre>";
+        // print_R($data['getWarung']);die;
         $this->load->view('_parts/header', $head);
         $this->load->view('ecommerce/publish', $data);
         $this->load->view('_parts/footer');

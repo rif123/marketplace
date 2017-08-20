@@ -23,11 +23,21 @@ class Databank extends ADMIN_Controller
         $data['bank'] = $this->AdminModel->getBank($this->num_rows, $page, true);
         $rowscount = $this->AdminModel->getBank($this->num_rows, $page, false);
         $data['links_pagination'] = pagination('admin/databank', $rowscount, $this->num_rows, 3);
-
-        // $this->form_validation->set_rules('name_bank', 'User', 'trim|required');
-
         // ACTION SAVE
-        if (isset($_POST['save'])) {
+        if (isset($_POST['save'])){
+            if (!empty($_FILES['filetransfer']['name'])) {
+                $config['upload_path'] = './attachments/shop_images/';
+                $config['allowed_types'] = $this->allowed_img_types;
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('image_bank')) {
+                    log_message('error', 'Image Upload Error: ' . $this->upload->display_errors());
+                }
+                $img = $this->upload->data();
+                if ($img['file_name'] != null) {
+                    $_POST['image'] = $img['file_name'];
+                }
+            }
            $result =$this->AdminModel->saveDataBank($_POST);
               if ($result ==1) {
                 $this->session->set_flashdata('result_add', 'Bank is added!');
@@ -62,6 +72,19 @@ class Databank extends ADMIN_Controller
 
         // ACTION UPDATE
         if (isset($_POST['update'])) {
+            if (!empty($_FILES['image_bank']['name'])) {
+                $config['upload_path'] = './attachments/shop_images/';
+                $config['allowed_types'] = $this->allowed_img_types;
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('image_bank')) {
+                    log_message('error', 'Image Upload Error: ' . $this->upload->display_errors());
+                }
+                $img = $this->upload->data();
+                if ($img['file_name'] != null) {
+                    $_POST['image'] = $img['file_name'];
+                }
+            }
           $result  =$this->AdminModel->updateBank($_POST);
           if ($result ==1) {
             $this->session->set_flashdata('result_add', 'Bank is Update!');
@@ -70,12 +93,9 @@ class Databank extends ADMIN_Controller
           }else{
             $this->session->set_flashdata('result_fail', 'Problem with Bank Update!');
             $this->saveHistory('Cant add admin user');
-
           }
-
           redirect('admin/databank');
         }
-
         //TAMPIL DATA
         $this->load->view('_parts/header', $head);
         $this->load->view('bank/databank', $data);

@@ -6,7 +6,6 @@ class Home extends MY_Controller
 {
 
     private $num_rows = 20;
-
     public function __construct()
     {
         parent::__construct();
@@ -18,10 +17,15 @@ class Home extends MY_Controller
     }
 
     public function landing() {
-        $this->load->view('templates/blanja/landing');
+        $data['listKota'] = $this->Publicmodel->getListKota();
+        $this->load->view('templates/blanja/landing', $data);
     }
+
     public function index($page = 0)
     {
+
+        $getKampus = $this->session->userdata('location');
+        if (!empty($getKampus)) {
             $data = array();
             $head = array();
             $arrSeo = $this->Publicmodel->getSeo('page_home');
@@ -29,7 +33,22 @@ class Home extends MY_Controller
             $head['description'] = @$arrSeo['description'];
             $head['keywords'] = str_replace(" ", ",", $head['title']);
             $data['countQuantities'] = $this->Publicmodel->getCountQuantities();
-            $data['bestSellers'] = $this->Publicmodel->getbestSellers();
+
+            // promo slider type = 2
+            $data['promoSlider'] = $this->PromoboxModel->getPromo(2);
+
+            //  promo discount type  = 1
+            $data['promoDiscount'] = $this->PromoboxModel->getPromo(1);
+
+            // penjualan terbaik
+
+            // HOT DEALS
+            $data['hotDeal'] = $this->PromoboxModel->getPromo(1);
+
+            // popular category
+            $data['popularCategori'] = $this->PromoboxModel->getPopularCategori();
+
+
             $data['sliderProducts'] = $this->Publicmodel->getSliderProducts();
             $data['products'] = $this->Publicmodel->getProducts($this->num_rows, $page, $_GET);
             $rowscount = $this->Publicmodel->productsCount($_GET);
@@ -38,12 +57,17 @@ class Home extends MY_Controller
             $data['showBrands'] = $this->AdminModel->getValueStore('showBrands');
             $data['brands'] = $this->AdminModel->getBrands();
             $data['links_pagination'] = pagination('home', $rowscount, $this->num_rows);
-            $data['promoHorizontal'] = $this->PromoboxModel->getPromoHorizontal(1);
-            $data['promoSlider'] = $this->PromoboxModel->getPromoHorizontal(2);
-            $data['popularCategori'] = $this->ProductModel->getPopularCategori();
 
+
+            $data['bestSellers'] = $this->Publicmodel->getbestSellers();
+
+
+            $data['listSearchcategory'] = $this->ProductModel->getCategorySearch();
             $data['config'] = $this->ConfigModel->getConfig();
             $this->load->view('templates/blanja/index', $data);
+        } else {
+            Redirect('/landing');
+        }
     }
 
     /*

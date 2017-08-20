@@ -17,11 +17,11 @@
 						<div class="advanced-search box-radius">
                             <form class="form-inline" action="<?php echo site_url('/search'); ?>">
                                 <div class="form-group search-category">
-                                    <select id="category-select" class="search-category-select" name="category">
+                                    <select id="category-select" class="search-category-select" name="id_category">
                                         <option value="">All Categories</option>
                                         <?php
                                             foreach ($home_categories as $key => $value) {
-                                                echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                                                echo "<option value='".$value['idCategory']."'>".$value['nameCategory']."</option>";
                                             }
                                         ?>
                                     </select>
@@ -48,7 +48,9 @@
 		<!-- main menu-->
 		<div class="main-menu">
             <!-- main menu-->
-        		<?php $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => $home_categories]); ?>
+        		<?php
+                $this->load->view('templates/blanja/component/mainmenu',  ['listCategory' => $home_categories]);
+                ?>
             <!-- ./main menu-->
 		</div>
 		<!-- ./main menu-->
@@ -72,33 +74,28 @@
 				<div class="col-sm-5">
 					<div class="block block-product-image">
 						<div class="product-image easyzoom easyzoom--overlay easyzoom--with-thumbnails">
-							<a href="<?php echo base_url('/attachments/shop_images/'). $item[0]['image']; ?>">
-								<img src="<?php echo base_url('/attachments/shop_images/'). $item[0]['image']; ?>" alt="Product" width="450" height="450" />
+							<a href="<?php echo base_url('/attachments/shop_images/'). $item[0]['image_product']; ?>">
+								<img src="<?php echo base_url('/attachments/shop_images/'). $item[0]['image_product']; ?>" alt="Product" width="450" height="450" />
 							</a>
 						</div>
-						<div class="text"><?php echo $item[0]['title']?></div>
+						<div class="text"><?php echo $item[0]['title_product']?></div>
 						<div class="product-list-thumb">
 							<ul class="thumbnails kt-owl-carousel" data-margin="10" data-nav="true" data-responsive='{"0":{"items":2},"600":{"items":2},"1000":{"items":3}}'>
 								<li>
-									<a class="selected" href="<?php echo base_url('/attachments/shop_images/'). $item[0]['image']; ?>" data-standard="<?php echo base_url('/attachments/shop_images/'). $item[0]['image']; ?>">
-										<img src="<?php echo base_url('/attachments/shop_images/'). $item[0]['image']; ?>" alt="" />
+									<a class="selected" href="<?php echo base_url('/attachments/shop_images/'). $item[0]['image_product']; ?>" data-standard="<?php echo base_url('/attachments/shop_images/'). $item[0]['image_product']; ?>">
+										<img src="<?php echo base_url('/attachments/shop_images/'). $item[0]['image_product']; ?>" alt="" />
 									</a>
 								</li>
+                                <?php
+                                    $listImage = getImageOther($item[0]['id_product']);
+                                    foreach ($listImage as $key => $value) {
+                                ?>
 								<li>
-									<a href="data/zoom/full2.jpg" data-standard="data/zoom/standard2.jpg">
-										<img src="data/zoom/thumb2.jpg" alt="" />
+									<a href="<?php echo base_url('/attachments/shop_images/'). $value['name_image_prod']; ?>" data-standard="<?php echo base_url('/attachments/shop_images/'). $value['name_image_prod']; ?>">
+										<img src="<?php echo base_url('/attachments/shop_images/'). $value['name_image_prod']; ?>" alt="" />
 									</a>
 								</li>
-								<li>
-									<a href="data/zoom/full3.jpg" data-standard="data/zoom/standard3.jpg">
-										<img src="data/zoom/thumb3.jpg" alt="" />
-									</a>
-								</li>
-								<li>
-									<a href="data/zoom/full4.jpg" data-standard="data/zoom/standard4.jpg">
-										<img src="data/zoom/thumb4.jpg" alt="" />
-									</a>
-								</li>
+								<?php } ?>
 							</ul>
 						</div>
 					</div>
@@ -107,23 +104,23 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-7">
 							<div class="block-product-info">
-								<h2 class="product-name"><?php echo $item[0]['title']; ?></h2>
+								<h2 class="product-name"><?php echo $item[0]['title_product']; ?></h2>
 								<div class="price-box">
-									<span class="product-price"><?php echo numberToRp($item[0]['price']); ?></span>
-									<span class="product-price-old"><?php echo numberToRp($item[0]['old_price']); ?></span>
+									<span class="product-price"><?php echo numberToRp($item[0]['price_product']); ?></span>
+									<span class="product-price-old"><?php echo numberToRp($item[0]['old_price_product']); ?></span>
 								</div>
-		                        <div class="desc"><?php echo $item[0]['description']; ?></div>
+		                        <div class="desc"><?php echo $item[0]['desc_product']; ?></div>
 								<div class="variations-box">
 									<table class="variations-table">
 										<tr>
 											<td class="table-label">Qty</td>
 											<td class="table-value">
 												<div class="box-qty">
-													<a href="#" class="quantity-minus">-</a>
+													<a href="javascript:void(0)" class="quantity-minus">-</a>
 													<input type="text" class="quantity" value="1">
-													<a href="#" class="quantity-plus">+</a>
+													<a href="javascript:void(0)" class="quantity-plus">+</a>
 												</div>
-												<a href="#" class="button-radius btn-add-cart">Buy<span class="icon"></span></a>
+												<a href="javascript:void(0)" class="button-radius btn-add-cart cart" data-id-prod="<?php echo $item[0]['id_product']; ?>">Buy<span class="icon"></span></a>
 											</td>
 										</tr>
 									</table>
@@ -138,15 +135,14 @@
 						</div>
 						<div class="col-sm-12 col-md-12">
 							<div class="block block-category-list">
-
 								<div class="block-inner">
                                     <?php
                                         foreach ($home_categories as $kl => $val) {
                                     ?>
-									<a href="<?php echo site_url('c/').sanitizeStringForUrl($val['name']).'?category='.$val['id']; ?>">
-										<img class="icon1" src="<?php echo base_url('/assets/tempdkantin/data/').$val['icon']; ?>" alt="Icon">
-										<img class="icon2" src="<?php echo base_url('/assets/tempdkantin/data/').$val['icon']; ?>" alt="Icon">
-										<span><?php echo $val['name']; ?></span>
+									<a href="<?php echo site_url('c/').sanitizeStringForUrl($val['nameCategory']).'?category='.$val['idCategory']; ?>">
+										<img class="icon1" src="<?php echo base_url('/assets/tempdkantin/data/').$val['logo_category']; ?>" alt="Icon">
+										<img class="icon2" src="<?php echo base_url('/assets/tempdkantin/data/').$val['logo_category']; ?>" alt="Icon">
+										<span><?php echo $val['nameCategory']; ?></span>
 									</a>
                                     <?php } ?>
 								</div>
@@ -169,11 +165,10 @@
 					<div class="tab-container">
 						<div id="tab-1" class="tab-panel active">
 							<p>
-                                <?php echo $item[0]['description']; ?>
+                                <?php echo $item[0]['desc_product']; ?>
 							</p>
 						</div>
 						<div id="tab-3" class="tab-panel">
-
 							<div id="reviews">
                                 <?php
                                     foreach ($listReview as $key => $value) {
@@ -262,8 +257,8 @@
 											<span class="product-price-old"><?php echo numberToRp($value['itemsOldPrice']); ?></span>
 										</div>
 	                                    <div class="product-button">
-	                                    	<a class="btn-add-wishlist" title="Add to Wishlist" href="#">Add Wishlist</a>
-	                                    	<a class="button-radius btn-add-cart" title="Add to Cart" href="#">Buy<span class="icon"></span></a>
+	                                    	<a class="btn-add-wishlist" title="Add to Wishlist" href="#">Add Wish list</a>
+	                                    	<a class="button-radius btn-add-cart" title="Add to Cart" href="javascript:void(0)">Buy<span class="icon"></span></a>
 	                                    </div>
 									</div>
 								</div>
@@ -290,4 +285,59 @@
 	</footer>
     <?php
         $this->load->view('templates/blanja/core/footer_detail');
+        $client = !empty($this->session->userdata('auth')->id_client) ? $this->session->userdata('auth')->id_client : "";
+        $checksession = !empty($client) ? $client : "";
     ?>
+<script>
+    var urlCart = "<?php echo site_url('/cart'); ?>";
+    var urlCartOrder = "<?php echo site_url('/cart/order'); ?>";
+    var qmin = $('.quantity-minus');
+    var qplus = $('.quantity-plus');
+    var cart = $('.cart');
+    var q = $('.quantity');
+    var statusSession = "<?php echo $checksession ?>";
+    var urlLogin = "<?php echo site_url('//auth/login'); ?>";
+    qmin.click(function(){
+        var vq = q.val();
+        if (vq > 1 ){
+            var m  = vq - 1;
+            q.val(m);
+        }
+    });
+    qplus.click(function(){
+        var vq = q.val();
+        var m  = Number(vq) + Number(1);
+        q.val(m);
+    });
+
+    cart.click(function(){
+        var id_product = $(this).attr('data-id-prod');
+        var quantity = q.val();
+        if (statusSession != "") {
+            $.ajax({
+                url: urlCart,
+                type: "POST",
+                data: {quantity : quantity, id_product : id_product},
+                dataType : 'json',
+                success: function(retval){
+                    if (retval.status) {
+                        window.location = urlCartOrder;
+                    }
+                }
+            });
+        } else {
+            swal({
+                title: "Info",
+                text: "Harap Login terlebuh dahulu!",
+                type: "warning",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "OK",
+                closeOnConfirm: false
+        	},
+        	function(isConfirm){
+                window.location  = urlLogin;
+        	});
+        }
+    });
+</script>

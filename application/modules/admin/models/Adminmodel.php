@@ -6,17 +6,20 @@ class AdminModel extends CI_Model
     public function loginCheck($values)
     {
         $arr = array(
-            'username' => $values['username'],
-            'password' => md5($values['password']),
+            'name_client' => $values['username'],
+            'password_client' => md5($values['password']),
+            'status_client' => 1,
         );
         $this->db->where($arr);
-        $result = $this->db->get('users');
+        $result = $this->db->get('dk_client');
         $resultArray = $result->row_array();
         if ($result->num_rows() > 0) {
-            $this->db->where('id', $resultArray['id']);
-            $this->db->update('users', array('last_login' => time()));
+            // $this->db->where('id', $resultArray['id']);
+            // $this->db->update('users', array('last_login' => time()));
+            return $resultArray;
+        } else {
+            return [];
         }
-        return $resultArray;
     }
 // ======================= Category ======================= //
     public function getCategoryNew($limit, $start, $status = null, $where=[]) {
@@ -117,7 +120,7 @@ class AdminModel extends CI_Model
             'id_category' =>$post['id_category'],
             'id_client' =>$post['id_client'],
             'id_kampus' =>$post['id_kampus'],
-            'creator' => $datasession['authlog']['id'],
+            'creator' => $datasession['authlog']['id_client'],
             'created' => date('Y-m-d H:i:s')
         );
         $result =$this->db->insert('dk_warung', $data);
@@ -131,7 +134,7 @@ class AdminModel extends CI_Model
             'id_category' =>$post['id_category'],
             'id_client' =>$post['id_client'],
             'id_kampus' =>$post['id_kampus'],
-            'editor' => $datasession['authlog']['id'],
+            'editor' => $datasession['authlog']['id_client'],
             'edited' => date('Y-m-d H:i:s')
         );
         $this->db->where('id_warung', $post['edit']);
@@ -156,9 +159,9 @@ class AdminModel extends CI_Model
         $datasave['price_product'] = $post['price'];
         $datasave['old_price_product'] = $post['old_price'];
         $datasave['quantity_product'] = $post['quantity'];
-        // $datasave['id_warung'] = $post['id_warung'];
+        $datasave['id_warung'] = $post['id_warung'];
         $datasave['image_product'] = $post['image'];
-        $datasave['creator'] = $datasession['authlog']['id'];
+        $datasave['creator'] = $datasession['authlog']['id_client'];
         $datasave['created'] = date('Y-m-d H:i:s');
         $this->db->insert('dk_product', $datasave);
         $insert_id = $this->db->insert_id();
@@ -172,11 +175,11 @@ class AdminModel extends CI_Model
         $datasave['price_product'] = $post['price'];
         $datasave['old_price_product'] = $post['old_price'];
         $datasave['quantity_product'] = $post['quantity'];
-        // $datasave['id_warung'] = $post['id_warung'];
+        $datasave['id_warung'] = $post['id_warung'];
         if (!empty($post['image'])) {
             $datasave['image_product'] = $post['image'];
         }
-        $datasave['editor'] = $datasession['authlog']['id'];
+        $datasave['editor'] = $datasession['authlog']['id_client'];
         $datasave['edited'] = date('Y-m-d H:i:s');
         $this->db->where('id_product', $id);
         return $this->db->update('dk_product', $datasave);
@@ -186,7 +189,7 @@ class AdminModel extends CI_Model
         foreach ($post['otherImages'] as $key => $value) {
             $datasave['name_image_prod'] = $value;
             $datasave['id_product'] = $id;
-            $datasave['created'] = $datasession['authlog']['id'];
+            $datasave['created'] = $datasession['authlog']['id_client'];
             $datasave['creator'] = date('Y-m-d H:i:s');
             $this->db->insert('dk_image_prod', $datasave);
         }
@@ -198,7 +201,7 @@ class AdminModel extends CI_Model
         foreach ($post['otherImages'] as $key => $value) {
             $datasave['name_image_prod'] = $value;
             $datasave['id_product'] = $id;
-            $datasave['editor'] = $datasession['authlog']['id'];
+            $datasave['editor'] = $datasession['authlog']['id_client'];
             $datasave['edited'] = date('Y-m-d H:i:s');
             $this->db->insert('dk_image_prod', $datasave);
         }
@@ -254,6 +257,7 @@ class AdminModel extends CI_Model
 
         $query = "select
                 dp.id_product as idProd,
+                dp.id_warung,
                 dp.title_product as titleProd,
                 dp.desc_product as descProd,
                 dp.basic_produc as basicProd,
@@ -481,7 +485,7 @@ class AdminModel extends CI_Model
             if ($limit !== null && $start !== null) {
                 $limit_sql = ' LIMIT ' . $start . ',' . $limit;
             }
-            $query =$this->db->query('SELECT dk_m_bank.id_bank,dk_m_bank.name_bank,dk_m_bank.created,dk_m_bank.edited,users.id,users.username
+            $query =$this->db->query('SELECT dk_m_bank.id_bank,dk_m_bank.name_bank, dk_m_bank.image_bank,dk_m_bank.created,dk_m_bank.edited,users.id,users.username
                                 FROM dk_m_bank
                                 LEFT JOIN users ON dk_m_bank.creator = users.id'. $limit_sql);
             return $query;
@@ -593,6 +597,12 @@ class AdminModel extends CI_Model
         }
     }
     public function getPopulerCategory($limit = null, $start = null, $status){
+
+
+        $query  = "select *  from dk_popular_categories as dpc
+                    LEFT JOIN dk_category as dc on dpc.id_category = dc.id_category
+                    LEFT JOIN dk_menu_kota as  dmkot on dpc.id_kota = dmkot.id_menu_kota
+                    ";
         // FOR STATUS TRUE
         if ($status) {
             // FOR CONFIG LIMIT
@@ -600,16 +610,11 @@ class AdminModel extends CI_Model
             if ($limit !== null && $start !== null) {
                 $limit_sql = ' LIMIT ' . $start . ',' . $limit;
             }
-
-            $query =$this->db->query('SELECT * FROM `dk_popular_categories`
-	                                    LEFT JOIN (SELECT * FROM translations where type = "shop_categorie" ) AS shop ON dk_popular_categories.id_category = shop.for_id
-                                      LEFT JOIN users ON dk_popular_categories.creator = users.id'. $limit_sql);
-            return $query;
+            $q = $query.$limit_sql;
+            $result =$this->db->query($q)->result_array();
+            return $result;
         } else {
-          $query =$this->db->query('SELECT * FROM `dk_popular_categories`
-	                                 LEFT JOIN (SELECT * FROM translations where type= "shop_categorie")
-                                    AS shop ON dk_popular_categories.id_category = shop.for_id
-                                    LEFT JOIN users ON dk_popular_categories.creator = users.id');
+          $query =$this->db->query($query);
           return $query->num_rows();
         }
     }
@@ -721,20 +726,32 @@ class AdminModel extends CI_Model
         }
         public function getPromoItem($limit = null, $start = null, $status){
             // FOR STATUS TRUE
+            $q = "select
+                        dpi.id_promo_items  as idPromoItems,
+                        dpi.dk_promotion_id as idPromo,
+                        dpi.id_warung as idWarung,
+                        dpi.id_menu_kampus as idMenuKampus,
+                        dpi.id_menu_kota,
+                        dp.title_product  as titleProd,
+                        dmk.name_menu_kampus as nameKampus,
+                        dmkot.name_menu_kota as nameKota
+                        from dk_promo_items as dpi
+                        LEFT JOIN dk_product as dp on dpi.id_prod = dp.id_product
+                        LEFT JOIN dk_warung as dw on dpi.id_warung = dw.id_warung
+                        LEFT JOIN dk_menu_kampus as dmk on dpi.id_menu_kampus = dmk.id_menu_kampus
+                        LEFT JOIN dk_menu_kota as dmkot on dpi.id_menu_kota = dmkot.id_menu_kota ";
             if ($status) {
                 // FOR CONFIG LIMIT
                 $limit_sql = '';
                 if ($limit !== null && $start !== null) {
                     $limit_sql = ' LIMIT ' . $start . ',' . $limit;
                 }
-                $query =$this->db->query('SELECT dk_promo_items.id_promo_items,dk_promo_items.created,dk_promo_items.edited,dk_promo.dk_head_title,product.title,users.username
-                                          FROM dk_promo_items
-                                          LEFT JOIN dk_promo ON dk_promo_items.dk_promotion_id = dk_promo.dk_promotion_id
-                                          LEFT JOIN (SELECT * FROM translations WHERE type ="product") AS product ON dk_promo_items.id_prod = product.id
-                                          LEFT JOIN users ON dk_promo_items.creator = users.id'. $limit_sql);
-                return $query;
+                $query = $q." ".$limit_sql;
+                $result = $this->db->query($query)->result_array();
+                return $result;
             } else {
-              return $this->db->count_all_results('dk_promo_items');
+                $result = $this->db->query($q)->num_rows();
+                return $result;
             }
         }
         public function getPromoSlider($limit = null, $start = null, $status){
@@ -872,6 +889,10 @@ public function getBankClient($limit = null, $start = null, $status){
        }
    }
 
+    public function getKota() {
+        $q = "select * from dk_menu_kota";
+        return $this->db->query($q)->result_array();
+    }
     public function getPromos(){
 
         $query =$this->db->query('SELECT dk_promo.dk_promotion_id,dk_promo.dk_head_title FROM dk_promo');
@@ -900,22 +921,17 @@ public function getBankClient($limit = null, $start = null, $status){
         return $query->result_array();
     }
     public function updateBank($POST){
-      $datasession = $this->session->userdata();
-      $this->db->where('name_bank',$POST['name_bank']);
-      $result =$this->db->get('dk_m_bank');
-      if ($result->num_rows() == 0) {
+        $datasession = $this->session->userdata();
         $data = array(
         'name_bank' => $POST['name_bank'],
-        'editor' => $datasession['authlog']['id'],
+        'editor' => $datasession['authlog']['id_client'],
         'edited' => date('Y-m-d H:i:s')
         );
-
+        if (!empty($POST['image'])) {
+            $data['image_bank'] = $POST['image'];
+        }
         $this->db->where('id_bank', $POST['edit']);
         $result =$this->db->update('dk_m_bank', $data);
-      }else{
-        $result =false;
-      }
-
         return $result;
 
     }
@@ -926,7 +942,7 @@ public function getBankClient($limit = null, $start = null, $status){
       if ($result->num_rows() == 0) {
         $data = array(
         'name_identity' => $POST['name_identity'],
-        'editor' => $datasession['authlog']['id'],
+        'editor' => $datasession['authlog']['id_client'],
         'edited' => date('Y-m-d H:i:s')
         );
 
@@ -946,7 +962,7 @@ public function getBankClient($limit = null, $start = null, $status){
       if ($result->num_rows() == 0) {
         $data = array(
         'name_type_business' => $POST['name_type_business'],
-        'editor' => $datasession['authlog']['id'],
+        'editor' => $datasession['authlog']['id_client'],
         'edited' => date('Y-m-d H:i:s')
         );
 
@@ -1049,21 +1065,14 @@ public function getBankClient($limit = null, $start = null, $status){
     }
     public function updatePopulerCategory($POST){
       $datasession = $this->session->userdata();
-      $this->db->where('id_category',$POST['id_category']);
-      $result =$this->db->get('dk_popular_categories');
-      if ($result->num_rows() == 0) {
         $data = array(
-        'id_category' => $POST['id_category'],
-        'editor' => $datasession['authlog']['id'],
-        'edited' => date('Y-m-d H:i:s')
+            'id_category' => $POST['id_category'],
+            'id_kota' => $POST['id_menu_kota'],
+            'editor' => $datasession['authlog']['id_client'],
+            'edited' => date('Y-m-d H:i:s')
         );
-
         $this->db->where('id_popular_category', $POST['edit']);
         $result =$this->db->update('dk_popular_categories', $data);
-      }else{
-        $result =false;
-      }
-
         return $result;
 
     }
@@ -1076,7 +1085,7 @@ public function getBankClient($limit = null, $start = null, $status){
         $data = array(
         'name_partner' => $POST['name_partner'],
         'img_partner' => $POST['img_partner'],
-        'editor' => $datasession['authlog']['id'],
+        'editor' => $datasession['authlog']['id_client'],
         'edited' => date('Y-m-d H:i:s')
         );
 
@@ -1102,7 +1111,7 @@ public function getBankClient($limit = null, $start = null, $status){
             'dk_promotion_type' =>1,
             'dk_promotion_db' =>'dk_promo_discount',
             'dk_status' =>$test['dk_status'],
-            'editor' => $datasession['authlog']['id'],
+            'editor' => $datasession['authlog']['id_client'],
             'edited' => date('Y-m-d H:i:s')
 
           );
@@ -1129,7 +1138,7 @@ public function getBankClient($limit = null, $start = null, $status){
             'dk_promotion_type' =>2,
             'dk_promotion_db' =>'dk_promo_sliders',
             'dk_status' =>$test['dk_status'],
-            'editor' => $datasession['authlog']['id'],
+            'editor' => $datasession['authlog']['id_client'],
             'edited' => date('Y-m-d H:i:s')
 
           );
@@ -1143,7 +1152,7 @@ public function getBankClient($limit = null, $start = null, $status){
             'dk_promotion_type' =>2,
             'dk_promotion_db' =>'dk_promo_sliders',
             'dk_status' =>$test['dk_status'],
-            'editor' => $datasession['authlog']['id'],
+            'editor' => $datasession['authlog']['id_client'],
             'edited' => date('Y-m-d H:i:s')
 
           );
@@ -1165,7 +1174,7 @@ public function getBankClient($limit = null, $start = null, $status){
         $data = array(
         'dk_promotion_id' => $POST['dk_promotion_id'],
         'id_prod' => $POST['id_prod'],
-        'editor' => $datasession['authlog']['id'],
+        'editor' => $datasession['authlog']['id_client'],
         'edited' => date('Y-m-d H:i:s')
         );
 
@@ -1183,14 +1192,14 @@ public function getBankClient($limit = null, $start = null, $status){
         $datasession = $this->session->userdata();
           $this->db->where('name_bank',$test['name_bank']);
           $result =$this->db->get('dk_m_bank');
-
           if ($result->num_rows() == 0) {
             $data = array(
               'name_bank' =>$test['name_bank'],
-              'creator' => $datasession['authlog']['id'],
+              'image_bank' =>$test['image'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
-
             );
+
             $result =$this->db->insert('dk_m_bank', $data);
 
           }else{
@@ -1212,7 +1221,7 @@ public function getBankClient($limit = null, $start = null, $status){
               'dk_promotion_type' =>1,
               'dk_promotion_db' =>'dk_promo_discount',
               'dk_status' =>$test['dk_status'],
-              'creator' => $datasession['authlog']['id'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
 
             );
@@ -1232,7 +1241,7 @@ public function getBankClient($limit = null, $start = null, $status){
               'dk_promotion_type' =>2,
               'dk_promotion_db' =>'dk_promo_sliders',
               'dk_status' =>$test['dk_status'],
-              'creator' => $datasession['authlog']['id'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
 
             );
@@ -1249,7 +1258,7 @@ public function getBankClient($limit = null, $start = null, $status){
             $data = array(
               'dk_promotion_id' =>$test['dk_promotion_id'],
               'id_prod' =>$test['id_prod'],
-              'creator' => $datasession['authlog']['id'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
 
             );
@@ -1270,7 +1279,7 @@ public function getBankClient($limit = null, $start = null, $status){
           if ($result->num_rows() == 0) {
             $data = array(
               'name_identity' =>$test['name_identity'],
-              'creator' => $datasession['authlog']['id'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
 
             );
@@ -1291,7 +1300,7 @@ public function getBankClient($limit = null, $start = null, $status){
           if ($result->num_rows() == 0) {
             $data = array(
               'name_type_business' =>$test['name_type_business'],
-              'creator' => $datasession['authlog']['id'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
 
             );
@@ -1410,14 +1419,16 @@ public function getBankClient($limit = null, $start = null, $status){
       return $result;
     }
     public function savePopulerCategory($test){
-        $datasession = $this->session->userdata();
+          $datasession = $this->session->userdata();
           $this->db->where('id_category',$test['id_category']);
+          $this->db->where('id_kota',$test['id_menu_kota']);
           $result =$this->db->get('dk_popular_categories');
 
           if ($result->num_rows() == 0) {
             $data = array(
               'id_category' =>$test['id_category'],
-              'creator' =>$datasession['authlog']['id'],
+              'id_kota' =>$test['id_menu_kota'],
+              'creator' =>$datasession['authlog']['id_client'],
               'credited' => date('Y-m-d H:i:s')
             );
             $result =$this->db->insert('dk_popular_categories', $data);
@@ -1502,7 +1513,7 @@ public function getBankClient($limit = null, $start = null, $status){
             $data = array(
               'name_partner' =>$test['name_partner'],
               'img_partner' =>$test['img_partner'],
-              'creator' => $datasession['authlog']['id'],
+              'creator' => $datasession['authlog']['id_client'],
               'created' => date('Y-m-d H:i:s')
 
             );
@@ -1575,6 +1586,12 @@ public function getBankClient($limit = null, $start = null, $status){
     }
     public function deleteBank($id)
     {
+        $this->db->where('id_bank', $id);
+        $getbank = $this->db->get('dk_m_bank', $id)->result_array();
+        if (!empty($getbank[0]['image_bank'])){
+            $link = FCPATH.'/attachments/shop_images/'.$getbank[0]['image_bank'];
+            unlink($link);
+        }
         $this->db->where('id_bank', $id);
         $result = $this->db->delete('dk_m_bank');
         return $result;
@@ -1908,9 +1925,11 @@ public function getBankClient($limit = null, $start = null, $status){
 
     public function deleteproduct($id)
     {
-        $this->deleteTranslations($id, 'product');
-        $this->db->where('id', $id);
-        $result = $this->db->delete('products');
+        $this->db->where('id_product', $id);
+        $this->db->delete('dk_product');
+        // image
+        $this->db->where('id_product', $id);
+        $this->db->delete('dk_image_prod');
         return $result;
     }
 

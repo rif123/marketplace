@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/tempdkantin/css/responsive.css');?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/tempdkantin/css/option2.css');?>" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	 <link rel="stylesheet" href="<?php echo base_url('assets/tempdkantin/plugins/alert/sweetalert.css')?> ">
 	<title>Edo - Home 2</title>
 </head>
 <body class="option2">

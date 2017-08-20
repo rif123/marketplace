@@ -31,30 +31,35 @@
     ?>
    <a href="javascript:void(0);" data-toggle="modal" data-target="#add_edit_users" class="btn btn-primary btn-xs pull-right" style="margin-bottom:10px;"><b>+</b> Add new promo item</a>
    <?php
-   if ($promoitem->result()) {
+   if (!empty($promoitem)) {
        ?>
        <table class="table table-striped custab">
            <thead>
                <tr>
-                   <th>#ID</th>
-                   <th>Head Title</th>
-                   <th>Title Product</th>
-                   <th>creator</th>
-                   <th>created</th>
+                   <th>#No</th>
+                   <th>Promo</th>
+                   <th>Warung</th>
+                   <th>Produk</th>
+                   <th>Kampus</th>
+                   <th>Kota</th>
                     <th class="text-center">Action</th>
                </tr>
            </thead>
-           <?php $i=1; foreach ($promoitem->result() as $key=> $user) { ?>
+           <?php
+               $i=1;
+               foreach ($promoitem as $key=> $val) {
+               ?>
                <tr>
                    <td><?= $i ?></td>
-                   <td><?= $user->dk_head_title ?></td>
-                   <td><?= $user->title ?></td>
-                   <td><?= $user->username ?></td>
-                   <td><?= $user->created ?></td>
+                   <td><?= $val['titlePromo']; ?></td>
+                   <td><?= $val['nameWarung']; ?></td>
+                   <td><?= $val['titleProd']; ?></td>
+                   <td><?= $val['nameKampus'];  ?></td>
+                   <td><?= $val['nameKota'];  ?></td>
                    <td class="text-center">
                        <div>
-                           <a href="?delete=<?= isset($user->id_promo_items) ? $user->id_promo_items : "" ?>" class="confirm-delete">Delete</a>
-                           <a href="?edit=<?= isset($user->id_promo_items) ? $user->id_promo_items : "" ?>">Edit</a>
+                           <a href="?delete=<?= isset($val['idPromoItems']) ? $val['idPromoItems'] : "" ?>" class="confirm-delete">Delete</a>
+                           <a href="?edit=<?= isset($val['idPromoItems']) ? $val['idPromoItems'] : "" ?>">Edit</a>
                        </div>
                    </td>
                </tr>
@@ -84,7 +89,6 @@
                            <select class="form-control" name="dk_promotion_id">
                                <option value="0">None</option>
                                <?php
-
                                foreach ($promo as $key_cat => $promos) {
                                  $selected ="";
                                   if (isset($edit['dk_promotion_id'])) {
@@ -93,27 +97,42 @@
                                       }
                                   }
                                      ?>
-                                   <option value="<?= $promos['dk_promotion_id'] ?>"<?= $selected ?>><?= $promos['dk_head_title'] ?></option>
+                                   <option value="<?= $promos['dk_promotion_id'] ?>"<?= $selected ?>><?= $promos['dk_title_promotion'] ?></option>
                                <?php } ?>
                            </select>
                        </div>
                        <div class="form-group">
-                           <label>Title Product</label>
-
-                           <select class="form-control" name="id_prod">
-                               <option value="0">None</option>
+                           <label>Warung</label>
+                           <select class="form-control id_warung" name="id_warung">
+                               <option value="0">Warung</option>
                                <?php
-
-                               foreach ($product as $key_cat => $products) {
-                                 if (isset($edit['id_prod'])) {
-                                   $selected="";
-                                     if ($edit['id_prod'] == $products['id']) {
-                                       $selected ="selected";
+                               foreach ($listWarung as $k => $v) {
+                                     if (isset($edit['id_warung'])) {
+                                       $selected="";
+                                         if ($edit['id_warung'] == $v['id_warung']) {
+                                           $selected ="selected";
+                                         }
                                      }
-                                 }
-                                     ?>
-                                   <option value="<?= $products['id'] ?>"<?= $selected ?>><?= $products['title'] ?></option>
-                               <?php } ?>
+                                ?>
+                                     <option value="<?= $v['id_warung'] ?>"<?= $selected ?>><?= $v['name_warung'] ?></option>
+                            <?php } ?>
+                           </select>
+                       </div>
+                       <div class="form-group">
+                           <label>Product</label>
+                           <select class="form-control id_prod" name="id_prod">
+                               <option value="0">Product</option>
+                               <?php
+                                if (isset($edit)){
+                                    foreach ($listProduct as $k => $v) {
+                                        $selected="";
+                                        if ($edit['id_prod'] == $v['id_product']) {
+                                            $selected ="selected";
+                                        }
+                                        echo '<option   '.$selected.' value="'.$v['id_product'].'">'.$v['title_product'].'</option>';
+                                    }
+                                }
+                               ?>
                            </select>
                        </div>
                    <div class="modal-footer">
@@ -141,9 +160,39 @@
    </div>
 </div>
 <script>
+var urlGetWarung = "<?=  site_url('/admin/promo-product'); ?>";
 <?php if (isset($_GET['edit'])) { ?>
        $(document).ready(function () {
            $("#add_edit_users").modal('show');
        });
 <?php } ?>
+
+$('.id_warung').change(function(){
+    var id_warung  = $(this).val();
+    $.ajax({
+      url: urlGetWarung,
+      dataType:"json",
+      type: 'post',
+      data : {id_warung : id_warung},
+      cache: false,
+      success: function(retval){
+            var prodSelector = $('.id_prod');
+            if (retval.listData != "") {
+            prodSelector.html('');
+            $(retval.listData).each(function(index, value){
+                prodSelector.append($('<option>',{
+                    value: value.id_product,
+                    text : value.title_product
+                }));
+            })
+        } else {
+            prodSelector.html($('<option>',{
+                value: "",
+                text : "Product"
+            }));
+        }
+      }
+    });
+});
+
 </script>

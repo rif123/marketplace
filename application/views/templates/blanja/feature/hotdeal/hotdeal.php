@@ -35,22 +35,22 @@
                             <div class="product-container">
                                 <div class="product-left">
                                     <div class="product-thumb">
-                                        <a class="product-img" href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title']).'-'.$itm['id']; ?>">
-                                            <img style="width:250px; height:250px" src="<?php echo base_url('attachments/shop_images/').$itm['image']; ?>" alt="<?php echo $itm['title']; ?>"
+                                        <a class="product-img" href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title_product']).'?detail='.$itm['id_prod']; ?>">
+                                            <img style="width:250px; height:250px" src="<?php echo base_url('attachments/shop_images/').$itm['image_product']; ?>" alt="<?php echo $itm['title_product']; ?>"
                                             onerror="this.onerror=null;this.src='<?php echo base_url('assets/tempdkantin/data/option2/p21.jpg'); ?>'">
                                         </a>
-                                        <a title="Quick View" href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title']).'-'.$itm['id']; ?>" class="btn-quick-view">Quick View</a>
+                                        <a title="Quick View" href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title_product']).'?detail='.$itm['id_prod']; ?>" class="btn-quick-view">Quick View</a>
                                     </div>
                                 </div>
                                 <div class="product-right">
                                     <div class="product-name">
-                                        <a href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title']).'-'.$itm['id']; ?>">
-                                            <?php echo $itm['title']; ?>
+                                        <a href="<?php echo site_url('/p').'/'.sanitizeStringForUrl($itm['title_product']).'?detail='.$itm['id_prod']; ?>">
+                                            <?php echo $itm['title_product']; ?>
                                         </a>
                                     </div>
                                     <div class="price-box">
-                                        <span class="product-price"><?php echo numberToRp($itm['price']); ?></span>
-                                        <span class="product-price-old"><?php echo numberToRp($itm['old_price']); ?></span>
+                                        <span class="product-price"><?php echo numberToRp($itm['price_product']); ?></span>
+                                        <span class="product-price-old"><?php echo numberToRp($itm['old_price_product']); ?></span>
                                     </div>
                                     <div class="product-button">
                                         <a class="btn-add-wishlist" title="Add to Wishlist" href="#">Add Wishlist</a>

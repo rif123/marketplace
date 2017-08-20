@@ -399,27 +399,23 @@ function changeProductStatus(id) {
 }
 
 // Orders
-function changeOrdersOrderStatus(id, to_status) {
-    $.post(urls.changeOrdersOrderStatus, {the_id: id, to_status: to_status}, function (data) {
-        if (data == '1') {
-            if (to_status == 0) {
-                $('[data-action-id="' + id + '"] div.status b').text('No processed');
-                $('[data-action-id="' + id + '"]').removeClass().addClass('bg-danger text-center');
+function changeOrdersOrderStatus(status_order, id_order) {
+    $.ajax({
+        url: urls.changeOrdersOrderStatus,
+        type: "POST",
+        data: {status_order: status_order, id_order: id_order},
+        dataType : 'json',
+        success: function (data)
+        {
+            if(data.status) {
+                window.location = urlorder;
             }
-            if (to_status == 1) {
-                $('[data-action-id="' + id + '"] div.status b').text('Processed');
-                $('[data-action-id="' + id + '"]').removeClass().addClass('bg-success  text-center');
-            }
-            if (to_status == 2) {
-                $('[data-action-id="' + id + '"] div.status b').text('Rejected');
-                $('[data-action-id="' + id + '"]').removeClass().addClass('bg-warning  text-center');
-            }
-            $('#new-order-alert-' + id).remove();
         }
     });
+
 }
 $(".changeOrder").change(function () {
-    window.location.href = urls.ordersOrderBy + $(this).val();
+    window.location.href = urlStatusOrder + $(this).val();
 });
 $(document).ready(function () {
     $('.more-info').click(function () {

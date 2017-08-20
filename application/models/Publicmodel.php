@@ -14,6 +14,16 @@ class Publicmodel extends CI_Model
         $this->showInSliderProducts = $this->AdminModel->getValueStore('showInSlider');
     }
 
+    public function getListKota () {
+        $result = $this->db->query('select id_menu_kota, name_menu_kota from dk_menu_kota');
+        return $result->result_array();
+    }
+
+    public function getKampus ($idmenukota) {
+        $result = $this->db->query('select id_menu_kampus, name_menu_kampus from dk_menu_kampus where id_menu_kota  = '.$idmenukota)->result_array();
+        return !empty($result[0]) ? $result[0] : "";
+    }
+
     public function productsCount($big_get)
     {
         $this->db->join('translations', 'translations.for_id = products.id', 'left');

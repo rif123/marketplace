@@ -39,8 +39,7 @@
                 <tr>
                     <th>#ID</th>
                     <th>Name Bank</th>
-                    <th>creator</th>
-                    <th>Created</th>
+                    <th>Image</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -48,8 +47,7 @@
                 <tr>
                     <td><?= $i ?></td>
                     <td><?= $user->name_bank ?></td>
-                    <td><?= $user->username ?></td>
-                    <td><?= $user->created ?></td>
+                    <td><img src="<?= base_url('/attachments/shop_images/').$user->image_bank ?>" width="50px"/></td>
                     <td class="text-center">
                         <div>
                             <a href="?delete=<?= $user->id_bank ?>" class="confirm-delete">Delete</a>
@@ -79,8 +77,16 @@
                         <input type="hidden" name="edit" value="<?= isset($_GET['edit']) ? $_GET['edit'] : '0' ?>">
                         <div class="form-group">
                             <label for="username">Name Bank</label>
-
                             <input type="text" name="name_bank" value="<?= isset($edit['name_bank']) ? $edit['name_bank'] : '' ?>" class="form-control" id="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Image</label>
+                            <input type="file" name="image_bank" value="" class="form-control" id="username">
+                            <?php
+                                if (!empty($edit['image_bank'])) {
+                                    echo '<img src="'.base_url('/attachments/shop_images/').$edit['image_bank'].'"  width="100px"/>';
+                                }
+                            ?>
                         </div>
                     <div class="modal-footer">
                     <?php

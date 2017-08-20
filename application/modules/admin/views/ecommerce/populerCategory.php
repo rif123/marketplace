@@ -33,28 +33,28 @@
     ?>
     <a href="javascript:void(0);" data-toggle="modal" data-target="#add_edit_users" class="btn btn-primary btn-xs pull-right" style="margin-bottom:10px;"><b>+</b> Add new user</a>
     <?php
-    if ($populerCategory->result()) {
+    if (!empty($populerCategory)) {
         ?>
         <table class="table table-striped custab">
             <thead>
                 <tr>
                     <th>#ID</th>
                     <th>Populer Category</th>
-                    <th>Creator</th>
-                    <th>Created</th>
+                    <th>Kota</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
-            <?php $i=1; foreach ($populerCategory->result() as $key=> $user) { ?>
+            <?php $i=1;
+                foreach ($populerCategory as $key=> $user) {
+                ?>
                 <tr>
-                    <td><?= $i ?></td>
-                    <td><?= $user->name ?></td>
-                    <td><?= $user->username ?></td>
-                    <td><?= $user->credited ?></td>
+                    <td><?= $i; ?></td>
+                    <td><?= $user['name_category'] ?></td>
+                    <td><?= $user['name_menu_kota'] ?></td>
                     <td class="text-center">
                         <div>
-                            <a href="?delete=<?= $user->id_popular_category ?>" class="confirm-delete">Delete</a>
-                            <a href="?edit=<?= $user->id_popular_category ?>">Edit</a>
+                            <a href="?delete=<?= $user['id_popular_category'] ?>" class="confirm-delete">Delete</a>
+                            <a href="?edit=<?= $user['id_popular_category'] ?>">Edit</a>
                         </div>
                     </td>
                 </tr>
@@ -84,18 +84,35 @@
                             <select class="form-control" name="id_category">
                                 <option value="0">None</option>
                                 <?php
-
                                 foreach ($form as $key_cat => $forms) {
-                                        $selected ="";
-                                      if ($edit['for_id'] == $forms['for_id']) {
-                                          $selected ="selected";
-                                      }
+                                    $selected ="";
+                                    if(!empty($edit['for_id'])) {
+                                        if ($edit['for_id'] == $forms['for_id']) {
+                                              $selected ="selected";
+                                        }
+                                    }
                                       ?>
                                     <option value="<?= $forms['for_id'] ?>" <?php echo $selected; ?> ><?= $forms['name'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label>Kota</label>
+                            <select class="form-control" name="id_menu_kota">
+                                <option value="0">None</option>
+                                <?php
+                                foreach ($listKota as $l => $v) {
+                                      $selected ="";
+                                        if(!empty($edit['id_kota'])) {
+                                            if ($edit['id_kota'] == $v['id_menu_kota']) {
+                                              $selected ="selected";
+                                            }
+                                        }
+                                      ?>
+                                    <option  <?= $selected ?>  value="<?= $v['id_menu_kota'] ?>" <?php echo $selected; ?> ><?= $v['name_menu_kota'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
 
                     <?php
                     if (isset($edit['id_category'])) {

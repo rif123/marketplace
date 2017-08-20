@@ -114,6 +114,16 @@ if ($this->session->flashdata('result_publish')) {
             <?php } ?>
         </select>
     </div>
+    <div class="form-group for-shop">
+        <label>Warung</label>
+        <select class="selectpicker form-control show-tick show-menu-arrow" name="id_warung">
+            <?php foreach ($listWarung as $key_cat => $listWarung) { ?>
+                <option <?= !empty($trans_load['id_warung'])  && $trans_load['id_warung'] == $listWarung['id_warung'] ? 'selected=""' : '' ?> value="<?= $listWarung['id_warung'] ?>">
+                    <?php echo  $listWarung['name_warung']; ?>
+                </option>
+            <?php } ?>
+        </select>
+    </div>
     <?php
     $i = 0;
     foreach ($languages->result() as $language) {

@@ -22,7 +22,7 @@
                                         <option value="">All Categories</option>
                                         <?php
                                             foreach ($home_categories as $key => $value) {
-                                                echo "<option value='".$value['id']."'>".$value['name']."</option>";
+                                                echo "<option value='".$value['idCategory']."'>".$value['nameCategory']."</option>";
                                             }
                                         ?>
                                     </select>
@@ -119,74 +119,64 @@
 				</ul>
 			</div>
 		</div>
-        <div class="row">
-            <div class="category-products">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <h1 class="page-title">My Wishlist</h1>
-                    <div class="page-content">
-                    </div>
-                    <table class="table table-bordered table-wishlist">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $ws = getWishlist();
-                                foreach ($ws->result_array() as $key => $value) {
-                                    echo "<tr>";
-                                        echo "<td>".$value['title']."</td>";
-                                        echo '<td class="text-center"><a href="'.site_url('/delete-wishlist')."?idProd=".$value['id_whislist'].'"><i class="fa fa-close"></i></a></td>
-                                    </tr>';
-                                    echo "</tr>";
-                                }
-                            ?>
 
-                        </tbody>
-                    </table>
-                </div>
+<!-- LIST CART -->
+        <div class="row">
+            <div class="main-page">
+				<h1 class="page-title">History Order</h1>
+				<div class="page-content page-order">
+		            <div class="order-detail-content">
+		                <table class="cart_summary">
+		                    <thead>
+		                        <tr>
+		                            <th class="cart_product">No Order</th>
+		                            <th>User</th>
+		                            <th>Total</th>
+		                            <th>Status</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+                                <?php
+                                    foreach ($listHistory as $key => $value) {
+                                        $getStatus = $this->config->item('statusOrder');
+                                        echo "<tr>";
+                                            echo "<td>".$value['no_order']."</td>";
+                                            echo "<td>".$value['name_client']."</td>";
+                                            echo "<td>".numberToRp($value['total_order'])."</td>";
+                                            echo "<td >
+                                                    <button class='button btn-success'>".$getStatus[$value['status_order']]."</button>
+                                                </td>";
+                                        echo "</tr>";
+                                    }
+                                ?>
+		                    </tbody>
+		                    <tfoot>
+		                        <tr>
+		                            <td colspan="4"></td>
+		                        </tr>
+		                    </tfoot>
+		                </table>
+		                <div class="cart_navigation">
+		                    <a class="button" href="<?php echo site_url('/');?>"><i class="fa fa-angle-left"></i> Continue shopping </a>
+		                </div>
+		            </div>
+		        </div>
 			</div>
         </div>
-
-	</div>
+<!-- LIST CART -->
 	<!-- footer -->
-	<footer id="footer">
-        <!-- footer information -->
-                <?php $this->load->view('templates/blanja/component/footermenuvertical', ['partner', $partner]) ?>
-        <!-- footer information -->
+<footer id="footer">
+    <!-- footer information -->
+            <?php $this->load->view('templates/blanja/component/footermenuvertical', ['partner', $partner]) ?>
+    <!-- footer information -->
 
-        <!-- footer icon & social media -->
-                <?php $this->load->view('templates/blanja/component/footermiddleicon') ?>
-        <!-- ffooter icon & social media -->
-        <!-- footer icon & social media -->
-    			<?php $this->load->view('templates/blanja/component/footerabout') ?>
-    	<!-- ffooter icon & social media -->
-	</footer>
-    <?php
-        $this->load->view('templates/blanja/core/footer_detail');
-    ?>
-
-    <script>
-    var current_base_url = "<?php echo $currentUrl ?>";
-    var getView = "<?php echo !empty($view) ? $view : '' ?>";
-    var sort = "<?php echo $this->input->get('sort'); ?>";
-        $('.price').change(function(){
-            window.location = current_base_url+"&sort="+$(this).val();
-        });
-        $('.view-as-grid').click(function(){
-            if (sort != ""){
-                window.location = current_base_url+"&sort="+sort+"&view=grid";
-            } else {
-                window.location = current_base_url+"&view=grid";
-            }
-        });
-        $('.view-as-list').click(function(){
-            if (sort != ""){
-                window.location = current_base_url+"&sort="+sort+"&view=list";
-            } else {
-                window.location = current_base_url+"&view=list";
-            }
-        });
-    </script>
+    <!-- footer icon & social media -->
+            <?php $this->load->view('templates/blanja/component/footermiddleicon') ?>
+    <!-- ffooter icon & social media -->
+    <!-- footer icon & social media -->
+			<?php $this->load->view('templates/blanja/component/footerabout') ?>
+	<!-- ffooter icon & social media -->
+</footer>
+<?php
+    $this->load->view('templates/blanja/core/footer_detail');
+?>
